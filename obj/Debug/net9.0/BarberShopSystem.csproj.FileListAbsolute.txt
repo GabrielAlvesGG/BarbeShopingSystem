@@ -96,3 +96,4 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberShopSystem.pdb
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberShopSystem.genruntimeconfig.cache
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\ref\BarberShopSystem.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberShopSystem.sourcelink.json

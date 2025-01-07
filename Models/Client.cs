@@ -8,5 +8,6 @@
         public DateTime? DateOfBird { get; set; } 
         public string? Email { get;set; }
         public String? PassWord { get; set; }
+        public string? cpf { get; set; }
     }
 }
