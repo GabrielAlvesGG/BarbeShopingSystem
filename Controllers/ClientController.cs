@@ -1,5 +1,6 @@
 ﻿using BarberShopSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberShopSystem.Controllers
 {
@@ -14,12 +15,12 @@ namespace BarberShopSystem.Controllers
             return View();
         }
 
-        public void RegisterNewClient([FromBody] Client client)
+        public void InsertClient([FromBody] Client client)
         {
             try
             {
                 ClientRepository clientRepository = new ClientRepository();
-                clientRepository.RegisterNewClient(client);
+                clientRepository.InsertClient(client);
             }
             catch (Exception ex)
             {
@@ -34,6 +35,22 @@ namespace BarberShopSystem.Controllers
                 ClientRepository clientRepository = new ClientRepository();
                 List<Client> allClients = clientRepository.ListAllClient();
                 return allClients;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+        }
+
+        public Client EditClient([FromBody] int idOldClient)
+        {
+            try
+            {
+               ClientRepository clientRepository = new ClientRepository();
+
+               return clientRepository.GetClient(idOldClient);
+
             }
             catch (Exception ex)
             {

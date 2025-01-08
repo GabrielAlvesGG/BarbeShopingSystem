@@ -42,6 +42,7 @@
       el: '#registerClient',
       data() {
         return {
+            id:0,
           name: '',
           email: '',
           password: '',
@@ -50,9 +51,11 @@
           phone:''
         };
       },
-      methods: {
+      methods: 
+      {
         registerClient() {
           const client = {
+             Id:this.id,
              Name: this.name,
              Email: this.email,
              Password: this.password,
@@ -61,7 +64,7 @@
              Phone: this.phone
           };
 
-          axios.post('/Client/RegisterNewClient', client,{
+           axios.post('/Client/InsertClient', client,{
               headers: {
               'Content-Type': 'application/json'
             }})
@@ -71,7 +74,41 @@
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
             });
-        }
+        },
+          editMode(idClient){
+               let idOldClient = idClient;
+                axios.post('/Client/EditClient', idOldClient,{
+               headers: {
+               'Content-Type': 'application/json'
+             }})
+             .then(response => {
+                this.id = response.data.id;
+                this.name= response.data.name;
+                this.email= response.data.email;
+                this.password= response.data.passWord;
+                this.cpf= response.data.cpf;
+                 this.dateOfBirth= response.data.dateOfBirth;
+                this.phone= response.data.phone;
+             })
+             .catch(error => {
+               console.error('Erro ao  cadastrar:', error);
+             });
+         },
+         getQueryString(){
+            let urlParams = new URLSearchParams(window.location.search);
+
+            if(urlParams.has('id')){
+                 let idClient = Number(urlParams.get('id'));
+                  this.editMode(idClient);
+            }
+                  
+
+                
+     
+         }
+      },
+      mounted(){
+          this.getQueryString();
       }
     });
 </script>

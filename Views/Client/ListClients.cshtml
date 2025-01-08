@@ -21,6 +21,7 @@
                     <td>{{client.email}}</td>
                     <td>{{client.dateOfBirth}}</td>
                     <td>{{client.cpf}}</td>
+                    <td><button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button></td>
                 </tr>
               </table>
           </div>
@@ -47,6 +48,9 @@
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
             });
+        },
+        EditClient(oldClient){
+               window.location.href = "/Client/RegisterClient?id="+ oldClient.id;
         }
       },
        mounted() {
