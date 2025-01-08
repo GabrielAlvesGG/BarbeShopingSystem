@@ -25,7 +25,7 @@ namespace BarberShopSystem.Models
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
-                        cpf = reader.GetString("cpf"),
+                        cpf = reader.GetString("Cpf"),
                         DateOfBird = reader.GetDateTime("DateOfBird"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")

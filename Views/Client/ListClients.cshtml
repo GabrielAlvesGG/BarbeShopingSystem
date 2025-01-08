@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Cadastro de Cliente";
+}
+<div id="ListClients">
+       <div class="container">
+          <div class="row">
+              <h1>Lista de Clientes</h1>
+          </div>
+          <div class="row">
+              <table>
+                <tr>
+                    <td>Id</td>
+                    <td>Nome</td>
+                    <td>E-mail</td>
+                    <td>Data de nascimento</td>
+                    <td>cpf</td>
+                </tr>
+                <tr v-for="client in clients" :key="client.id">
+                    <td>{{client.id}}</td>
+                    <td>{{client.name}}</td>
+                    <td>{{client.email}}</td>
+                    <td>{{client.dateOfBird}}</td>
+                    <td>{{client.cpf}}</td>
+                </tr>
+              </table>
+          </div>
+       </div>
+</div>
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+   listClient = new Vue({
+       el: '#ListClients',
+      data() {
+        return {
+            clients:[],
+            teste:'ggplayer',
+        };
+      },
+      methods: {
+        ListAllClients() {
+           axios.post('/Client/ListAllClients')
+            .then(response => {
+                  this.clients = response.data;
+              console.log("A chamada foi um sucesso !!");
+            })
+            .catch(error => {
+              console.error('Erro ao  cadastrar:', error);
+            });
+        }
+      },
+       mounted() {
+          this.ListAllClients();
+        },
+    });
+</script>

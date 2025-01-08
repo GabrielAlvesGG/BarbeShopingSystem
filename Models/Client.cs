@@ -10,4 +10,5 @@
         public String? PassWord { get; set; }
         public string? cpf { get; set; }
     }
+
 }
