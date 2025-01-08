@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BarberShopSystem.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BarberShopSystem.Controllers
 {
@@ -7,6 +8,12 @@ namespace BarberShopSystem.Controllers
         public IActionResult RegisterClient()
         {
             return View();
+        }
+        
+        public void RegisterNewClient([FromBody] Client client)
+        {
+            ClientRepository clientRepository = new ClientRepository();
+            clientRepository.ListAllClient();
         }
     }
 }
