@@ -26,7 +26,7 @@ namespace BarberShopSystem.Models
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
                         cpf = reader.GetString("Cpf"),
-                        DateOfBird = reader.GetDateTime("DateOfBird"),
+                        DateOfBirth = reader.GetDateTime("DateOfBirth"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")
                     });

@@ -9,12 +9,20 @@
                    <input type="text" v-model="name" placeholder="Nome"/>
               </div>
             <div>
+                <label>Cpf:</label>
+                <input type="text" v-model="cpf" placeholder="Cpf" />
+            </div>
+            <div>
                 <label>E-mail:</label>
                 <input type="text" v-model="email" placeholder="E-mail" />
             </div>
             <div>
                 <label>Senha:</label>
                 <input type="password" v-model="password" placeholder="Senha" />
+            </div>
+            <div>
+                <label>Data de Nacimento :</label>
+                <input type="password" v-model="dateOfBirth" placeholder="Senha" />
             </div>
           </div>
             <input type="button" class="btn btn-success" name="name" value="cadastrar" v-on:Click="cadastrar" />
@@ -30,6 +38,8 @@
            name: '',
           email: '',
           password: '',
+          cpf:'',
+          dateOfBirth:''
         };
       },
       methods: {
@@ -37,7 +47,9 @@
           const client = {
              Name: this.name,
              Email: this.email,
-             Password: this.password
+             Password: this.password,
+             Cpf: this.cpf,
+             DateOfBirth: this.dateOfBirth
           };
 
           axios.post('/Client/RegisterNewClient', client,{
