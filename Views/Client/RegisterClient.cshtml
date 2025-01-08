@@ -5,6 +5,9 @@
        <div class="container">
           <div class="row">
               <div>
+                  <h1>Cadastro de Clientes</h1>
+              </div>
+              <div>
                    <label>Nome:</label>
                    <input type="text" v-model="name" placeholder="Nome"/>
               </div>
@@ -21,11 +24,15 @@
                 <input type="password" v-model="password" placeholder="Senha" />
             </div>
             <div>
-                <label>Data de Nacimento :</label>
-                <input type="password" v-model="dateOfBirth" placeholder="Senha" />
+                <label>Data de Nacimento:</label>
+                <input type="date" v-model="dateOfBirth"/>
+            </div>
+            <div>
+                <label>Telefone:</label>
+                <input type="text" v-model="phone" placeholder="Telefone" />
             </div>
           </div>
-            <input type="button" class="btn btn-success" name="name" value="cadastrar" v-on:Click="cadastrar" />
+        <input type="button" class="btn btn-success" name="name" value="Cadastrar" v-on:Click="registerClient" />
        </div>
 </div>
 <script src="~/lib/vue/vue.js"></script>
@@ -35,21 +42,23 @@
       el: '#registerClient',
       data() {
         return {
-           name: '',
+          name: '',
           email: '',
           password: '',
           cpf:'',
-          dateOfBirth:''
+          dateOfBirth:'',
+          phone:''
         };
       },
       methods: {
-        cadastrar() {
+        registerClient() {
           const client = {
              Name: this.name,
              Email: this.email,
              Password: this.password,
              Cpf: this.cpf,
-             DateOfBirth: this.dateOfBirth
+             DateOfBirth: this.dateOfBirth,
+             Phone: this.phone
           };
 
           axios.post('/Client/RegisterNewClient', client,{

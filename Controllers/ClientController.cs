@@ -16,7 +16,16 @@ namespace BarberShopSystem.Controllers
 
         public void RegisterNewClient([FromBody] Client client)
         {
-            
+            try
+            {
+                ClientRepository clientRepository = new ClientRepository();
+                clientRepository.RegisterNewClient(client);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
         }
         public List<Client> ListAllClients()
         {

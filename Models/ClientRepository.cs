@@ -41,5 +41,22 @@ namespace BarberShopSystem.Models
             }
             
         }
+
+        public void RegisterNewClient(Client client)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
+                connection.Open();
+                var command = new MySqlCommand($"Insert into Client (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')", connection);
+                command.ExecuteReader();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
+        }
     }
 }
