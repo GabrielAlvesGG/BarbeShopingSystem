@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 
 namespace BarberShopSystem.Models
 {
@@ -96,6 +97,27 @@ namespace BarberShopSystem.Models
             {
                 Console.WriteLine(ex.ToString());
                 throw;
+            }
+        }
+
+        public void DeleteClient(int idClient)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
+                connection.Open();
+                string sqlCommand = string.Empty;
+              
+                sqlCommand = $"DELETE FROM CLIENT WHERE Id={idClient}";
+
+                var command = new MySqlCommand(sqlCommand, connection);
+                command.ExecuteReader();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw ex;
             }
         }
     }

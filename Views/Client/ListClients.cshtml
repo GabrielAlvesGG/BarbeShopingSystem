@@ -21,7 +21,8 @@
                     <td>{{client.email}}</td>
                     <td>{{client.dateOfBirth}}</td>
                     <td>{{client.cpf}}</td>
-                    <td><button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button></td>
+                    <td><button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button>
+                        <button type="button" class="btn btn-info" style="color:white;" v-on:Click="DeleteClient(client.id)">Excluír</button></td>
                 </tr>
               </table>
           </div>
@@ -51,7 +52,22 @@
         },
         EditClient(oldClient){
                window.location.href = "/Client/RegisterClient?id="+ oldClient.id;
-        }
+        },
+            DeleteClient(idClient) {
+             axios.post('/Client/DeleteClient',idClient,
+              {
+               headers: {
+               'Content-Type': 'application/json'
+             }})
+             .then(response => {
+                   this.clients = response.data;
+                     this.ListAllClients();
+               console.log("A chamada foi um sucesso !!");
+             })
+             .catch(error => {
+               console.error('Erro ao  cadastrar:', error);
+             });
+         },
       },
        mounted() {
           this.ListAllClients();

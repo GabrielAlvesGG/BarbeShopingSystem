@@ -58,6 +58,18 @@ namespace BarberShopSystem.Controllers
                 throw;
             }
         }
-
+        public void DeleteClient([FromBody] int idClient)
+        {
+            try
+            {
+                ClientRepository clientRepository = new ClientRepository();
+                clientRepository.DeleteClient(idClient);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw ex;
+            }
+        }
     }
 }
