@@ -51,9 +51,9 @@ namespace BarberShopSystem.Models
                 if (client.Id == 0)
                     sqlCommand = $"Insert into Client (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
                 else
-                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', cpf='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
-
-                    var command = new MySqlCommand(sqlCommand, connection);
+                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', cpf='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
+                                                                                                                                                                  
+                var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
                 connection.Close();
             }
