@@ -1,6 +1,6 @@
-﻿namespace BarberShopSystem
+﻿namespace BarberShopSystem.Models
 {
-    public class Client
+    public class Barber
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -10,5 +10,4 @@
         public String? PassWord { get; set; }
         public string? cpf { get; set; }
     }
-
 }

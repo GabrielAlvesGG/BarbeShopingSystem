@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Cadastro de Barbeiro";
+}
+<div id="registerBarber">
+       <div class="container">
+          <div class="row">
+              <div>
+                  <h1>Cadastro de Barbeiros</h1>
+              </div>
+            <div class="col-4">
+                   <label>Nome:</label>
+                <input type="text" v-model="name" class="form-control" placeholder="Nome" />
+              </div>
+            <div class="col-4">
+                <label>Cpf:</label>
+                <input type="text" v-model="cpf" class="form-control" placeholder="Cpf" />
+            </div>
+            <div class="col-4">
+                <label>E-mail:</label>
+                <input type="text" v-model="email" class="form-control" placeholder="E-mail" />
+            </div>
+            <div class="col-4">
+                <label>Senha:</label>
+                <input type="password" class="form-control" v-model="password" placeholder="Senha" />
+            </div>
+            <div class="col-4">
+                <label>Telefone:</label>
+                <input type="text" v-model="phone" class="form-control" placeholder="Telefone" />
+            </div>
+            <div class="col-4">
+                <label>Data de Nacimento:</label>
+                <input class="form-control" type="date" v-model="dateOfBirth" name="data_nascimento">
+            </div>
+            <input type="button" class="btn btn-success col-2" name="name" value="Cadastrar" v-on:Click="registerBarber" />
+          </div>
+        
+       </div>
+</div>
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+   RegisterBarber = new Vue({
+      el: '#registerBarber',
+      data() {
+        return {
+            id:0,
+          name: '',
+          email: '',
+          password: '',
+          cpf:'',
+          dateOfBirth:'',
+          phone:''
+        };
+      },
+      methods: 
+      {
+        registerBarber() {
+          const barber = {
+             Id:this.id,
+             Name: this.name,
+             Email: this.email,
+             Password: this.password,
+             Cpf: this.cpf,
+             DateOfBirth: this.dateOfBirth,
+             Phone: this.phone
+          };
+
+           axios.post('/Barber/InsertBarber', barber,{
+              headers: {
+              'Content-Type': 'application/json'
+            }})
+            .then(response => {
+              alert('Cadastro realizado com sucesso!');
+              //Ajustar mensagem e layout 
+            })
+            .catch(error => {
+              console.error('Erro ao  cadastrar:', error);
+            });
+        },
+          editMode(idBarber){
+               let idOldBarber= idBarber;
+                axios.post('/Barber/EditBarber', idOldBarber,{
+               headers: {
+               'Content-Type': 'application/json'
+             }})
+             .then(response => {
+                this.id = response.data.id;
+                this.name= response.data.name;
+                this.email= response.data.email;
+                this.password= response.data.passWord;
+                this.cpf= response.data.cpf;
+                this.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
+                this.phone= response.data.phone;
+             })
+             .catch(error => {
+               console.error('Erro ao  cadastrar:', error);
+             });
+         },
+         getQueryString(){
+            let urlParams = new URLSearchParams(window.location.search);
+
+            if(urlParams.has('id')){
+                 let idBarber= Number(urlParams.get('id'));
+                  this.editMode(idBarber);
+            }
+                  
+
+                
+     
+         },
+         formatToPTBR(date) {
+            return date.split("T")[0];
+        },
+      },
+      mounted(){
+          this.getQueryString();
+      }
+    });
+</script>

@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Cadastro de Barbeiros";
+}
+<div id="ListBarber">
+       <div class="container">
+          <div class="row">
+              <h1>Lista de Barbeiros</h1>
+          </div>
+          <div class="row">
+              <table>
+                <tr>
+                    <td>Id</td>
+                    <td>Nome</td>
+                    <td>E-mail</td>
+                    <td>Data de nascimento</td>
+                    <td>cpf</td>
+                </tr>
+                <tr v-for="barber in barbers" :key="barber.id">
+                    <td>{{barber.id}}</td>
+                    <td>{{barber.name}}</td>
+                    <td>{{barber.email}}</td>
+                    <td>{{barber.dateOfBirth}}</td>
+                    <td>{{barber.cpf}}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditBarber(barber.id)">Editar</button>
+                        <button type="button" class="btn btn-danger" style="color:white;" v-on:Click="GetIdBarber(barber.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluír <i class="fa-solid fa-trash"> </i></button>
+                    </td>
+                </tr>
+              </table>
+
+          </div>
+       </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir ?</h1>
+                    <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedBarber()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja excluir esse Barbeiro ? 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedBarber()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="DeleteBarber()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+   listBarber = new Vue({
+        el: '#ListBarber',
+      data() {
+        return {
+              barbers:[],
+            teste:'ggplayer',
+            possibleExcludedCustomer : 0,
+        };
+      },
+      methods: {
+        ListAllBarbers() {
+             axios.post('/Barber/ListAllBarbers')
+            .then(response => {
+                    this.barbers = response.data;
+              console.log("A chamada foi um sucesso !!");
+            })
+            .catch(error => {
+              console.error('Erro ao  cadastrar:', error);
+            });
+        },
+         EditBarber(idBarber){
+                   window.location.href = "/Barber/RegisterBarber?id="+ idBarber;
+        },
+        DeleteBarber() {
+              const idBarber = this.possibleExcludedCustomer;
+                axios.post('/Barber/DeleteBarber',idBarber,
+              {
+               headers: {
+               'Content-Type': 'application/json'
+             }})
+             .then(response => {
+                     this.barbers = response.data;
+                      this.ListAllBarbers();
+               console.log("A chamada foi um sucesso !!");
+             })
+             .catch(error => {
+               console.error('Erro ao  cadastrar:', error);
+             });
+         },
+          GetIdBarber(idBarber)
+         {
+              this.possibleExcludedCustomer = idBarber;
+         },
+          ResetPossibleDeletedBarber(){
+             this.possibleExcludedCustomer = 0;
+         },
+      },
+       mounted() {
+           this.ListAllBarbers();
+           const modalElement = this.$refs.modal;
+              modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedBarber());
+        },
+    });
+</script>

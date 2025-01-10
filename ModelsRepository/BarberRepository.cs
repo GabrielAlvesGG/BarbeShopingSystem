@@ -4,9 +4,9 @@ using MySqlX.XDevAPI;
 
 namespace BarberShopSystem.Models
 {
-    public class ClientRepository
+    public class BarberRepository
     {
-        public List<Client> ListAllClient()
+        public List<Barber> ListAllBarber()
         {
             try
             {
@@ -14,14 +14,14 @@ namespace BarberShopSystem.Models
                 
                 connection.Open();
 
-                var command = new MySqlCommand("SELECT * FROM client", connection);
+                var command = new MySqlCommand("SELECT * FROM Barber", connection);
                 var reader = command.ExecuteReader();
 
-                List<Client> client = new List<Client>();
+                List<Barber> Barber = new List<Barber>();
 
                 while (reader.Read())
                 {
-                    client.Add(new Client
+                    Barber.Add(new Barber
                     {
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
@@ -33,7 +33,7 @@ namespace BarberShopSystem.Models
                     });
                 }
                 connection.Close();
-                return client;
+                return Barber;
             }
             catch (Exception ex)
             {
@@ -42,17 +42,17 @@ namespace BarberShopSystem.Models
             }
             
         }
-        public void InsertClient(Client client)
+        public void InsertBarber(Barber Barber)
         {
             try
             {
                 MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
                 connection.Open();
                 string sqlCommand = string.Empty;
-                if (client.Id == 0)
-                    sqlCommand = $"Insert into Client (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
+                if (Barber.Id == 0)
+                    sqlCommand = $"Insert into Barber (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({Barber.Id}, '{Barber.Name}', '{Barber.Email}','{Barber.cpf}', '{Barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{Barber.PassWord}', '{Barber.Phone}')";
                 else
-                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', cpf='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
+                    sqlCommand = $"UPDATE Barber SET name='{Barber.Name}', email='{Barber.Email}', cpf='{Barber.cpf}', dateOfBirth='{Barber.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{Barber.PassWord}', Phone='{Barber.Phone}' WHERE Id={Barber.Id};";
                                                                                                                                                                   
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
@@ -64,7 +64,7 @@ namespace BarberShopSystem.Models
                 throw;
             }
         }
-        public Client GetClient(int idOldClient)
+        public Barber GetBarber(int idOldBarber)
         {
             try
             {
@@ -72,14 +72,14 @@ namespace BarberShopSystem.Models
 
                 connection.Open();
 
-                var command = new MySqlCommand($"SELECT * FROM client WHERE id={idOldClient}", connection);
+                var command = new MySqlCommand($"SELECT * FROM Barber WHERE id={idOldBarber}", connection);
                 var reader = command.ExecuteReader();
 
-                Client client = new Client();
+                Barber Barber = new Barber();
 
                 while (reader.Read())
                 {
-                    client = new Client
+                    Barber = new Barber
                     {
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
@@ -91,7 +91,7 @@ namespace BarberShopSystem.Models
                     };
                 }
                 connection.Close();
-                return client;
+                return Barber;
             }
             catch (Exception ex)
             {
@@ -100,7 +100,7 @@ namespace BarberShopSystem.Models
             }
         }
 
-        public void DeleteClient(int idClient)
+        public void DeleteBarber(int idBarber)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace BarberShopSystem.Models
                 connection.Open();
                 string sqlCommand = string.Empty;
               
-                sqlCommand = $"DELETE FROM CLIENT WHERE Id={idClient}";
+                sqlCommand = $"DELETE FROM Barber WHERE Id={idBarber}";
 
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();

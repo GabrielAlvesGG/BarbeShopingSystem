@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberShopSystem.Controllers
 {
-    public class ClientController : Controller
+    public class BarberController : Controller
     {
-        public IActionResult RegisterClient()
+        public IActionResult RegisterBarber()
         {
             return View();
         }
-        public IActionResult ListClients()
+        public IActionResult ListBarber()
         {
             return View();
         }
 
-        public void InsertClient([FromBody] Client client)
+        public void InsertBarber([FromBody] Barber barber)
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                clientRepository.InsertClient(client);
+                BarberRepository barberRepository = new BarberRepository();
+                barberRepository.InsertBarber(barber);
             }
             catch (Exception ex)
             {
@@ -29,13 +29,13 @@ namespace BarberShopSystem.Controllers
                 throw;
             }
         }
-        public List<Client> ListAllClients()
+        public List<Barber> ListAllBarbers()
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                List<Client> allClients = clientRepository.ListAllClient();
-                return allClients;
+                BarberRepository barberRepository = new BarberRepository();
+                List<Barber> allBarbers = barberRepository.ListAllBarber();
+                return allBarbers;
             }
             catch (Exception ex)
             {
@@ -44,13 +44,13 @@ namespace BarberShopSystem.Controllers
             }
         }
 
-        public Client EditClient([FromBody] int idOldClient)
+        public Barber EditBarber([FromBody] int idOldBarber)
         {
             try
             {
-               ClientRepository clientRepository = new ClientRepository();
+               BarberRepository barberRepository = new BarberRepository();
 
-               return clientRepository.GetClient(idOldClient);
+               return barberRepository.GetBarber(idOldBarber);
 
             }
             catch (Exception ex)
@@ -59,12 +59,12 @@ namespace BarberShopSystem.Controllers
                 throw;
             }
         }
-        public void DeleteClient([FromBody] int idClient)
+        public void DeleteBarber([FromBody] int idBarber)
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                clientRepository.DeleteClient(idClient);
+                BarberRepository barberRepository = new BarberRepository();
+                barberRepository.DeleteBarber(idBarber);
             }
             catch (Exception ex)
             {
