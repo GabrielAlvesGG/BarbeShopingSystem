@@ -21,12 +21,34 @@
                     <td>{{client.email}}</td>
                     <td>{{client.dateOfBirth}}</td>
                     <td>{{client.cpf}}</td>
-                    <td><button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button>
-                        <button type="button" class="btn btn-info" style="color:white;" v-on:Click="DeleteClient(client.id)">Excluír</button></td>
+                    <td>
+                        <button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button>
+                        <button type="button" class="btn btn-danger" style="color:white;" v-on:Click="GetIdClient(client.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluír <i class="fa-solid fa-trash"> </i></button>
+                    </td>
                 </tr>
               </table>
+
           </div>
        </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir ?</h1>
+                    <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedClient()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja excluir esse cliente ? 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedClient()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="DeleteClient()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -37,6 +59,7 @@
         return {
             clients:[],
             teste:'ggplayer',
+            possibleExcludedCustomer : 0,
         };
       },
       methods: {
@@ -53,7 +76,8 @@
         EditClient(oldClient){
                window.location.href = "/Client/RegisterClient?id="+ oldClient.id;
         },
-            DeleteClient(idClient) {
+        DeleteClient() {
+             const idClient = this.possibleExcludedCustomer;
              axios.post('/Client/DeleteClient',idClient,
               {
                headers: {
@@ -68,9 +92,18 @@
                console.error('Erro ao  cadastrar:', error);
              });
          },
+         GetIdClient(idClient)
+         {
+             this.possibleExcludedCustomer = idClient;
+         },
+         ResetPossibleDeletedClient(){
+             this.possibleExcludedCustomer = 0;
+         },
       },
        mounted() {
           this.ListAllClients();
+           const modalElement = this.$refs.modal;
+             modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
         },
     });
 </script>
