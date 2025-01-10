@@ -69,7 +69,6 @@
                     this.barbers = response.data;
                          this.barbers.forEach(barber => {
                           barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
-                        console.log(formattedDate);
                     });
               console.log("A chamada foi um sucesso !!");
             })

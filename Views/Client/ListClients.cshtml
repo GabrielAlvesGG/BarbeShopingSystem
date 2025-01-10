@@ -67,6 +67,10 @@
            axios.post('/Client/ListAllClients')
             .then(response => {
                   this.clients = response.data;
+
+                            this.clients.forEach(client => {
+                               client.dateOfBirth = this.formatToPTBR(client.dateOfBirth);
+                     });
               console.log("A chamada foi um sucesso !!");
             })
             .catch(error => {
@@ -92,12 +96,16 @@
                console.error('Erro ao  cadastrar:', error);
              });
          },
-         GetIdClient(idClient)
+        GetIdClient(idClient)
          {
              this.possibleExcludedCustomer = idClient;
          },
-         ResetPossibleDeletedClient(){
+        ResetPossibleDeletedClient(){
              this.possibleExcludedCustomer = 0;
+         },
+        formatToPTBR(date) {
+             const [year, month, day] = date.split("T")[0].split("-");
+             return `${day}/${month}/${year}`;
          },
       },
        mounted() {
