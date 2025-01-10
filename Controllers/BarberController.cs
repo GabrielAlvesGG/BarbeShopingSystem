@@ -21,7 +21,7 @@ namespace BarberShopSystem.Controllers
             try
             {
                 BarberRepository barberRepository = new BarberRepository();
-                barberRepository.InsertBarber(barber);
+                barberRepository.InsertOrUpdateBarber(barber);
             }
             catch (Exception ex)
             {

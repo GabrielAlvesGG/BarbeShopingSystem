@@ -1,19 +1,18 @@
 ﻿using BarberShopSystem.Models;
+using BarberShopSystem.ModelsRepository;
 using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 
 namespace BarberShopSystem
 {
-    public class ClientRepository
+    public class ClientRepository : DataBaseRepostitory
     {
         public List<Client> ListAllClient()
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-
-                connection.Open();
+                MySqlConnection connection = GetConnection();
 
                 var command = new MySqlCommand("SELECT * FROM client", connection);
                 var reader = command.ExecuteReader();
@@ -47,8 +46,7 @@ namespace BarberShopSystem
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                connection.Open();
+                MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
                 if (client.Id == 0)
                     sqlCommand = $"Insert into Client (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
@@ -69,9 +67,7 @@ namespace BarberShopSystem
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-
-                connection.Open();
+                MySqlConnection connection = GetConnection();
 
                 var command = new MySqlCommand($"SELECT * FROM client WHERE id={idOldClient}", connection);
                 var reader = command.ExecuteReader();
@@ -105,8 +101,7 @@ namespace BarberShopSystem
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                connection.Open();
+                MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
 
                 sqlCommand = $"DELETE FROM CLIENT WHERE Id={idClient}";

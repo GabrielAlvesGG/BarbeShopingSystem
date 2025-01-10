@@ -67,6 +67,10 @@
              axios.post('/Barber/ListAllBarbers')
             .then(response => {
                     this.barbers = response.data;
+                         this.barbers.forEach(barber => {
+                          barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
+                        console.log(formattedDate);
+                    });
               console.log("A chamada foi um sucesso !!");
             })
             .catch(error => {
@@ -98,7 +102,11 @@
          },
           ResetPossibleDeletedBarber(){
              this.possibleExcludedCustomer = 0;
-         },
+             }, 
+        formatToPTBR(date) {
+            const [year, month, day] = date.split("T")[0].split("-");
+            return `${day}/${month}/${year}`; 
+        },
       },
        mounted() {
            this.ListAllBarbers();

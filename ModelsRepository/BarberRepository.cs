@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
+﻿using BarberShopSystem.ModelsRepository;
+using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 
 namespace BarberShopSystem.Models
 {
-    public class BarberRepository
+    public class BarberRepository : DataBaseRepostitory
     {
         public List<Barber> ListAllBarber()
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                
-                connection.Open();
+                MySqlConnection connection = GetConnection();
 
                 var command = new MySqlCommand("SELECT * FROM Barber", connection);
                 var reader = command.ExecuteReader();
@@ -42,12 +41,11 @@ namespace BarberShopSystem.Models
             }
             
         }
-        public void InsertBarber(Barber Barber)
+        public void InsertOrUpdateBarber(Barber Barber)
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                connection.Open();
+                MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
                 if (Barber.Id == 0)
                     sqlCommand = $"Insert into Barber (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({Barber.Id}, '{Barber.Name}', '{Barber.Email}','{Barber.cpf}', '{Barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{Barber.PassWord}', '{Barber.Phone}')";
@@ -68,10 +66,9 @@ namespace BarberShopSystem.Models
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
 
-                connection.Open();
-
+                MySqlConnection connection = GetConnection();
+                
                 var command = new MySqlCommand($"SELECT * FROM Barber WHERE id={idOldBarber}", connection);
                 var reader = command.ExecuteReader();
 
@@ -104,8 +101,8 @@ namespace BarberShopSystem.Models
         {
             try
             {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                connection.Open();
+                MySqlConnection connection = GetConnection();
+
                 string sqlCommand = string.Empty;
               
                 sqlCommand = $"DELETE FROM Barber WHERE Id={idBarber}";
