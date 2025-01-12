@@ -20,8 +20,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                clientRepository.InsertClient(client);
+                new ClientService().InsertClient(client);
             }
             catch (Exception ex)
             {
@@ -33,9 +32,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                List<Client> allClients = clientRepository.ListAllClient();
-                return allClients;
+                return new ClientService().ListAllClient(); ;
             }
             catch (Exception ex)
             {
@@ -48,10 +45,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-               ClientRepository clientRepository = new ClientRepository();
-
-               return clientRepository.GetClient(idOldClient);
-
+               return new ClientService().GetClient(idOldClient);
             }
             catch (Exception ex)
             {
@@ -63,8 +57,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
-                clientRepository.DeleteClient(idClient);
+                new ClientRepository().DeleteClient(idClient);
             }
             catch (Exception ex)
             {

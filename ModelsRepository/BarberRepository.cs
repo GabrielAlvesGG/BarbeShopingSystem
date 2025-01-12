@@ -1,7 +1,6 @@
-﻿using BarberShopSystem.ModelsRepository;
-using Microsoft.AspNetCore.Hosting.Server;
+﻿
+using BarberShopSystem.Data;
 using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
 
 namespace BarberShopSystem.Models
 {
@@ -41,16 +40,16 @@ namespace BarberShopSystem.Models
             }
             
         }
-        public void InsertOrUpdateBarber(Barber Barber)
+        public void InsertOrUpdateBarber(Barber barber)
         {
             try
             {
                 MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
-                if (Barber.Id == 0)
-                    sqlCommand = $"Insert into Barber (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({Barber.Id}, '{Barber.Name}', '{Barber.Email}','{Barber.cpf}', '{Barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{Barber.PassWord}', '{Barber.Phone}')";
+                if (barber.Id == 0)
+                    sqlCommand = $"Insert into Barber (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({barber.Id}, '{barber.Name}', '{barber.Email}','{barber.cpf}', '{barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{barber.PassWord}', '{barber.Phone}')";
                 else
-                    sqlCommand = $"UPDATE Barber SET name='{Barber.Name}', email='{Barber.Email}', cpf='{Barber.cpf}', dateOfBirth='{Barber.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{Barber.PassWord}', Phone='{Barber.Phone}' WHERE Id={Barber.Id};";
+                    sqlCommand = $"UPDATE Barber SET name='{barber.Name}', email='{barber.Email}', cpf='{barber.cpf}', dateOfBirth='{barber.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{barber.PassWord}', Phone='{barber.Phone}' WHERE Id={barber.Id};";
                                                                                                                                                                   
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();

@@ -1,4 +1,4 @@
-﻿namespace BarberShopSystem.Models
+﻿namespace BarberShopSystem
 {
     public class Barber
     {

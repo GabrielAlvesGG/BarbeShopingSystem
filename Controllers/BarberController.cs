@@ -20,8 +20,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                BarberRepository barberRepository = new BarberRepository();
-                barberRepository.InsertOrUpdateBarber(barber);
+                new BarberService().InsertOrUpdateBarber(barber);
             }
             catch (Exception ex)
             {
@@ -33,9 +32,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                BarberRepository barberRepository = new BarberRepository();
-                List<Barber> allBarbers = barberRepository.ListAllBarber();
-                return allBarbers;
+                return new BarberService().ListAllBarber(); 
             }
             catch (Exception ex)
             {
@@ -48,9 +45,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-               BarberRepository barberRepository = new BarberRepository();
-
-               return barberRepository.GetBarber(idOldBarber);
+                return new BarberService().GetBarber(idOldBarber);
 
             }
             catch (Exception ex)
@@ -63,8 +58,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                BarberRepository barberRepository = new BarberRepository();
-                barberRepository.DeleteBarber(idBarber);
+                new BarberService().DeleteBarber(idBarber);
             }
             catch (Exception ex)
             {

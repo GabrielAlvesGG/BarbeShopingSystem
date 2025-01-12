@@ -1,5 +1,5 @@
-﻿using BarberShopSystem.Models;
-using BarberShopSystem.ModelsRepository;
+﻿using BarberShopSystem.Data;
+using BarberShopSystem.Models;
 using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;

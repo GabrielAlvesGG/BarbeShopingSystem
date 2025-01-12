@@ -1,22 +1,22 @@
 ﻿using MySql.Data.MySqlClient;
 
-namespace BarberShopSystem.ModelsRepository
+namespace BarberShopSystem.Data
 {
     public class DataBaseRepostitory
     {
         public MySqlConnection GetConnection()
         {
-			try
-			{
+            try
+            {
                 MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
                 connection.Open();
                 return connection;
             }
-			catch (Exception ex)
-			{
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
-				throw ex;
-			}
+                throw ex;
+            }
         }
 
         public void GetAll()
