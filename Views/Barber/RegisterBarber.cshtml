@@ -70,8 +70,20 @@
               'Content-Type': 'application/json'
             }})
             .then(response => {
-              alert('Cadastro realizado com sucesso!');
-              //Ajustar mensagem e layout 
+                if(this.id ==0)
+                   Swal.fire({
+                          title: 'Sucesso!',
+                          text: 'Barbeiro cadastrado com sucesso!',
+                          icon: 'success',
+                          confirmButtonText: 'Ok'
+                      });
+                      else
+                        Swal.fire({
+                           title: 'Sucesso!',
+                            text: 'Barbeiro Editado com sucesso!',
+                           icon: 'success',
+                           confirmButtonText: 'Ok'
+                       });
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);

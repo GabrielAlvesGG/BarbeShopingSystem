@@ -38,6 +38,7 @@
 </div>
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
    Registerclient = new Vue({
       el: '#registerClient',
@@ -70,7 +71,21 @@
               'Content-Type': 'application/json'
             }})
             .then(response => {
-              alert('Cadastro realizado com sucesso!');
+                 if(this.id ==0)
+                  Swal.fire({
+                         title: 'Sucesso!',
+                         text: 'Cliente cadastrado com sucesso!',
+                         icon: 'success',
+                         confirmButtonText: 'Ok'
+                     });
+                     else
+                       Swal.fire({
+                          title: 'Sucesso!',
+                          text: 'Cliente Editado com sucesso!',
+                          icon: 'success',
+                          confirmButtonText: 'Ok'
+                      });
+
               //Ajustar mensagem e layout 
             })
             .catch(error => {
