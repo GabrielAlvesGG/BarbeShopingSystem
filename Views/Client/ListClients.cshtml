@@ -90,8 +90,8 @@
              }})
              .then(response => {
                    this.clients = response.data;
-                     this.ListAllClients();
-               console.log("A chamada foi um sucesso !!");
+                   this.ListAllClients();
+                   this.hiddenModelDelete();
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
@@ -108,6 +108,11 @@
              const [year, month, day] = date.split("T")[0].split("-");
              return `${day}/${month}/${year}`;
          },
+        hiddenModelDelete(){
+             const modalElement = document.getElementById('exampleModal');
+             const modal = bootstrap.Modal.getInstance(modalElement);
+             modal.hide();
+        }
       },
        mounted() {
           this.ListAllClients();
