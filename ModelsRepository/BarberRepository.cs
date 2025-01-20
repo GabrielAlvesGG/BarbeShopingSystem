@@ -24,7 +24,7 @@ namespace BarberShopSystem.Models
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
-                        cpf = reader.GetString("Cpf"),
+                        cpf = reader.GetString("CpfCnpj"),
                         DateOfBirth = reader.GetDateTime("DateOfBirth"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")
@@ -47,9 +47,9 @@ namespace BarberShopSystem.Models
                 MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
                 if (barber.Id == 0)
-                    sqlCommand = $"Insert into Barber (id, name, email, cpf, dateOfBirth, password, Phone) VALUES ({barber.Id}, '{barber.Name}', '{barber.Email}','{barber.cpf}', '{barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{barber.PassWord}', '{barber.Phone}')";
+                    sqlCommand = $"Insert into Barber (id, name, email, CpfCnpj, dateOfBirth, password, Phone) VALUES ({barber.Id}, '{barber.Name}', '{barber.Email}','{barber.cpf}', '{barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{barber.PassWord}', '{barber.Phone}')";
                 else
-                    sqlCommand = $"UPDATE Barber SET name='{barber.Name}', email='{barber.Email}', cpf='{barber.cpf}', dateOfBirth='{barber.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{barber.PassWord}', Phone='{barber.Phone}' WHERE Id={barber.Id};";
+                    sqlCommand = $"UPDATE Barber SET name='{barber.Name}', email='{barber.Email}', CpfCnpj='{barber.cpf}', dateOfBirth='{barber.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{barber.PassWord}', Phone='{barber.Phone}' WHERE Id={barber.Id};";
                                                                                                                                                                   
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
@@ -80,7 +80,7 @@ namespace BarberShopSystem.Models
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
-                        cpf = reader.GetString("Cpf"),
+                        cpf = reader.GetString("CpfCnpj"),
                         DateOfBirth = reader.GetDateTime("DateOfBirth"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")

@@ -20,6 +20,7 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\js\Helper.js
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\js\site.js
@@ -62,6 +63,7 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\jquery\LICENSE.txt
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\js\Helper.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map

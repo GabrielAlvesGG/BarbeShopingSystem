@@ -26,7 +26,7 @@ namespace BarberShopSystem
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
-                        cpf = reader.GetString("Cpf"),
+                        cpf = reader.GetString("CpfCnpj"),
                         DateOfBirth = reader.GetDateTime("DateOfBirth"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")
@@ -49,9 +49,9 @@ namespace BarberShopSystem
                 MySqlConnection connection = GetConnection();
                 string sqlCommand = string.Empty;
                 if (client.Id == 0)
-                    sqlCommand = $"Insert into Client (id, name, email, Cpf, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
+                    sqlCommand = $"Insert into Client (id, name, email, CpfCnpj, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
                 else
-                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', Cpf='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
+                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', CpfCnpj='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
 
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
@@ -81,7 +81,7 @@ namespace BarberShopSystem
                         Id = reader.GetInt32("Id"),
                         Name = reader.GetString("Name"),
                         Email = reader.GetString("Email"),
-                        cpf = reader.GetString("Cpf"),
+                        cpf = reader.GetString("CpfCnpj"),
                         DateOfBirth = reader.GetDateTime("DateOfBirth"),
                         PassWord = reader.GetString("PassWord"),
                         Phone = reader.GetString("Phone")

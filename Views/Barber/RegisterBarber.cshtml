@@ -16,7 +16,7 @@
               </div>
             <div class="col-4">
                 <label>Cpf:</label>
-                <input type="text" v-model="form.cpf" class="form-control" placeholder="Cpf" />
+                <input type="text" v-model="form.cpf" id="cpf-cnpj" class="form-control" placeholder="Cpf" />
                 <div class="alert alert-danger" v-show="messages.alertCpfInvalidade" role="alert">
                     O formato do cpf está incorreto !
                 </div>
@@ -56,6 +56,8 @@
 </div>
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Helper.js"></script>
 <script>
    RegisterBarber = new Vue({
       el: '#registerBarber',

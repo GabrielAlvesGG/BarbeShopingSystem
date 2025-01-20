@@ -116,3 +116,4 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberShopSystem.csproj.AssemblyReference.cache
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberSh.F026FA0F.Up2Date
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\bo370fvk4h-33657gsbe0.gz
