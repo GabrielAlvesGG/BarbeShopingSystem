@@ -59,7 +59,6 @@
       data() {
         return {
             clients:[],
-            teste:'ggplayer',
             possibleExcludedCustomer : 0,
         };
       },
@@ -92,6 +91,12 @@
                    this.clients = response.data;
                    this.ListAllClients();
                    this.hiddenModelDelete();
+                     Swal.fire({
+                              title: 'Sucesso!',
+                              text: 'Cliente Excluido com sucesso!',
+                              icon: 'success',
+                              confirmButtonText: 'Ok'
+                     });
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);

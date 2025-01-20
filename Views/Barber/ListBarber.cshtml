@@ -91,6 +91,12 @@
                   this.hiddenModelDelete();
                   this.barbers = response.data;
                   this.ListAllBarbers();
+                     Swal.fire({
+                               title: 'Sucesso!',
+                               text: 'Barbeiro Excluido com sucesso!',
+                               icon: 'success',
+                               confirmButtonText: 'Ok'
+                      });
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
