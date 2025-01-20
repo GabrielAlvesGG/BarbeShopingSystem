@@ -11,7 +11,7 @@
                    <label>Nome:</label>
                 <input type="text" v-model="form.name" class="form-control" placeholder="Nome" />
                 <div class="alert alert-danger" v-show="messages.alertNameInvalidade" role="alert">
-                    É necessário colocar o nome do usuário!
+                    É necessário preencher o nome do barbeiro!
                 </div>
               </div>
             <div class="col-4">
@@ -153,33 +153,29 @@
             return date.split("T")[0];
         },
         validateForm() {
-             let fullForm = true;
-             if(this.form.name === ""){
-                 this.messages.alertNameInvalidade = true;
-                 fullForm = false;
+            const fields = {
+                name: "alertNameInvalidade",
+                email: "alertEmailInvalidade",
+                password: "alertPasswordInvalidade",
+                phone: "alertPhoneInvalidade",
+                cpf: "alertCpfInvalidade",
+                dateOfBirth: "alertDateOfBirthInvalidade"
+            };
+
+            let fullForm = true;
+
+            for (const [field, alert] of Object.entries(fields)) {
+                if (this.form[field] === "") {
+                    this.messages[alert] = true;
+                    fullForm = false;
+                } else {
+                    this.messages[alert] = false; 
+                }
             }
-              if(this.form.email === ""){
-                  this.messages.alertEmailInvalidade = true;
-                 fullForm = false;
-            }
-             if(this.form.password === ""){
-                 this.messages.alertPasswordInvalidade = true;
-                 fullForm = false;
-            }
-             if(this.form.phone === ""){
-                  this.messages.alertPhoneInvalidade = true;
-                  fullForm = false;
-            }
-             if(this.form.cpf === ""){
-                 this.messages.alertCpfInvalidade = true;
-                 fullForm = false;
-            }
-             if(this.form.dateOfBirth === ""){
-                 this.messages.alertDateOfBirthInvalidade = true;
-                 fullForm = false;
-            }
+
             return fullForm;
         },
+
         resetValidateForm(){
              this.messages.alertNameInvalidade = false;
              this.messages.alertEmailInvalidade = false;
