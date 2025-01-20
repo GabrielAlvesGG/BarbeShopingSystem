@@ -37,7 +37,7 @@
             </div>
             <div class="col-4">
                 <label>Telefone:</label>
-                <input type="text" v-model="form.phone" class="form-control" placeholder="Telefone" />
+                <input type="text" v-model="form.phone" id="phone" class="form-control" placeholder="Telefone" />
                 <div class="alert alert-danger" v-show="messages.alertPhoneInvalidade" role="alert">
                     O campo telefone está incorreto! 
                 </div>
@@ -70,7 +70,7 @@
               id:0,
               name: '',
               email: '',
-              password: '',
+               password: '',
               cpf:'',
               dateOfBirth:'',
               phone:''
