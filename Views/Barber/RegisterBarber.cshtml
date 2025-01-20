@@ -9,27 +9,45 @@
               </div>
             <div class="col-4">
                    <label>Nome:</label>
-                <input type="text" v-model="name" class="form-control" placeholder="Nome" />
+                <input type="text" v-model="form.name" class="form-control" placeholder="Nome" />
+                <div class="alert alert-danger" v-show="messages.alertNameInvalidade" role="alert">
+                    É necessário colocar o nome do usuário!
+                </div>
               </div>
             <div class="col-4">
                 <label>Cpf:</label>
-                <input type="text" v-model="cpf" class="form-control" placeholder="Cpf" />
+                <input type="text" v-model="form.cpf" class="form-control" placeholder="Cpf" />
+                <div class="alert alert-danger" v-show="messages.alertCpfInvalidade" role="alert">
+                    O formato do cpf está incorreto !
+                </div>
             </div>
             <div class="col-4">
                 <label>E-mail:</label>
-                <input type="text" v-model="email" class="form-control" placeholder="E-mail" />
+                <input type="text" v-model="form.email" class="form-control" placeholder="E-mail" />
+                <div class="alert alert-danger" v-show="messages.alertEmailInvalidade" role="alert">
+                    O e-mail está incorreto !
+                </div>
             </div>
             <div class="col-4">
                 <label>Senha:</label>
-                <input type="password" class="form-control" v-model="password" placeholder="Senha" />
+                <input type="password" class="form-control" v-model="form.password" placeholder="Senha" />
+                <div class="alert alert-danger" v-show="messages.alertPasswordInvalidade" role="alert">
+                    está faltando prencher o campo senha!
+                </div>
             </div>
             <div class="col-4">
                 <label>Telefone:</label>
-                <input type="text" v-model="phone" class="form-control" placeholder="Telefone" />
+                <input type="text" v-model="form.phone" class="form-control" placeholder="Telefone" />
+                <div class="alert alert-danger" v-show="messages.alertPhoneInvalidade" role="alert">
+                    está faltando prencher o campo telefone!
+                </div>
             </div>
             <div class="col-4">
                 <label>Data de Nacimento:</label>
-                <input class="form-control" type="date" v-model="dateOfBirth" name="data_nascimento">
+                <input class="form-control" type="date" v-model="form.dateOfBirth" name="data_nascimento">
+                <div class="alert alert-danger" v-show="messages.alertDateOfBirthInvalidade" role="alert">
+                    Necessita de colocar a data de aniversário correta!
+                </div>
             </div>
             <input type="button" class="btn btn-success col-2" name="name" value="Cadastrar" v-on:Click="registerBarber" />
           </div>
@@ -43,86 +61,133 @@
       el: '#registerBarber',
       data() {
         return {
-            id:0,
-          name: '',
-          email: '',
-          password: '',
-          cpf:'',
-          dateOfBirth:'',
-          phone:''
+            form:{
+              id:0,
+              name: '',
+              email: '',
+              password: '',
+              cpf:'',
+              dateOfBirth:'',
+              phone:'',
+            },
+            messages: {
+                  alertNameInvalidade: false,
+                   alertEmailInvalidade: false,
+                  alertPasswordInvalidade: false,
+                  alertCpfInvalidade: false,
+                  alertDateOfBirthInvalidade: false,
+                  alertPhoneInvalidade :false,
+            }
         };
       },
       methods: 
       {
         registerBarber() {
-          const barber = {
-             Id:this.id,
-             Name: this.name,
-             Email: this.email,
-             Password: this.password,
-             Cpf: this.cpf,
-             DateOfBirth: this.dateOfBirth,
-             Phone: this.phone
-          };
+             this.resetValidateForm();
+            if(this.validateForm())
+            {
+                const barber = {
+                  Id:this.form.id,
+                  Name: this.form.name,
+                  Email: this.form.email,
+                  Password: this.form.password,
+                  Cpf: this.form.cpf,
+                  DateOfBirth: this.form.dateOfBirth,
+                  Phone: this.form.phone
+              };
 
-           axios.post('/Barber/InsertBarber', barber,{
-              headers: {
-              'Content-Type': 'application/json'
-            }})
-            .then(response => {
-                if(this.id ==0)
-                   Swal.fire({
-                          title: 'Sucesso!',
-                          text: 'Barbeiro cadastrado com sucesso!',
-                          icon: 'success',
-                          confirmButtonText: 'Ok'
-                      });
-                      else
-                        Swal.fire({
-                           title: 'Sucesso!',
-                            text: 'Barbeiro Editado com sucesso!',
-                           icon: 'success',
-                           confirmButtonText: 'Ok'
-                       });
-            })
-            .catch(error => {
-              console.error('Erro ao  cadastrar:', error);
-            });
+               axios.post('/Barber/InsertBarber', barber,{
+                  headers: {
+                  'Content-Type': 'application/json'
+                }})
+                .then(response => {
+                     if(this.form.id ==0)
+                       Swal.fire({
+                              title: 'Sucesso!',
+                              text: 'Barbeiro cadastrado com sucesso!',
+                              icon: 'success',
+                              confirmButtonText: 'Ok'
+                          });
+                          else
+                            Swal.fire({
+                               title: 'Sucesso!',
+                                text: 'Barbeiro Editado com sucesso!',
+                               icon: 'success',
+                               confirmButtonText: 'Ok'
+                           });
+                })
+                .catch(error => {
+                  console.error('Erro ao  cadastrar:', error);
+                });
+            
+            }
         },
-          editMode(idBarber){
+        editMode(idBarber){
                let idOldBarber= idBarber;
                 axios.post('/Barber/EditBarber', idOldBarber,{
                headers: {
                'Content-Type': 'application/json'
              }})
              .then(response => {
-                this.id = response.data.id;
-                this.name= response.data.name;
-                this.email= response.data.email;
-                this.password= response.data.passWord;
-                this.cpf= response.data.cpf;
-                this.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
-                this.phone= response.data.phone;
+                 this.form.id = response.data.id;
+                 this.form.name= response.data.name;
+                 this.form.email= response.data.email;
+                 this.form.password= response.data.passWord;
+                 this.form.cpf= response.data.cpf;
+                 this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
+                 this.form.phone= response.data.phone;
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
              });
          },
-         getQueryString(){
+        getQueryString(){
             let urlParams = new URLSearchParams(window.location.search);
 
             if(urlParams.has('id')){
                  let idBarber= Number(urlParams.get('id'));
                   this.editMode(idBarber);
             }
-                  
-
-                
-     
          },
-         formatToPTBR(date) {
+        formatToPTBR(date) {
             return date.split("T")[0];
         },
+        validateForm() {
+             let fullForm = true;
+             if(this.form.name === ""){
+                 this.messages.alertNameInvalidade = true;
+                 fullForm = false;
+            }
+              if(this.form.email === ""){
+                  this.messages.alertEmailInvalidade = true;
+                 fullForm = false;
+            }
+             if(this.form.password === ""){
+                 this.messages.alertPasswordInvalidade = true;
+                 fullForm = false;
+            }
+             if(this.form.phone === ""){
+                  this.messages.alertPhoneInvalidade = true;
+                  fullForm = false;
+            }
+             if(this.form.cpf === ""){
+                 this.messages.alertCpfInvalidade = true;
+                 fullForm = false;
+            }
+             if(this.form.dateOfBirth === ""){
+                 this.messages.alertDateOfBirthInvalidade = true;
+                 fullForm = false;
+            }
+            return fullForm;
+        },
+        resetValidateForm(){
+             this.messages.alertNameInvalidade = false;
+             this.messages.alertEmailInvalidade = false;
+             this.messages.alertPasswordInvalidade = false;
+             this.messages.alertPhoneInvalidade = false;
+             this.messages.alertCpfInvalidade = false;
+             this.messages.alertDateOfBirthInvalidade = false;
+        }
       },
       mounted(){
           this.getQueryString();
