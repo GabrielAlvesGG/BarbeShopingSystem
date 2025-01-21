@@ -2,8 +2,11 @@
     ViewData["Title"] = "Cadastro de Barbeiros";
 }
 <div id="ListBarber">
-       <div class="container">
-          <div class="row">
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+    <div class="container" v-show="showPropts.listShow"> 
+          <div class="row" >
               <h1>Lista de Barbeiros</h1>
           </div>
           <div class="row">
@@ -14,6 +17,7 @@
                     <td>E-mail</td>
                     <td>Data de nascimento</td>
                     <td>cpf</td>
+                    <td>phone</td>
                     <td></td>
                 </tr>
                 <tr v-for="barber in barbers" :key="barber.id">
@@ -22,6 +26,7 @@
                     <td>{{barber.email}}</td>
                     <td>{{barber.dateOfBirth}}</td>
                     <td>{{barber.cpf}}</td>
+                    <td>{{barber.phone}}</td>
                     <td>
                         <button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditBarber(barber.id)">Editar</button>
                         <button type="button" class="btn btn-danger" style="color:white;" v-on:Click="GetIdBarber(barber.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluír <i class="fa-solid fa-trash"> </i></button>
@@ -60,19 +65,22 @@
       data() {
         return {
               barbers:[],
-            teste:'ggplayer',
             possibleExcludedCustomer : 0,
+             showPropts: {
+                listShow: false,
+            }
         };
       },
       methods: {
         ListAllBarbers() {
+             this.showLoader();
              axios.post('/Barber/ListAllBarbers')
             .then(response => {
                     this.barbers = response.data;
                          this.barbers.forEach(barber => {
                           barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
                     });
-              console.log("A chamada foi um sucesso !!");
+               this.hideLoader();
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
@@ -82,6 +90,7 @@
                    window.location.href = "/Barber/RegisterBarber?id="+ idBarber;
         },
         DeleteBarber() {
+             this.showLoader();
               const idBarber = this.possibleExcludedCustomer;
                 axios.post('/Barber/DeleteBarber',idBarber,
               {
@@ -91,6 +100,7 @@
              .then(response => {
                   this.hiddenModelDelete();
                   this.barbers = response.data;
+                   this.hideLoader();
                   this.ListAllBarbers();
                      Swal.fire({
                                title: 'Sucesso!',
@@ -118,12 +128,22 @@
             const modalElement = document.getElementById('exampleModal');
             const modal = bootstrap.Modal.getInstance(modalElement);
             modal.hide();
-        }
+        },
+         showLoader() {
+               this.showPropts.listShow = false;
+              document.getElementById('loadingOverlay').style.display = 'flex';
+          },
+          hideLoader() {
+                this.showPropts.listShow = true;
+              document.getElementById('loadingOverlay').style.display = 'none';
+          },
       },
        mounted() {
+           this.showLoader();
            this.ListAllBarbers();
            const modalElement = this.$refs.modal;
-              modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedBarber());
+           modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedBarber());
+            this.hideLoader();
         },
     });
 </script>

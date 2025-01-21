@@ -59,7 +59,7 @@ namespace BarberShopSystem
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -92,7 +92,7 @@ namespace BarberShopSystem
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -113,7 +113,7 @@ namespace BarberShopSystem
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                throw ex;
+                throw;
             }
         }
     }
