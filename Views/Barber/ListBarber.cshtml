@@ -20,7 +20,7 @@
                     <td>phone</td>
                     <td></td>
                 </tr>
-                <tr v-for="barber in barbers" :key="barber.id">
+                <tr v-for="barber in  paginatedList()" :key="barber.id">
                     <td>{{barber.id}}</td>
                     <td>{{barber.name}}</td>
                     <td>{{barber.email}}</td>
@@ -33,7 +33,13 @@
                     </td>
                 </tr>
               </table>
-
+            <v-app>
+                <div clasas="text-center">
+                    <v-pagination v-model="page"
+                                  :length="4"
+                                  rounded="0"></v-pagination>
+                </div>
+            </v-app>
           </div>
        </div>
 
@@ -58,28 +64,34 @@
 </div>
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.js"></script>
 <script>
     
    listBarber = new Vue({
         el: '#ListBarber',
-      data() {
-        return {
-              barbers:[],
-            possibleExcludedCustomer : 0,
-             showPropts: {
-                listShow: false,
-            }
-        };
-      },
-      methods: {
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                barbers:[],
+                possibleExcludedCustomer : 0,
+                showPropts: {
+                    listShow: false,
+                },
+                page: 1,
+                itemsPerPage: 2,
+             };
+        },
+        methods: {
         ListAllBarbers() {
-             this.showLoader();
-             axios.post('/Barber/ListAllBarbers')
+            this.showLoader();
+            axios.post('/Barber/ListAllBarbers')
             .then(response => {
-                    this.barbers = response.data;
-                         this.barbers.forEach(barber => {
-                          barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
-                    });
+                this.barbers = response.data;
+                this.barbers.forEach(barber => {
+                    barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
+                });
+                this.totalPages();
                
             })
             .catch(error => {
@@ -140,6 +152,14 @@
                 this.showPropts.listShow = true;
               document.getElementById('loadingOverlay').style.display = 'none';
           },
+             totalPages() {
+              return Math.ceil(this.barbers.length / this.itemsPerPage);
+         },
+         paginatedList() {
+                 const start = (this.page - 1) * this.itemsPerPage;
+                 const end = start + this.itemsPerPage;
+                  return this.barbers.slice(start, end);
+         },
       },
        mounted() {
            this.showLoader();
