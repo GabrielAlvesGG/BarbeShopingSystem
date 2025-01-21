@@ -20,7 +20,7 @@
                     <td>phone</td>
                     <td></td>
                 </tr>
-                <tr v-for="client in clients" :key="client.id">
+                <tr v-for="client in paginatedList()" :key="client.id">
                     <td>{{client.id}}</td>
                     <td>{{client.name}}</td>
                     <td>{{client.email}}</td>
@@ -33,7 +33,13 @@
                     </td>
                 </tr>
               </table>
-
+            <v-app>
+              <div clasas="text-center">
+                    <v-pagination v-model="page"
+                                  :length="4"
+                                  rounded="0"></v-pagination>
+              </div>
+            </v-app>
           </div>
        </div>
 
@@ -58,16 +64,21 @@
 </div>
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.js"></script>
 <script>
    listClient = new Vue({
        el: '#ListClients',
+        vuetify: new Vuetify(),
       data() {
         return {
             clients:[],
             possibleExcludedCustomer : 0,
             showPropts: {
                 listShow: false,
-            }
+            },
+             page: 1,
+             itemsPerPage: 2, 
         };
       },
       methods: {
@@ -75,19 +86,17 @@
              this.showLoader();
            axios.post('/Client/ListAllClients')
             .then(response => {
-                  this.clients = response.data;
-
-                            this.clients.forEach(client => {
-                               client.dateOfBirth = this.formatToPTBR(client.dateOfBirth);
-                     });
-                 
+                this.clients = response.data;
+                this.clients.forEach(client => {
+                    client.dateOfBirth = this.formatToPTBR(client.dateOfBirth);
+                });
+                 this.totalPages();
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
             })
               .finally(function () {
                   listClient.hideLoader();
-
               });
         },
         EditClient(oldClient){
@@ -142,6 +151,14 @@
         hideLoader() {
             this.showPropts.listShow = true;
             document.getElementById('loadingOverlay').style.display = 'none';
+        },
+        totalPages() {
+            return Math.ceil(this.clients.length / this.itemsPerPage);
+        },
+        paginatedList() {
+                const start = (this.page - 1) * this.itemsPerPage;
+                const end = start + this.itemsPerPage;
+                return this.clients.slice(start, end);
         },
       },
        mounted() {
