@@ -2,7 +2,10 @@
     ViewData["Title"] = "Cadastro de Cliente";
 }
 <div id="ListClients">
-       <div class="container">
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+       <div class="container" v-show="showPropts.listShow">
           <div class="row">
               <h1>Lista de Clientes</h1>
           </div>
@@ -14,6 +17,7 @@
                     <td>E-mail</td>
                     <td>Data de nascimento</td>
                     <td>cpf</td>
+                    <td>phone</td>
                     <td></td>
                 </tr>
                 <tr v-for="client in clients" :key="client.id">
@@ -22,6 +26,7 @@
                     <td>{{client.email}}</td>
                     <td>{{client.dateOfBirth}}</td>
                     <td>{{client.cpf}}</td>
+                    <td>{{client.phone}}</td>
                     <td>
                         <button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditClient(client)">Editar</button>
                         <button type="button" class="btn btn-danger" style="color:white;" v-on:Click="GetIdClient(client.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluír <i class="fa-solid fa-trash"> </i></button>
@@ -60,10 +65,14 @@
         return {
             clients:[],
             possibleExcludedCustomer : 0,
+            showPropts: {
+                listShow: false,
+            }
         };
       },
       methods: {
         ListAllClients() {
+             this.showLoader();
            axios.post('/Client/ListAllClients')
             .then(response => {
                   this.clients = response.data;
@@ -71,7 +80,7 @@
                             this.clients.forEach(client => {
                                client.dateOfBirth = this.formatToPTBR(client.dateOfBirth);
                      });
-              console.log("A chamada foi um sucesso !!");
+                 this.hideLoader();
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
@@ -81,6 +90,7 @@
                window.location.href = "/Client/RegisterClient?id="+ oldClient.id;
         },
         DeleteClient() {
+             this.showLoader();
              const idClient = this.possibleExcludedCustomer;
              axios.post('/Client/DeleteClient',idClient,
               {
@@ -91,6 +101,7 @@
                    this.clients = response.data;
                    this.ListAllClients();
                    this.hiddenModelDelete();
+                   this.hideLoader();
                      Swal.fire({
                               title: 'Sucesso!',
                               text: 'Cliente Excluido com sucesso!',
@@ -117,12 +128,22 @@
              const modalElement = document.getElementById('exampleModal');
              const modal = bootstrap.Modal.getInstance(modalElement);
              modal.hide();
-        }
+        },
+        showLoader() {
+            this.showPropts.listShow = false;
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        },
+        hideLoader() {
+            this.showPropts.listShow = true;
+            document.getElementById('loadingOverlay').style.display = 'none';
+        },
       },
        mounted() {
+          this.showLoader();
           this.ListAllClients();
-           const modalElement = this.$refs.modal;
-             modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
+          const modalElement = this.$refs.modal;
+          modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
+          this.hideLoader();
         },
     });
 </script>
