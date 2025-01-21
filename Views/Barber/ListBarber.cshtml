@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Cadastro de Barbeiros";
 }
-<div id="ListBarber">
+<div id="ListBarber" v-cloak>
     <div class="overlay" id="loadingOverlay" style="display: none;">
         <div class="loader"></div>
     </div>
@@ -80,10 +80,13 @@
                          this.barbers.forEach(barber => {
                           barber.dateOfBirth = this.formatToPTBR(barber.dateOfBirth);
                     });
-               this.hideLoader();
+               
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
+            })
+            .finally(function(){
+                listBarber.hideLoader();
             });
         },
          EditBarber(idBarber){
@@ -143,7 +146,6 @@
            this.ListAllBarbers();
            const modalElement = this.$refs.modal;
            modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedBarber());
-           this.hideLoader();
         },
     });
 </script>

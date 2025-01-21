@@ -66,6 +66,9 @@ body {
         transform: rotate(360deg);
     }
 }
+[v-cloak] {
+    display: none;
+}
 
 
 /* termina as estilizações personalizadas */

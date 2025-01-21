@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Cadastro de Cliente";
 }
-<div id="ListClients">
+<div id="ListClients" v-cloak>
     <div class="overlay" id="loadingOverlay" style="display: none;">
         <div class="loader"></div>
     </div>
@@ -80,11 +80,15 @@
                             this.clients.forEach(client => {
                                client.dateOfBirth = this.formatToPTBR(client.dateOfBirth);
                      });
-                 this.hideLoader();
+                 
             })
             .catch(error => {
               console.error('Erro ao  cadastrar:', error);
-            });
+            })
+              .finally(function () {
+                  listClient.hideLoader();
+
+              });
         },
         EditClient(oldClient){
                window.location.href = "/Client/RegisterClient?id="+ oldClient.id;
@@ -101,7 +105,7 @@
                    this.clients = response.data;
                    this.ListAllClients();
                    this.hiddenModelDelete();
-                   this.hideLoader();
+                   
                      Swal.fire({
                               title: 'Sucesso!',
                               text: 'Cliente Excluido com sucesso!',
@@ -111,6 +115,8 @@
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
+             }).finally(function (){
+               listClient.hideLoader();
              });
          },
         GetIdClient(idClient)
@@ -143,7 +149,6 @@
           this.ListAllClients();
           const modalElement = this.$refs.modal;
           modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
-          this.hideLoader();
         },
     });
 </script>

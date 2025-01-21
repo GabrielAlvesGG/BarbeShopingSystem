@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Cadastro de Barbeiro";
 }
-<div id="registerBarber">
+<div id="registerBarber" v-cloak>
     <div class="overlay" id="loadingOverlay" style="display: none;">
         <div class="loader"></div>
     </div>
@@ -146,10 +146,11 @@
                  this.form.cpf= response.data.cpf;
                  this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
                  this.form.phone= response.data.phone;
-                 this.hideLoader();
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
+             }).finally(function (){
+                 RegisterBarber.hideLoader();
              });
          },
         getQueryString(){
@@ -159,6 +160,10 @@
                  let idBarber= Number(urlParams.get('id'));
                   this.editMode(idBarber);
             }
+            else
+                this.hideLoader();
+
+            
          },
         formatToPTBR(date) {
             return date.split("T")[0];
@@ -207,7 +212,6 @@
       mounted(){
            this.showLoader();
            this.getQueryString();
-           this.hideLoader();
       }
     });
 </script>
