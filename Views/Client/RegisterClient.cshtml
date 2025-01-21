@@ -149,7 +149,7 @@
                  this.form.cpf= response.data.cpf;
                  this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
                  this.form.phone= response.data.phone;
-                  this.hideLoader();
+                 this.hideLoader();
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);

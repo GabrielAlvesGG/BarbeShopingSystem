@@ -2,7 +2,10 @@
     ViewData["Title"] = "Cadastro de Barbeiro";
 }
 <div id="registerBarber">
-       <div class="container">
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+    <div class="container" v-show="showPropts.formsShow">
           <div class="row">
               <div>
                   <h1>Cadastro de Barbeiros</h1>
@@ -79,12 +82,16 @@
                   alertCpfInvalidade: false,
                   alertDateOfBirthInvalidade: false,
                   alertPhoneInvalidade :false,
+            },
+            showPropts:{
+                formsShow: false,
             }
         };
       },
       methods: 
       {
         registerBarber() {
+             this.showLoader();
              this.resetValidateForm();
             if(this.validateForm())
             {
@@ -103,6 +110,7 @@
                   'Content-Type': 'application/json'
                 }})
                 .then(response => {
+                     this.hideLoader();
                      if(this.form.id ==0)
                        Swal.fire({
                               title: 'Sucesso!',
@@ -138,6 +146,7 @@
                  this.form.cpf= response.data.cpf;
                  this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
                  this.form.phone= response.data.phone;
+                 this.hideLoader();
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
@@ -185,10 +194,20 @@
              this.messages.alertPhoneInvalidade = false;
              this.messages.alertCpfInvalidade = false;
              this.messages.alertDateOfBirthInvalidade = false;
-        }
+        },
+        showLoader() {
+            this.showPropts.formsShow = false;
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        },
+        hideLoader() {
+            this.showPropts.formsShow = true;
+            document.getElementById('loadingOverlay').style.display = 'none';
+        },
       },
       mounted(){
-          this.getQueryString();
+           this.showLoader();
+           this.getQueryString();
+           this.hideLoader();
       }
     });
 </script>
