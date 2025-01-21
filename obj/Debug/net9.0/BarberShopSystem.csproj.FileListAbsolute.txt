@@ -17,7 +17,6 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\scopedcss\bundle\BarberShopSystem.styles.css
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\scopedcss\projectbundle\BarberShopSystem.bundle.scp.css
-C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\uym6fboowe-b9sayid5wm.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\pz9h6z65rf-61n19gt1b8.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\eh4e73yzgj-xtxxf3hu2r.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\elkb2kdlys-bqjiyaj88i.gz
@@ -116,4 +115,5 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberShopSystem.csproj.AssemblyReference.cache
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberSh.F026FA0F.Up2Date
-C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\bo370fvk4h-4i9ez4poy3.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\bo370fvk4h-ikn4q55kxt.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\uym6fboowe-c5x2m92hsa.gz

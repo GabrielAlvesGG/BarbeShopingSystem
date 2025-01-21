@@ -2,7 +2,11 @@
     ViewData["Title"] = "Cadastro de Cliente";
 }
 <div id="registerClient">
-       <div class="container">
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <div class="container" v-show="showPropts.formsShow">
           <div class="row">
               <div>
                   <h1>Cadastro de Clientes</h1>
@@ -82,13 +86,16 @@
                alertCpfInvalidade: false,
                alertDateOfBirthInvalidade: false,
                alertPhoneInvalidade :false,
+            },
+            showPropts:{
+                formsShow: false,
             }
         };
       },
       methods: 
       {
         registerClient() {
-
+            this.showLoader();
             this.resetValidateForm();
 
             if(this.validateForm()){
@@ -107,6 +114,7 @@
                   'Content-Type': 'application/json'
                 }})
                 .then(response => {
+                    this.hideLoader();
                       if(this.form.id ==0)
                       Swal.fire({
                              title: 'Sucesso!',
@@ -141,6 +149,7 @@
                  this.form.cpf= response.data.cpf;
                  this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
                  this.form.phone= response.data.phone;
+                  this.hideLoader();
              })
              .catch(error => {
                console.error('Erro ao  cadastrar:', error);
@@ -180,7 +189,14 @@
 
              return fullForm;
          },
-
+         showLoader() {
+             this.showPropts.formsShow = false;
+             document.getElementById('loadingOverlay').style.display = 'flex';
+         },
+         hideLoader() {
+              this.showPropts.formsShow = true;
+             document.getElementById('loadingOverlay').style.display = 'none';
+         },
          resetValidateForm(){
               this.messages.alertNameInvalidade = false;
               this.messages.alertEmailInvalidade = false;
@@ -191,7 +207,9 @@
          }
       },
       mounted(){
+          this.showLoader();
           this.getQueryString();
+          this.hideLoader();
       }
     });
 </script>
