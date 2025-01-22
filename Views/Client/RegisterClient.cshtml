@@ -54,7 +54,7 @@
                     Insira a data de nascimento corretamente ! 
                 </div>
             </div>
-            <input type="button" class="btn btn-success col-2" name="name" value="Cadastrar" v-on:Click="registerClient" />
+            <input type="button" class="btn btn-success col-2" name="name" value="Cadastrar" style="color:white" v-on:Click="registerClient" />
           </div>
         
        </div>
@@ -121,14 +121,20 @@
                              title: 'Sucesso!',
                              text: 'Cliente cadastrado com sucesso!',
                              icon: 'success',
-                             confirmButtonText: 'Ok'
+                             confirmButtonText: 'Ok',
+                             customClass: {
+                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                             }
                          });
                          else
                            Swal.fire({
                               title: 'Sucesso!',
                               text: 'Cliente Editado com sucesso!',
                               icon: 'success',
-                              confirmButtonText: 'Ok'
+                              confirmButtonText: 'Ok',
+                              customClass: {
+                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                              }
                           });
                 })
                 .catch(error => {

@@ -4,7 +4,7 @@ namespace BarberShopSystem.Data
 {
     public class DataBaseRepostitory
     {
-        public MySqlConnection GetConnection()
+        public static MySqlConnection GetConnection()
         {
             try
             {
@@ -16,19 +16,6 @@ namespace BarberShopSystem.Data
             {
                 Console.WriteLine(ex.ToString());
                 throw ex;
-            }
-        }
-
-        public void GetAll()
-        {
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
             }
         }
     }

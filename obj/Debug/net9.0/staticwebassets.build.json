@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TjmUOTCT/IHKxv25fAv6evswvEtL6UsIZBz2QOZDSoc=",
+  "Hash": "xA/Crj/hiAazYRy/krXUqUcIx0xvY5Lq6nDOxh8Qv6o=",
   "Source": "BarberShopSystem",
   "BasePath": "_content/BarberShopSystem",
   "Mode": "Default",
@@ -687,6 +687,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\il2lmmelb4-6h31kfu8vp.gz",
+      "SourceId": "BarberShopSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/BarberShopSystem",
+      "RelativePath": "lib/Swal/swal#[.{fingerprint=6h31kfu8vp}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "oumlxxp9ev",
+      "Integrity": "EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js"
     },
     {
       "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\jz5ka5i1lu-4v8eqarkd7.gz",
@@ -2766,6 +2787,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js",
+      "SourceId": "BarberShopSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\",
+      "BasePath": "_content/BarberShopSystem",
+      "RelativePath": "lib/Swal/swal#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6h31kfu8vp",
+      "Integrity": "JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\Swal\\swal.js"
     }
   ],
   "Endpoints": [
@@ -22218,6 +22260,304 @@
         {
           "Name": "integrity",
           "Value": "sha256-1HkjQSVuV0/ji/X/lGeDTHeagBS0BwopMrHDQuwqgtU="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.6h31kfu8vp.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\il2lmmelb4-6h31kfu8vp.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000050022510"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19990"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6h31kfu8vp"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/Swal/swal.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.6h31kfu8vp.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "79088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6h31kfu8vp"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/Swal/swal.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.6h31kfu8vp.js.gz",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\il2lmmelb4-6h31kfu8vp.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19990"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6h31kfu8vp"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/Swal/swal.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\il2lmmelb4-6h31kfu8vp.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000050022510"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19990"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "79088"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O+U="
+        }
+      ]
+    },
+    {
+      "Route": "lib/Swal/swal.js.gz",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\il2lmmelb4-6h31kfu8vp.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19990"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 22 Jan 2025 15:54:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EOTAmmMPs1aL80kxPavP7H7e+8oaHDPxyT+fBe6nh2g="
         }
       ]
     }

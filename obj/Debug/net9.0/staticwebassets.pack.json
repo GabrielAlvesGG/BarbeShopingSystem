@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\Swal\\swal.js",
+      "PackagePath": "staticwebassets\\lib\\Swal\\swal.js"
+    },
+    {
       "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },

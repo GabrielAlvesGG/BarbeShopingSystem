@@ -780,5 +780,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1117"},{"Name":"Content-Type","Value":"text/plain"},{"Name":"ETag","Value":"\u0022hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 06 Jan 2025 20:47:04 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/lib/Swal/swal.6h31kfu8vp.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\Swal\swal.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6h31kfu8vp"},{"Name":"integrity","Value":"sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O\u002BU="},{"Name":"label","Value":"_content/BarberShopSystem/lib/Swal/swal.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"79088"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O\u002BU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:54:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/lib/Swal/swal.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\Swal\swal.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O\u002BU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"79088"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022JihGcAzWR5ejmmqsXnJarjvtJVNlcPPe0TVaB5P8O\u002BU=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:54:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

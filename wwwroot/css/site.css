@@ -95,4 +95,15 @@ body {
         }
 /*Paginação com vue.js */
 
+/* Estilização dos alertas do swal.js*/
+
+.swal2-confirm.custom-confirm-button {
+    color: white !important; /* Garante que o texto seja branco */
+    background-color: #3085d6 !important; /* Ajusta a cor de fundo */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+/* Estilização dos alertas do swal.js*/
+
 /* termina as estilizações personalizadas */

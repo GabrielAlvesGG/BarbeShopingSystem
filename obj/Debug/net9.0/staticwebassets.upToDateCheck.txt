@@ -30,6 +30,7 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\Swal\swal.js
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
@@ -125,3 +126,4 @@ wwwroot\lib\jquery-validation\LICENSE.md
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\lib\Swal\swal.js
