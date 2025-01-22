@@ -1,4 +1,5 @@
 ﻿using BarberShopSystem.Data;
+using BarberShopSystem.Models;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 
@@ -6,11 +7,11 @@ namespace BarberShopSystem.ModelsRepository;
 
 public class LoginRepository : DataBaseRepostitory
 {
-    public static bool Validade(string login, string password)
+    public static Client GetClient(loginDto login)
     {
         MySqlConnection connection = GetConnection();
 
-        var command = new MySqlCommand($"SELECT * FROM client WHERE ( EMAIL='{login}') and PASSWORD='{password}'", connection);
+        var command = new MySqlCommand($"SELECT * FROM client WHERE ( EMAIL='{login.login}') and PASSWORD='{login.password}'", connection);
         var reader = command.ExecuteReader();
 
         Client client = null;
@@ -27,10 +28,8 @@ public class LoginRepository : DataBaseRepostitory
                 Phone = reader.GetString("Phone")
             };
         }
-        if (client != null)
-            return true;
-        else
-            return false;
+        
+            return client;
     }
     
 }

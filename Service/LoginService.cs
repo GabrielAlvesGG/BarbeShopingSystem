@@ -1,19 +1,26 @@
-﻿using BarberShopSystem.ModelsRepository;
+﻿using BarberShopSystem.Helpers;
+using BarberShopSystem.Models;
+using BarberShopSystem.ModelsRepository;
 
 namespace BarberShopSystem.Service;
 
 public class LoginService
 {
-    public bool LoginValidate(string login, string password)
+    public Client LoginValidate(loginDto login)
     {
 		try
 		{
-            return LoginRepository.Validade(login, password);
-		}
+            return LoginRepository.GetClient(login); ;
+
+        }
 		catch (Exception ex)
 		{
 			Console.WriteLine(ex.Message);
 			throw;
 		}
+    }
+    public bool IsUserLoggedIn()
+    {
+        return SessionHelper.UserId != 0 && SessionHelper.UserId != null;
     }
 }

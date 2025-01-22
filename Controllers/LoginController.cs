@@ -1,4 +1,5 @@
-﻿using BarberShopSystem.Models;
+﻿using BarberShopSystem.Helpers;
+using BarberShopSystem.Models;
 using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,20 @@ namespace BarberShopSystem.Controllers
     {
         public IActionResult Login()
         {
-            return View();
+            LoginService loginService = new LoginService();
+            if (loginService.IsUserLoggedIn())
+                return RedirectToAction("Index", "Home");
+            else
+                return View();
         }
         public bool Logar([FromBody] loginDto login)
         {
             LoginService loginService = new LoginService();
-            return loginService.LoginValidate(login.login, login.password);
+            Client clientLoggedIn = loginService.LoginValidate(login);
+            SessionHelper.UserId = clientLoggedIn.Id;
+            SessionHelper.UserName = clientLoggedIn.Name;
+
+            return loginService.IsUserLoggedIn(); 
         }
     }
 }
