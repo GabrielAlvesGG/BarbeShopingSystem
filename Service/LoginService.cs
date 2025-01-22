@@ -19,8 +19,5 @@ public class LoginService
 			throw;
 		}
     }
-    public bool IsUserLoggedIn()
-    {
-        return SessionHelper.UserId != 0 && SessionHelper.UserId != null;
-    }
+  
 }

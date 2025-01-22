@@ -9,8 +9,7 @@ namespace BarberShopSystem.Controllers
     {
         public IActionResult Login()
         {
-            LoginService loginService = new LoginService();
-            if (loginService.IsUserLoggedIn())
+            if (SessionHelper.IsUserLoggedIn())
                 return RedirectToAction("Index", "Home");
             else
                 return View();
@@ -22,7 +21,16 @@ namespace BarberShopSystem.Controllers
             SessionHelper.UserId = clientLoggedIn.Id;
             SessionHelper.UserName = clientLoggedIn.Name;
 
-            return loginService.IsUserLoggedIn(); 
+            return SessionHelper.IsUserLoggedIn(); 
+        }
+        public void Logout()
+        {
+            
+            SessionHelper.ClearSession();
+        }
+        public bool IsUserLoggedIn()
+        {
+            return SessionHelper.IsUserLoggedIn();
         }
     }
 }

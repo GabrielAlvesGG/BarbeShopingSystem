@@ -18,7 +18,9 @@
     <link href="https://cdn.jsdelivr.net/npm/@@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 </head>
 <body>
+    
     <header>
+        <div id="layout">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
                             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BarberShopSystem</a>
@@ -65,11 +67,13 @@
                             </ul>
                             <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success" type="button" v-on:click="Logout()" v-show="isLoggedIn">Sair </button>
+                            <button class="btn btn-outline-success" type="button" v-on:click="Login()" v-show="!isLoggedIn">Logar </button>
                             </form>
                         </div>
                     </div>
                 </nav>
+        </div>
                 @* </div> *@
             @* </div> *@
         @* </nav> *@
@@ -90,6 +94,45 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      var layout= new Vue({
+        el: '#layout',
+        data() {
+          return {
+
+            isLoggedIn: false,
+          };
+        },
+        methods: {
+            Logout(){
+                      axios.post('/Login/Logout')
+               .then(response => {
+                   window.location.href = "/Login/Login"
+               })
+               .catch(error => {
+                 console.error('Erro ao  cadastrar:', error);
+               });
+            },
+            userLoggedIn(){
+                               axios.post('/Login/IsUserLoggedIn')
+                 .then(response => {
+                     this.isLoggedIn = response.data;
+                 })
+                 .catch(error => {
+                   console.error('Erro ao  cadastrar:', error);
+                 });
+            },
+              Login(){  
+                     window.location.href = "/Login/Login"
+              },
+        },
+        mounted(){
+              this.userLoggedIn();
+        }
+      })
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

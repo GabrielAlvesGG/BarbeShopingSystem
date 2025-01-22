@@ -32,5 +32,9 @@ namespace BarberShopSystem.Helpers
         {
             Session.Clear();
         }
+        public static bool IsUserLoggedIn()
+        {
+            return SessionHelper.UserId != 0 && SessionHelper.UserId != null;
+        }
     }
 }
