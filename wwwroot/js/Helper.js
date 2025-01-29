@@ -1,27 +1,22 @@
 ﻿$(document).ready(function () {
     // Para CPF e CNPJ
-    $("#cpf-cnpj").on("input", function () {
-        var valor = $(this).val();
-        var tamanho = valor.length;
+    var input = $('#cpf-cnpj');
 
-        // Só muda a máscara quando o valor realmente mudar
-        if (tamanho < 11) {
-            if (!$(this).hasClass("cpf-mask")) {
-                $(this).mask("999.999.999-99");
-                $(this).addClass("cpf-mask");
-            }
+    input.on('input', function () {
+        var value = input.val().replace(/\D/g, ''); // Remove caracteres não numéricos
+        var caret = this.selectionStart; // Salva a posição do cursor
+
+        // Se ultrapassar 11 dígitos, aplica a máscara de CNPJ
+        if (value.length > 11) {
+            input.unmask().mask('00.000.000/0000-00');
         } else {
-            if (!$(this).hasClass("cnpj-mask")) {
-                $(this).mask("99.999.999/9999-99");
-                $(this).addClass("cnpj-mask");
-            }
+            input.unmask().mask('000.000.000-009'); // Mantém a máscara de CPF permitindo a transição
         }
+
+        // Restaura a posição do cursor
+        this.setSelectionRange(caret, caret);
     });
 
     // Para telefone
-    $("#phone").on("input", function () {  
-        var elem = this;
-        $(this).mask("(99)99999-9999");
-        elem.selectionStart = elem.selectionEnd = elem.value.length;
-    });
+    $("#phone").mask("(00) 00000-0000");
 });

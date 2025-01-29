@@ -6,53 +6,55 @@
         <div class="loader"></div>
     </div>
     <div class="container" v-show="showPropts.listShow"> 
-          <div class="row" >
-              <h1>Lista de Barbeiros</h1>
-          </div>
-          <div class="row">
-              <table class="table">
-                <tr>
-                    <td>Id</td>
-                    <td>Nome</td>
-                    <td>E-mail</td>
-                    <td>Data de nascimento</td>
-                    <td>cpf</td>
-                    <td>phone</td>
-                    <td></td>
-                </tr>
-                <tr v-for="barber in  paginatedList()" :key="barber.id">
-                    <td>{{barber.id}}</td>
-                    <td>{{barber.name}}</td>
-                    <td>{{barber.email}}</td>
-                    <td>{{barber.dateOfBirth}}</td>
-                    <td>{{barber.cpf}}</td>
-                    <td>{{barber.phone}}</td>
-                    <td>
-                        <button type="button" class="btn btn-info" style="color:white;" v-on:Click="EditBarber(barber.id)">Editar</button>
-                        <button type="button" class="btn btn-danger" style="color:white;" v-on:Click="GetIdBarber(barber.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluír <i class="fa-solid fa-trash"> </i></button>
-                    </td>
-                </tr>
-              </table>
+        <div class="row">
+            <h1>Lista de Barbeiros</h1>
+        </div>
+        <div class="row">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Data de nascimento</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="barber in paginatedList()" :key="barber.id">
+                        <td>{{barber.id}}</td>
+                        <td>{{barber.name}}</td>
+                        <td>{{barber.email}}</td>
+                        <td>{{barber.dateOfBirth}}</td>
+                        <td>{{barber.cpf}}</td>
+                        <td>{{barber.phone}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary text-white" v-on:Click="EditBarber(barber.id)">Editar</button>
+                            <button type="button" class="btn btn-danger text-white" v-on:Click="GetIdBarber(barber.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluir <i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <v-app>
-                <div clasas="text-center">
-                    <v-pagination v-model="page"
-                                  :length="4"
-                                  rounded="0"></v-pagination>
+                <div class="text-center">
+                    <v-pagination v-model="page" :length="totalPages()" rounded="0"></v-pagination>
                 </div>
             </v-app>
-          </div>
-       </div>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir ?</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir?</h1>
                     <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedBarber()" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Deseja excluir esse Barbeiro ? 
+                    Deseja excluir esse barbeiro?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedBarber()">Voltar</button>
@@ -67,7 +69,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.js"></script>
 <script>
-    
    listBarber = new Vue({
         el: '#ListBarber',
         vuetify: new Vuetify(),
@@ -79,7 +80,7 @@
                     listShow: false,
                 },
                 page: 1,
-                itemsPerPage: 2,
+                itemsPerPage: 10,
              };
         },
         methods: {

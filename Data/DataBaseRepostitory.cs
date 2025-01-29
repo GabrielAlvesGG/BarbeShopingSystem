@@ -1,22 +1,21 @@
 ﻿using MySql.Data.MySqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace BarberShopSystem.Data
 {
-    public class DataBaseRepostitory
+    public class DataBaseRepository
     {
-        public static MySqlConnection GetConnection()
+        private readonly IConfiguration _configuration;
+
+        public DataBaseRepository(IConfiguration configuration)
         {
-            try
-            {
-                MySqlConnection connection = new MySqlConnection("server=localhost;database=barbeshopsystem;uid=root;pwd=masterkey;");
-                connection.Open();
-                return connection;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw ex;
-            }
+            _configuration = configuration;
+        }
+
+        protected MySqlConnection GetConnection()
+        {
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            return new MySqlConnection(connectionString);
         }
     }
 }

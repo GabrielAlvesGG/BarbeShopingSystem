@@ -1,14 +1,19 @@
+using BarberShopSystem.Data;
+using BarberShopSystem.ModelsRepository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Adiciona suporte ao cache e sessões
-builder.Services.AddDistributedMemoryCache(); // Necessário para armazenar dados da sessão
-builder.Services.AddSession(); // Habilita sessões no projeto
-
-// Habilita o HttpContextAccessor para facilitar o uso em outras classes
+// Add support for caching and sessions
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+
+// Add database repository
+builder.Services.AddScoped<DataBaseRepository>();
+builder.Services.AddScoped<LoginRepository>();
 
 var app = builder.Build();
 
@@ -20,11 +25,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Habilita acesso a arquivos estáticos (CSS, JS, imagens, etc.)
+app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // Middleware de sessão deve ser adicionado aqui
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(

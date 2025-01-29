@@ -1,17 +1,21 @@
-﻿
-using BarberShopSystem.Data;
+﻿using BarberShopSystem.Data; // Adicione esta linha, substitua pelo namespace correto
 using MySql.Data.MySqlClient;
+using BarberShopSystem.ModelsRepository;
 
-namespace BarberShopSystem.Models
+namespace BarberShopSystem.ModelsRepository
 {
-    public class BarberRepository : DataBaseRepostitory
+    public class BarberRepository : DataBaseRepository // Corrija o nome do tipo
     {
+        public BarberRepository(IConfiguration configuration) : base(configuration)
+        {
+        }
+
         public List<Barber> ListAllBarber()
         {
             try
             {
                 MySqlConnection connection = GetConnection();
-
+                connection.Open();
                 var command = new MySqlCommand("SELECT * FROM Barber", connection);
                 var reader = command.ExecuteReader();
 
@@ -45,6 +49,7 @@ namespace BarberShopSystem.Models
             try
             {
                 MySqlConnection connection = GetConnection();
+                connection.Open();
                 string sqlCommand = string.Empty;
                 if (barber.Id == 0)
                     sqlCommand = $"Insert into Barber (id, name, email, CpfCnpj, dateOfBirth, password, Phone) VALUES ({barber.Id}, '{barber.Name}', '{barber.Email}','{barber.cpf}', '{barber.DateOfBirth.ToString("yyyy-MM-dd")}', '{barber.PassWord}', '{barber.Phone}')";
@@ -67,7 +72,8 @@ namespace BarberShopSystem.Models
             {
 
                 MySqlConnection connection = GetConnection();
-                
+                connection.Open();
+
                 var command = new MySqlCommand($"SELECT * FROM Barber WHERE id={idOldBarber}", connection);
                 var reader = command.ExecuteReader();
 
@@ -101,6 +107,7 @@ namespace BarberShopSystem.Models
             try
             {
                 MySqlConnection connection = GetConnection();
+                connection.Open();
 
                 string sqlCommand = string.Empty;
               
@@ -117,4 +124,4 @@ namespace BarberShopSystem.Models
             }
         }
     }
-}
+} 

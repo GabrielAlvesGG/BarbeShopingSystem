@@ -1,19 +1,24 @@
-﻿using BarberShopSystem.Data;
+﻿using BarberShopSystem.Data; // Adicione esta linha, substitua pelo namespace correto
 using BarberShopSystem.Models;
 using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
+using BarberShopSystem.ModelsRepository;
 
-namespace BarberShopSystem
+namespace BarberShopSystem.ModelsRepository
 {
-    public class ClientRepository : DataBaseRepostitory
+    public class ClientRepository : DataBaseRepository // Corrija o nome do tipo
     {
+        public ClientRepository(IConfiguration configuration) : base(configuration)
+        {
+        }
+
         public List<Client> ListAllClient()
         {
             try
             {
                 MySqlConnection connection = GetConnection();
-
+                connection.Open();
                 var command = new MySqlCommand("SELECT * FROM client", connection);
                 var reader = command.ExecuteReader();
 
@@ -47,6 +52,7 @@ namespace BarberShopSystem
             try
             {
                 MySqlConnection connection = GetConnection();
+                connection.Open();
                 string sqlCommand = string.Empty;
                 if (client.Id == 0)
                     sqlCommand = $"Insert into Client (id, name, email, CpfCnpj, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
@@ -68,7 +74,7 @@ namespace BarberShopSystem
             try
             {
                 MySqlConnection connection = GetConnection();
-
+                connection.Open();
                 var command = new MySqlCommand($"SELECT * FROM client WHERE id={idOldClient}", connection);
                 var reader = command.ExecuteReader();
 
@@ -102,6 +108,7 @@ namespace BarberShopSystem
             try
             {
                 MySqlConnection connection = GetConnection();
+                connection.Open();
                 string sqlCommand = string.Empty;
 
                 sqlCommand = $"DELETE FROM CLIENT WHERE Id={idClient}";

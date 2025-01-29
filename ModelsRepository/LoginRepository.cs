@@ -1,35 +1,54 @@
 ﻿using BarberShopSystem.Data;
-using BarberShopSystem.Models;
 using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
+using BarberShopSystem.Models;
+using System.Data;
 
-namespace BarberShopSystem.ModelsRepository;
 
-public class LoginRepository : DataBaseRepostitory
+namespace BarberShopSystem.ModelsRepository
 {
-    public static Client GetClient(loginDto login)
+
+    public class LoginRepository : DataBaseRepository
     {
-        MySqlConnection connection = GetConnection();
+        public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-        var command = new MySqlCommand($"SELECT * FROM client WHERE ( EMAIL='{login.login}') and PASSWORD='{login.password}'", connection);
-        var reader = command.ExecuteReader();
-
-        Client client = null;
-        while (reader.Read())
+        public Client GetClient(loginDto login) // Corrija o nome do tipo
         {
-            client = new Client
+            Client client = new Client();
+
+            try
             {
-                Id = reader.GetInt32("Id"),
-                Name = reader.GetString("Name"),
-                Email = reader.GetString("Email"),
-                cpf = reader.GetString("CpfCnpj"),
-                DateOfBirth = reader.GetDateTime("DateOfBirth"),
-                PassWord = reader.GetString("PassWord"),
-                Phone = reader.GetString("Phone")
-            };
-        }
-        
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    var command = new MySqlCommand("SELECT * FROM client WHERE EMAIL=@Email AND PASSWORD=@Password", connection);
+                    command.Parameters.AddWithValue("@Email", login.login);
+                    command.Parameters.AddWithValue("@Password", login.password);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            client = new Client
+                            {
+                                Id = reader.GetInt32("Id"),
+                                Name = reader.GetString("Name"),
+                                Email = reader.GetString("Email"),
+                                cpf = reader.GetString("CpfCnpj"),
+                                DateOfBirth = reader.GetDateTime("DateOfBirth"),
+                                PassWord = reader.GetString("PassWord"),
+                                Phone = reader.GetString("Phone")
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+
             return client;
+        }
     }
-    
 }

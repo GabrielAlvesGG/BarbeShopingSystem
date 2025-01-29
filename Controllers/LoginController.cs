@@ -23,6 +23,7 @@ namespace BarberShopSystem.Controllers
 
             return SessionHelper.IsUserLoggedIn(); 
         }
+
         public void Logout()
         {
             

@@ -1,4 +1,5 @@
 ﻿using BarberShopSystem.Models;
+using BarberShopSystem.ModelsRepository;
 using MySql.Data.MySqlClient;
 
 namespace BarberShopSystem
@@ -9,7 +10,11 @@ namespace BarberShopSystem
         {
             try
             {
-               new BarberRepository().InsertOrUpdateBarber(Barber);
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                new BarberRepository(configuration).InsertOrUpdateBarber(Barber);
             }
             catch (Exception ex)
             {
@@ -21,7 +26,11 @@ namespace BarberShopSystem
         {
             try
             {
-                return new  BarberRepository().ListAllBarber();
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                return new  BarberRepository(configuration).ListAllBarber();
             }
             catch (Exception ex)
             {
@@ -34,7 +43,11 @@ namespace BarberShopSystem
         {
             try
             {
-                return new BarberRepository().GetBarber(idOldBarber);
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                return new BarberRepository(configuration).GetBarber(idOldBarber);
             }
             catch (Exception ex)
             {
@@ -46,7 +59,11 @@ namespace BarberShopSystem
         {
             try
             {
-                new BarberRepository().DeleteBarber(idBarber); 
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                new BarberRepository(configuration).DeleteBarber(idBarber); 
             }
             catch (Exception ex)
             {

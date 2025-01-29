@@ -2,6 +2,7 @@
 using BarberShopSystem;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BarberShopSystem.ModelsRepository;
 
 namespace BarberShopSystem.Controllers
 {
@@ -57,7 +58,12 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                new ClientRepository().DeleteClient(idClient);
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+
+                new ClientRepository(configuration).DeleteClient(idClient);
             }
             catch (Exception ex)
             {

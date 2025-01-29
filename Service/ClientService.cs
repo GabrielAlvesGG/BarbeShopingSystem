@@ -1,14 +1,22 @@
-﻿using MySql.Data.MySqlClient;
+﻿using BarberShopSystem.ModelsRepository;
+using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace BarberShopSystem
 {
     public class ClientService
     {
+        
         public List<Client> ListAllClient()
         {
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+
+                ClientRepository clientRepository = new ClientRepository(configuration);
                 
                 return clientRepository.ListAllClient(); ;
             }
@@ -23,7 +31,11 @@ namespace BarberShopSystem
         {
             try
             {
-                new ClientRepository().InsertClient(client);
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                new ClientRepository(configuration).InsertClient(client);
             }
             catch (Exception ex)
             {
@@ -34,8 +46,12 @@ namespace BarberShopSystem
         public Client GetClient(int idOldClient)
         {
             try
-            {  
-                return new ClientRepository().GetClient(idOldClient);
+            {
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                return new ClientRepository(configuration).GetClient(idOldClient);
             }
             catch (Exception ex)
             {
@@ -47,7 +63,11 @@ namespace BarberShopSystem
         {
             try
             {
-               new ClientRepository().DeleteClient(idClient);
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfiguration configuration = builder.Build();
+                new ClientRepository(configuration).DeleteClient(idClient);
             }
             catch (Exception ex)
             {
