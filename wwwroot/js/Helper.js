@@ -13,7 +13,6 @@
             input.unmask().mask('000.000.000-009'); // Mantém a máscara de CPF permitindo a transição
         }
 
-        // Restaura a posição do cursor
         this.setSelectionRange(caret, caret);
     });
 
