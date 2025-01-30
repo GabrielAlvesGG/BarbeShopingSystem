@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Cadastro de Cliente";
 }
+
 <div id="registerClient" v-cloak>
     <div class="overlay" id="loadingOverlay" style="display: none;">
         <div class="loader"></div>
@@ -14,42 +15,42 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name" class="form-label">Nome:</label>
-                        <input type="text" v-model="form.name" class="form-control" id="name" placeholder="Nome" />
+                        <input type="text" v-model="form.name" class="form-control" id="name" placeholder="Nome">
                         <div class="alert alert-danger mt-2" v-show="messages.alertNameInvalidade" role="alert">
                             É necessário preencher o campo nome!
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="cpf" class="form-label">CPF:</label>
-                        <input type="text" v-model="form.cpf" id="cpf-cnpj" class="form-control" placeholder="CPF" />
+                        <label for="cpf" class="form-label">Cpf:</label>
+                        <input type="text" v-model="form.cpf" id="cpf" class="form-control" placeholder="Cpf">
                         <div class="alert alert-danger mt-2" v-show="messages.alertCpfInvalidade" role="alert">
-                            O formato do CPF está incorreto!
+                            O formato do cpf está incorreto!
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="email" class="form-label">E-mail:</label>
-                        <input type="email" v-model="form.email" id="email" class="form-control" placeholder="E-mail" />
+                        <input type="email" v-model="form.email" class="form-control" id="email" placeholder="E-mail">
                         <div class="alert alert-danger mt-2" v-show="messages.alertEmailInvalidade" role="alert">
                             O e-mail está incorreto!
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="password" class="form-label">Senha:</label>
-                        <input type="password" v-model="form.password" id="password" class="form-control" placeholder="Senha" />
+                        <input type="password" v-model="form.password" class="form-control" id="password" placeholder="Senha">
                         <div class="alert alert-danger mt-2" v-show="messages.alertPasswordInvalidade" role="alert">
                             Está faltando preencher o campo senha!
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="phone" class="form-label">Telefone:</label>
-                        <input type="text" v-model="form.phone" id="phone" class="form-control" placeholder="Telefone" />
+                        <input type="text" v-model="form.phone" id="phone" class="form-control" placeholder="Telefone">
                         <div class="alert alert-danger mt-2" v-show="messages.alertPhoneInvalidade" role="alert">
                             O campo telefone está incorreto!
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="dateOfBirth" class="form-label">Data de Nascimento:</label>
-                        <input type="date" v-model="form.dateOfBirth" id="dateOfBirth" class="form-control" />
+                        <input type="date" v-model="form.dateOfBirth" class="form-control" id="dateOfBirth">
                         <div class="alert alert-danger mt-2" v-show="messages.alertDateOfBirthInvalidade" role="alert">
                             Insira a data de nascimento corretamente!
                         </div>
@@ -62,12 +63,16 @@
         </div>
     </div>
 </div>
+
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/Helper.js"></script>
+
 <script>
-   RegisterClient = new Vue({
+
+   Registerclient = new Vue({
       el: '#registerClient',
       data() {
         return {
@@ -75,18 +80,18 @@
               id:0,
               name: '',
               email: '',
-              password: '',
+               password: '',
               cpf:'',
               dateOfBirth:'',
-              phone:'',
+              phone:''
             },
             messages: {
-                  alertNameInvalidade: false,
-                   alertEmailInvalidade: false,
-                  alertPasswordInvalidade: false,
-                  alertCpfInvalidade: false,
-                  alertDateOfBirthInvalidade: false,
-                  alertPhoneInvalidade :false,
+               alertNameInvalidade: false,
+               alertEmailInvalidade: false,
+               alertPasswordInvalidade: false,
+               alertCpfInvalidade: false,
+               alertDateOfBirthInvalidade: false,
+               alertPhoneInvalidade :false,
             },
             showPropts:{
                 formsShow: false,
@@ -96,11 +101,11 @@
       methods: 
       {
         registerClient() {
-             this.showLoader();
-             this.resetValidateForm();
-            if(this.validateForm())
-            {
-                const client = {
+            this.showLoader();
+            this.resetValidateForm();
+
+            if(this.validateForm()){
+              const client = {
                   Id:this.form.id,
                   Name: this.form.name,
                   Email: this.form.email,
@@ -110,40 +115,45 @@
                   Phone: this.form.phone
               };
 
-               axios.post('/Client/InsertClient', client, {
+               axios.post('/Client/InsertClient', client,{
                   headers: {
                   'Content-Type': 'application/json'
                 }})
                 .then(response => {
-                     this.hideLoader();
-                     if(this.form.id ==0)
-                       Swal.fire({
+                    this.hideLoader();
+                      if(this.form.id ==0)
+                      Swal.fire({
+                             title: 'Sucesso!',
+                             text: 'Cliente cadastrado com sucesso!',
+                             icon: 'success',
+                             confirmButtonText: 'Ok',
+                             customClass: {
+                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                             }
+                         });
+                         else
+                           Swal.fire({
                               title: 'Sucesso!',
-                              text: 'Cliente cadastrado com sucesso!',
+                              text: 'Cliente Editado com sucesso!',
                               icon: 'success',
-                              confirmButtonText: 'Ok'
+                              confirmButtonText: 'Ok',
+                              customClass: {
+                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                              }
                           });
-                          else
-                            Swal.fire({
-                               title: 'Sucesso!',
-                                text: 'Cliente Editado com sucesso!',
-                               icon: 'success',
-                               confirmButtonText: 'Ok'
-                           });
                 })
                 .catch(error => {
-                  console.error('Erro ao cadastrar:', error);
+                  console.error('Erro ao  cadastrar:', error);
                 });
-            
             }
             else
             {
                 this.hideLoader();
             }
         },
-        editMode(idClient){
-               let idOldClient= idClient;
-                axios.post('/Client/EditClient', idOldClient, {
+          editMode(idClient){
+               let idOldClient = idClient;
+                axios.post('/Client/EditClient', idOldClient,{
                headers: {
                'Content-Type': 'application/json'
              }})
@@ -155,72 +165,67 @@
                  this.form.cpf= response.data.cpf;
                  this.form.dateOfBirth= this.formatToPTBR(response.data.dateOfBirth);
                  this.form.phone= response.data.phone;
+                 this.hideLoader();
              })
              .catch(error => {
-               console.error('Erro ao cadastrar:', error);
-             }).finally(function (){
-                 RegisterClient.hideLoader();
+               console.error('Erro ao  cadastrar:', error);
              });
          },
-        getQueryString(){
+         getQueryString(){
             let urlParams = new URLSearchParams(window.location.search);
 
             if(urlParams.has('id')){
-                 let idClient= Number(urlParams.get('id'));
+                 let idClient = Number(urlParams.get('id'));
                   this.editMode(idClient);
             }
-            else
-                this.hideLoader();
-
-            
          },
-        formatToPTBR(date) {
+         formatToPTBR(date) {
             return date.split("T")[0];
         },
-        validateForm() {
-            const fields = {
-                name: "alertNameInvalidade",
-                email: "alertEmailInvalidade",
-                password: "alertPasswordInvalidade",
-                phone: "alertPhoneInvalidade",
-                cpf: "alertCpfInvalidade",
-                dateOfBirth: "alertDateOfBirthInvalidade"
-            };
+         validateForm() {
+             const fields = {
+                 name: "alertNameInvalidade",
+                 email: "alertEmailInvalidade",
+                 password: "alertPasswordInvalidade",
+                 phone: "alertPhoneInvalidade",
+                 cpf: "alertCpfInvalidade",
+                 dateOfBirth: "alertDateOfBirthInvalidade"
+             };
 
-            let fullForm = true;
+             let fullForm = true;
 
-            for (const [field, alert] of Object.entries(fields)) {
-                if (this.form[field] === "") {
-                    this.messages[alert] = true;
-                    fullForm = false;
-                } else {
-                    this.messages[alert] = false; 
-                }
-            }
+             for (const [field, alert] of Object.entries(fields)) {
+                 if (this.form[field] === "") {
+                     this.messages[alert] = true;
+                     fullForm = false;
+                 } else {
+                     this.messages[alert] = false;
+                 }
+             }
 
-            return fullForm;
-        },
-
-        resetValidateForm(){
-             this.messages.alertNameInvalidade = false;
-             this.messages.alertEmailInvalidade = false;
-             this.messages.alertPasswordInvalidade = false;
-             this.messages.alertPhoneInvalidade = false;
-             this.messages.alertCpfInvalidade = false;
-             this.messages.alertDateOfBirthInvalidade = false;
-        },
-        showLoader() {
-            this.showPropts.formsShow = false;
-            document.getElementById('loadingOverlay').style.display = 'flex';
-        },
-        hideLoader() {
-            this.showPropts.formsShow = true;
-            document.getElementById('loadingOverlay').style.display = 'none';
-        },
+             return fullForm;
+         },
+          showLoader() {
+             this.showPropts.formsShow = false;
+             document.getElementById('loadingOverlay').style.display = 'flex';
+         },
+         hideLoader() {
+              this.showPropts.formsShow = true;
+             document.getElementById('loadingOverlay').style.display = 'none';
+         },
+         resetValidateForm(){
+              this.messages.alertNameInvalidade = false;
+              this.messages.alertEmailInvalidade = false;
+              this.messages.alertPasswordInvalidade = false;
+              this.messages.alertPhoneInvalidade = false;
+              this.messages.alertCpfInvalidade = false;
+              this.messages.alertDateOfBirthInvalidade = false;
+         }
       },
       mounted(){
-           this.showLoader();
-           this.getQueryString();
+          this.showLoader();
+          this.getQueryString();
+          this.hideLoader();
       }
     });
 </script>

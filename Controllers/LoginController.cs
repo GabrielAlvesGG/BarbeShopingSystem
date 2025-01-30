@@ -19,7 +19,7 @@ namespace BarberShopSystem.Controllers
             LoginService loginService = new LoginService();
             Client clientLoggedIn = loginService.LoginValidate(login);
             SessionHelper.UserId = clientLoggedIn.Id;
-            SessionHelper.UserName = clientLoggedIn.Name;
+            SessionHelper.UserName = clientLoggedIn.Name == null ? string.Empty: clientLoggedIn.Name;
 
             return SessionHelper.IsUserLoggedIn(); 
         }

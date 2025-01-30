@@ -1,105 +1,128 @@
 ﻿@{
-    ViewData["Title"] = "Cadastro de Cliente";
+    ViewData["Title"] = "Login";
 }
 
-<div id="login">
-    <h1>Login</h1>
-    <form>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Login</label>
-            <input type="email" v-model="loginForm.login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div class="alert alert-danger" v-show="messages.alertLoginInvalidade" role="alert">
-                O campo de login está inválido. 
-            </div>
+<style>
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('@Url.Content("~/Images/PhotoLogin.png")') no-repeat center center fixed;
+        background-size: cover;
+        z-index: -1;
+    }
+    .login-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+    }
+</style>
+
+<div class="background"></div>
+
+<div id="login" class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+    <div class="login-container col-md-6 p-4 shadow-sm rounded">
+        <div class="col-12 text-center mb-4">
+            <h1>Login</h1>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" v-model="loginForm.password" class="form-control" id="exampleInputPassword1">
-            <div class="alert alert-danger" v-show="messages.alertPasswordInvalidade" role="alert">
-                O campo de senha está incorreto !
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Login</label>
+                <input type="email" v-model="loginForm.login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div class="alert alert-danger mt-2" v-show="messages.alertLoginInvalidade" role="alert">
+                    O campo de login está inválido.
+                </div>
             </div>
-        </div>
-      
-    </form>
-    <button type="button" class="btn btn-success" style="color:white;" v-on:Click="loginIn()">Entrar</button>
-    <div>
-        <button type="button" class="btn btn-primary" style="color:white;" v-on:Click="CreateNewClient()">Criar uma conta</button>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" v-model="loginForm.password" class="form-control" id="exampleInputPassword1">
+                <div class="alert alert-danger mt-2" v-show="messages.alertPasswordInvalidade" role="alert">
+                    O campo de senha está incorreto!
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-lg text-white" v-on:Click="loginIn">Entrar</button>
+            </div>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary btn-lg text-white" v-on:Click="CreateNewClient">Criar uma conta</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    var  login = new Vue({
-     el: '#login',
-    data() {
-      return {
-           loginForm: {
-               login: "",
-               password:"",
-           },
-           messages: {
-                alertLoginInvalidade: false,
-                alertPasswordInvalidade: false,
-           }
-      };
-    },
-    methods: {
-         loginIn() {
-             this.resetProptsForms();
+    var login = new Vue({
+        el: '#login',
+        data() {
+            return {
+                loginForm: {
+                    login: "",
+                    password: "",
+                },
+                messages: {
+                    alertLoginInvalidade: false,
+                    alertPasswordInvalidade: false,
+                }
+            };
+        },
+        methods: {
+            loginIn() {
+                this.resetProptsForms();
 
+                if (this.validateForm())
+                    return;
 
-             if(this.validateForm())
-                return ;
-
-             var login = {
-                  Login: this.loginForm.login,
-                  Password: this.loginForm.password,
-             }
-              axios.post('/Login/Logar', login,{
-                  headers: {
-                  'Content-Type': 'application/json'
-                }})
+                var login = {
+                    login: this.loginForm.login,
+                    password: this.loginForm.password,
+                }
+                axios.post('/Login/Logar', login, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 .then(response => {
-                    if(response.data)
+                    if (response.data)
                         window.location.href = "/Home/Index";
                     else
-                           Swal.fire({
-                              title: 'Login Invalido!',
-                              text: 'O seu login está incorreto!',
-                              icon: 'error',
-                              confirmButtonText: 'Ok',
-                               footer: 'Verifique os dados preenchidos'
-                          });
+                        Swal.fire({
+                            title: 'Login Invalido!',
+                            text: 'O seu login está incorreto!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                            footer: 'Verifique os dados preenchidos'
+                        });
                 })
                 .catch(error => {
-                  console.error('Erro ao  cadastrar:', error);
+                    console.error('Erro ao cadastrar:', error);
                 })
-                .finally(function(){
-                    
+                .finally(function () {
+                    // ...existing code...
                 });
-         },
-         validateForm(){
-             let formInValidate = false;
-             if(this.loginForm.login === ""){
-                this.messages.alertLoginInvalidade = true;
-                formInValidate = true;
-             }
-             if(this.loginForm.password === "")
-             {
-                 this.messages.alertPasswordInvalidade = true;
-                 formInValidate = true;
-             }
-             return formInValidate;
-        },
-        resetProptsForms(){
-            this.messages.alertLoginInvalidade =false;
-            this.messages.alertPasswordInvalidade = false
-        },
-        CreateNewClient(){
-            window.location.href = "/Client/RegisterClient";
+            },
+            validateForm() {
+                let formInValidate = false;
+                if (this.loginForm.login === "") {
+                    this.messages.alertLoginInvalidade = true;
+                    formInValidate = true;
+                }
+                if (this.loginForm.password === "") {
+                    this.messages.alertPasswordInvalidade = true;
+                    formInValidate = true;
+                }
+                return formInValidate;
+            },
+            resetProptsForms() {
+                this.messages.alertLoginInvalidade = false;
+                this.messages.alertPasswordInvalidade = false;
+            },
+            CreateNewClient() {
+                window.location.href = "/Client/RegisterClient";
+            }
         }
-        
-    }
-     })
+    })
 </script>

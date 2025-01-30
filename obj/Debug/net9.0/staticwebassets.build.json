@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7L7eetn5t+bTElBicycvd4IL6A4YxUIr9lMCwJp78t8=",
+  "Hash": "hRJTRPTHZv928keAf957ydUa+tDRw11XmHfvp7ccqtY=",
   "Source": "BarberShopSystem",
   "BasePath": "_content/BarberShopSystem",
   "Mode": "Default",
@@ -479,12 +479,12 @@
       "OriginalItemSpec": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-2qqxqseczp.gz",
+      "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-wt1176vk2r.gz",
       "SourceId": "BarberShopSystem",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/BarberShopSystem",
-      "RelativePath": "js/Helper#[.{fingerprint=2qqxqseczp}]?.js.gz",
+      "RelativePath": "js/Helper#[.{fingerprint=wt1176vk2r}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -493,8 +493,8 @@
       "RelatedAsset": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "q3u5lelxa2",
-      "Integrity": "Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA=",
+      "Fingerprint": "t3qibor4jb",
+      "Integrity": "V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js"
@@ -1487,6 +1487,27 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\PhotoLogin.png",
+      "SourceId": "BarberShopSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\",
+      "BasePath": "_content/BarberShopSystem",
+      "RelativePath": "Images/PhotoLogin#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "tp0gtv4zxf",
+      "Integrity": "oYC4EdzoCZFA4GQmi/IkM9+aPm2DJ/x7WWJlVXjbtA8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\PhotoLogin.png"
+    },
+    {
       "Identity": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js",
       "SourceId": "BarberShopSystem",
       "SourceType": "Discovered",
@@ -1501,8 +1522,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "2qqxqseczp",
-      "Integrity": "dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis=",
+      "Fingerprint": "wt1176vk2r",
+      "Integrity": "fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Helper.js"
@@ -4004,13 +4025,95 @@
       ]
     },
     {
-      "Route": "js/Helper.2qqxqseczp.js",
-      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-2qqxqseczp.gz",
+      "Route": "Images/PhotoLogin.png",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\PhotoLogin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1224766"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oYC4EdzoCZFA4GQmi/IkM9+aPm2DJ/x7WWJlVXjbtA8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 15:43:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oYC4EdzoCZFA4GQmi/IkM9+aPm2DJ/x7WWJlVXjbtA8="
+        }
+      ]
+    },
+    {
+      "Route": "Images/PhotoLogin.tp0gtv4zxf.png",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\PhotoLogin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1224766"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oYC4EdzoCZFA4GQmi/IkM9+aPm2DJ/x7WWJlVXjbtA8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 15:43:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tp0gtv4zxf"
+        },
+        {
+          "Name": "label",
+          "Value": "Images/PhotoLogin.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oYC4EdzoCZFA4GQmi/IkM9+aPm2DJ/x7WWJlVXjbtA8="
+        }
+      ]
+    },
+    {
+      "Route": "js/Helper.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-wt1176vk2r.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.002409638554"
+          "Quality": "0.003448275862"
         }
       ],
       "ResponseHeaders": [
@@ -4020,19 +4123,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "414"
+          "Value": "289"
         },
         {
           "Name": "ETag",
-          "Value": "\"Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA=\""
+          "Value": "\"V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -4048,26 +4151,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis=\""
+          "Value": "W/\"fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "2qqxqseczp"
-        },
-        {
-          "Name": "label",
-          "Value": "js/Helper.js"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis="
+          "Value": "sha256-fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg="
         }
       ]
     },
     {
-      "Route": "js/Helper.2qqxqseczp.js",
+      "Route": "js/Helper.js",
       "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -4077,7 +4172,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "716"
+          "Value": "519"
         },
         {
           "Name": "Content-Type",
@@ -4085,11 +4180,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis=\""
+          "Value": "\"fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg="
+        }
+      ]
+    },
+    {
+      "Route": "js/Helper.js.gz",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-wt1176vk2r.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "289"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI="
+        }
+      ]
+    },
+    {
+      "Route": "js/Helper.wt1176vk2r.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-wt1176vk2r.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.003448275862"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "289"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wt1176vk2r"
+        },
+        {
+          "Name": "label",
+          "Value": "js/Helper.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg="
+        }
+      ]
+    },
+    {
+      "Route": "js/Helper.wt1176vk2r.js",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "519"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4099,7 +4339,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "2qqxqseczp"
+          "Value": "wt1176vk2r"
         },
         {
           "Name": "label",
@@ -4107,13 +4347,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis="
+          "Value": "sha256-fBH+XVS2gFW7BuiAArIwOL7LYOAgv/3+RrF2Yt3k7kg="
         }
       ]
     },
     {
-      "Route": "js/Helper.2qqxqseczp.js.gz",
-      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-2qqxqseczp.gz",
+      "Route": "js/Helper.wt1176vk2r.js.gz",
+      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-wt1176vk2r.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4122,7 +4362,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "414"
+          "Value": "289"
         },
         {
           "Name": "Content-Type",
@@ -4130,11 +4370,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA=\""
+          "Value": "\"V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
+          "Value": "Thu, 30 Jan 2025 15:00:43 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4152,7 +4392,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "2qqxqseczp"
+          "Value": "wt1176vk2r"
         },
         {
           "Name": "label",
@@ -4160,144 +4400,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA="
-        }
-      ]
-    },
-    {
-      "Route": "js/Helper.js",
-      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-2qqxqseczp.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.002409638554"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "414"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis="
-        }
-      ]
-    },
-    {
-      "Route": "js/Helper.js",
-      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\js\\Helper.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "716"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x+AVsYGBQis="
-        }
-      ]
-    },
-    {
-      "Route": "js/Helper.js.gz",
-      "AssetFile": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\compressed\\bo370fvk4h-2qqxqseczp.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "414"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 30 Jan 2025 14:44:28 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-Whv4iP6t81LSg3D58V0NXaZ1KmJd+oDbMmVjyWtkiZA="
+          "Value": "sha256-V7DqvKIFTPuhdFfTW8eOSCW2uq8Dq2Ybsa3P/VsbIqI="
         }
       ]
     },
