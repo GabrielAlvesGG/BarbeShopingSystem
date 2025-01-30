@@ -40,13 +40,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Helper.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"2qqxqseczp"},{"Name":"integrity","Value":"sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis="},{"Name":"label","Value":"_content/BarberShopSystem/js/Helper.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"716"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Jan 2025 14:44:02 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"716"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Jan 2025 14:44:28 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/js/Helper.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\Helper.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"716"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Jan 2025 14:44:02 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"716"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022dtCOFY44xTzbb9BnIyJF8zRzSvrIqXM2x\u002BAVsYGBQis=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Jan 2025 14:44:28 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
