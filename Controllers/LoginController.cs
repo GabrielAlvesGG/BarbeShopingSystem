@@ -1,4 +1,5 @@
-﻿using BarberShopSystem.Helpers;
+﻿using BarberShopSyste.Models;
+using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,21 @@ namespace BarberShopSystem.Controllers
             else
                 return View();
         }
+
+        public IActionResult RecoverPassword()
+        {
+            if (SessionHelper.IsUserLoggedIn())
+                return RedirectToAction("Index", "Home");
+            else
+                return View();
+        }
         public bool Logar([FromBody] loginDto login)
         {
             LoginService loginService = new LoginService();
-            Client clientLoggedIn = loginService.LoginValidate(login);
-            SessionHelper.UserId = clientLoggedIn.Id;
-            SessionHelper.UserName = clientLoggedIn.Name == null ? string.Empty: clientLoggedIn.Name;
+            Usuario clientLoggedIn = loginService.LoginValidate(login);
+            SessionHelper.UserId = clientLoggedIn.id;
+            SessionHelper.UserName = clientLoggedIn.nome == null ? string.Empty: clientLoggedIn.nome;
+            SessionHelper.UserType = clientLoggedIn.tipoUsuario.ToString();
 
             return SessionHelper.IsUserLoggedIn(); 
         }
@@ -32,6 +42,18 @@ namespace BarberShopSystem.Controllers
         public bool IsUserLoggedIn()
         {
             return SessionHelper.IsUserLoggedIn();
+        }
+        public bool IsUserMaster()
+        {
+            try
+            {
+                return SessionHelper.IsMasterUser();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

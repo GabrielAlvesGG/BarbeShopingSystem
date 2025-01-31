@@ -1,4 +1,5 @@
-﻿using BarberShopSystem.Helpers;
+﻿using BarberShopSyste.Models;
+using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using System.Configuration;
@@ -8,7 +9,7 @@ namespace BarberShopSystem.Service;
 public class LoginService
 {
 
-    public Client LoginValidate(loginDto login)
+    public Usuario LoginValidate(loginDto login)
     {
         try
         {
@@ -18,7 +19,7 @@ public class LoginService
             IConfiguration configuration = builder.Build();
 
             LoginRepository loginRepository = new LoginRepository(configuration);
-            return  loginRepository.GetClient(login); ;
+            return  loginRepository.LoginValidate(login); ;
 
         }
 		catch (Exception ex)

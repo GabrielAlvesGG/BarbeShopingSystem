@@ -1,9 +1,11 @@
-﻿using BarberShopSystem.Data; // Adicione esta linha, substitua pelo namespace correto
+﻿using BarberShopSystem.Data; 
 using BarberShopSystem.Models;
 using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using BarberShopSystem.ModelsRepository;
+using BarberShopSyste.Models;
+using System.Threading;
 
 namespace BarberShopSystem.ModelsRepository
 {
@@ -13,52 +15,18 @@ namespace BarberShopSystem.ModelsRepository
         {
         }
 
-        public List<Client> ListAllClient()
+        public void InsertOrUpdateClient(Cliente client)
         {
             try
             {
-                MySqlConnection connection = GetConnection();
-                connection.Open();
-                var command = new MySqlCommand("SELECT * FROM client", connection);
-                var reader = command.ExecuteReader();
 
-                List<Client> client = new List<Client>();
-
-                while (reader.Read())
-                {
-                    client.Add(new Client
-                    {
-                        Id = reader.GetInt32("Id"),
-                        Name = reader.GetString("Name"),
-                        Email = reader.GetString("Email"),
-                        cpf = reader.GetString("CpfCnpj"),
-                        DateOfBirth = reader.GetDateTime("DateOfBirth"),
-                        PassWord = reader.GetString("PassWord"),
-                        Phone = reader.GetString("Phone")
-                    });
-                }
-                connection.Close();
-                return client;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
-
-        }
-        public void InsertClient(Client client)
-        {
-            try
-            {
                 MySqlConnection connection = GetConnection();
                 connection.Open();
                 string sqlCommand = string.Empty;
-                if (client.Id == 0)
-                    sqlCommand = $"Insert into Client (id, name, email, CpfCnpj, dateOfBirth, password, Phone) VALUES ({client.Id}, '{client.Name}', '{client.Email}','{client.cpf}', '{client.DateOfBirth.ToString("yyyy-MM-dd")}', '{client.PassWord}', '{client.Phone}')";
+                if (client.id == 0)
+                    sqlCommand = $"Insert into Clientes ( UsuarioId, Endereco) VALUES ( '{client.usuarioId}', '{client.endereco}')";
                 else
-                    sqlCommand = $"UPDATE CLIENT SET name='{client.Name}', email='{client.Email}', CpfCnpj='{client.cpf}', dateOfBirth='{client.DateOfBirth.ToString("yyyy-MM-dd HH:mm:ss")}', password='{client.PassWord}', Phone='{client.Phone}' WHERE Id={client.Id};";
-
+                    sqlCommand = $"UPDATE Clientes SET UsuarioId='{client.usuarioId}', Endereco='{client.endereco}' WHERE Id={client.id};";
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
                 connection.Close();
@@ -69,59 +37,6 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
         }
-        public Client GetClient(int idOldClient)
-        {
-            try
-            {
-                MySqlConnection connection = GetConnection();
-                connection.Open();
-                var command = new MySqlCommand($"SELECT * FROM client WHERE id={idOldClient}", connection);
-                var reader = command.ExecuteReader();
-
-                Client client = new Client();
-
-                while (reader.Read())
-                {
-                    client = new Client
-                    {
-                        Id = reader.GetInt32("Id"),
-                        Name = reader.GetString("Name"),
-                        Email = reader.GetString("Email"),
-                        cpf = reader.GetString("CpfCnpj"),
-                        DateOfBirth = reader.GetDateTime("DateOfBirth"),
-                        PassWord = reader.GetString("PassWord"),
-                        Phone = reader.GetString("Phone")
-                    };
-                }
-                connection.Close();
-                return client;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
-        public void DeleteClient(int idClient)
-        {
-            try
-            {
-                MySqlConnection connection = GetConnection();
-                connection.Open();
-                string sqlCommand = string.Empty;
-
-                sqlCommand = $"DELETE FROM CLIENT WHERE Id={idClient}";
-
-                var command = new MySqlCommand(sqlCommand, connection);
-                command.ExecuteReader();
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
-            }
-        }
+        
     }
 }

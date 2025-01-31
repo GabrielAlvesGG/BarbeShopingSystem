@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="cpf" class="form-label">Cpf:</label>
-                        <input type="text" v-model="form.cpf" id="cpf" class="form-control" placeholder="Cpf">
+                        <input type="text" v-model="form.cpf" id="cpf-cnpj" class="form-control" placeholder="Cpf">
                         <div class="alert alert-danger mt-2" v-show="messages.alertCpfInvalidade" role="alert">
                             O formato do cpf está incorreto!
                         </div>
@@ -128,7 +128,7 @@
                              icon: 'success',
                              confirmButtonText: 'Ok',
                              customClass: {
-                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                                confirmButton: 'custom-confirm-button' 
                              }
                          });
                          else
@@ -138,7 +138,7 @@
                               icon: 'success',
                               confirmButtonText: 'Ok',
                               customClass: {
-                                confirmButton: 'custom-confirm-button' // Classe CSS personalizada
+                                confirmButton: 'custom-confirm-button'
                               }
                           });
                 })

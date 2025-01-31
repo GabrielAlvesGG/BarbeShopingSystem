@@ -2,6 +2,8 @@
 using MySql.Data.MySqlClient;
 using BarberShopSystem.Models;
 using System.Data;
+using BarberShopSyste.Models;
+using BarberShopSystem.Enums;
 
 
 namespace BarberShopSystem.ModelsRepository
@@ -11,44 +13,40 @@ namespace BarberShopSystem.ModelsRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Client GetClient(loginDto login) // Corrija o nome do tipo
+        public Usuario LoginValidate(loginDto login)
         {
-            Client client = new Client();
+            Usuario client = new Usuario();
 
             try
             {
                 using (var connection = GetConnection())
                 {
                     connection.Open();
-                    var command = new MySqlCommand("SELECT * FROM client WHERE EMAIL=@Email AND PASSWORD=@Password", connection);
+                    var command = new MySqlCommand("SELECT Id, Nome, TipoUsuario FROM Usuarios WHERE Email=@Email  and Senha=@Senha", connection);
                     command.Parameters.AddWithValue("@Email", login.login);
-                    command.Parameters.AddWithValue("@Password", login.password);
+                    command.Parameters.AddWithValue("@Senha", login.password);
 
                     using (var reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            client = new Client
+                            client = new Usuario
                             {
-                                Id = reader.GetInt32("Id"),
-                                Name = reader.GetString("Name"),
-                                Email = reader.GetString("Email"),
-                                cpf = reader.GetString("CpfCnpj"),
-                                DateOfBirth = reader.GetDateTime("DateOfBirth"),
-                                PassWord = reader.GetString("PassWord"),
-                                Phone = reader.GetString("Phone")
+                                id = reader.GetInt32("Id"),
+                                nome = reader.GetString("Nome"),
+                                tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
                             };
                         }
                     }
                 }
+                return client;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 throw;
             }
-
-            return client;
         }
+
     }
 }
