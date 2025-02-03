@@ -50,7 +50,7 @@
                 <button type="button" class="btn btn-primary btn-lg text-white" v-on:Click="CreateNewClient">Criar uma conta</button>
             </div>
             <div class="text-center mt-3">
-                <button type="button" class="btn btn-primary btn-lg text-white" v-on:Click="recoverPassWord">Esqueci minha senha</button>
+                <button type="button" class="btn btn-primary btn-lg text-white" v-on:Click="recoveryPassWord">Esqueci minha senha</button>
             </div>
         </form>
     </div>
@@ -126,9 +126,9 @@
             },
             CreateNewClient() {
                 window.location.href = "/User/UserRegister";
-            }
-            recoverPassWord() {
-                window.location.href = "/Login/RecoverPassWord";
+            },
+            recoveryPassWord() {
+                window.location.href = "/Login/RecoveryPassword";
             }
         }
     })

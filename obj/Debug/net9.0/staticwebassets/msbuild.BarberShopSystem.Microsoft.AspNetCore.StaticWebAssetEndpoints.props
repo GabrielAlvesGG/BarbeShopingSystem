@@ -15,14 +15,14 @@
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-P2UuInW3rJWKa32//uP757MYgqq8nDAv8uoh08PxOPA="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2602"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022P2UuInW3rJWKa32//uP757MYgqq8nDAv8uoh08PxOPA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 31 Jan 2025 14:21:12 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-tNfnv7fWo8ObbKlvg3XOuM4CffxFbqduQ066xXGM5Ds="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3008"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022tNfnv7fWo8ObbKlvg3XOuM4CffxFbqduQ066xXGM5Ds=\u0022"},{"Name":"Last-Modified","Value":"Sat, 01 Feb 2025 11:21:21 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/site.x8c796u804.css">
+    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/site.wft1x3rerk.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x8c796u804"},{"Name":"integrity","Value":"sha256-P2UuInW3rJWKa32//uP757MYgqq8nDAv8uoh08PxOPA="},{"Name":"label","Value":"_content/BarberShopSystem/css/site.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2602"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022P2UuInW3rJWKa32//uP757MYgqq8nDAv8uoh08PxOPA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 31 Jan 2025 14:21:12 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wft1x3rerk"},{"Name":"integrity","Value":"sha256-tNfnv7fWo8ObbKlvg3XOuM4CffxFbqduQ066xXGM5Ds="},{"Name":"label","Value":"_content/BarberShopSystem/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3008"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022tNfnv7fWo8ObbKlvg3XOuM4CffxFbqduQ066xXGM5Ds=\u0022"},{"Name":"Last-Modified","Value":"Sat, 01 Feb 2025 11:21:21 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>

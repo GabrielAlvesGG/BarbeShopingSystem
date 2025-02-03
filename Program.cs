@@ -1,5 +1,6 @@
 using BarberShopSystem.Data;
 using BarberShopSystem.ModelsRepository;
+using BarberShopSystem.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,11 @@ builder.Services.AddHttpContextAccessor();
 // Add database repository
 builder.Services.AddScoped<DataBaseRepository>();
 builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<RecoveryPasswordService>();
+builder.Services.AddScoped<EmailService>(); 
+builder.Services.AddScoped<RecoveryPasswordService>(); 
+
+
 
 var app = builder.Build();
 

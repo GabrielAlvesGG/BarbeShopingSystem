@@ -3,74 +3,75 @@ using BarberShopSystem.Data;
 using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace BarberShopSystem.ModelsRepository;
 
 public class UserRepository : DataBaseRepository
 {
-        public UserRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-        //public void InsertOrUpdateUser(Usuario user)
-        //{
-        //    try
-        //    {
-        //        MySqlConnection connection = GetConnection();
-        //        connection.Open();
-        //        string sqlCommand = string.Empty;
-        //        if (user.id == 0)
-        //            sqlCommand = $"Insert into Usuarios (Nome, Email, Senha, TipoUsuario,DataCriacao, telefone) VALUES ( '{user.nome}', '{user.email}','{user.senha}', '{user.tipoUsuario}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{user.telefone}')";
-        //        else
-        //            sqlCommand = $"UPDATE Usuarios SET Name='{user.nome}', Email='{user.email}',Senha='{user.senha}', TipoUsuario='{user.tipoUsuario}', Telefone='{user.telefone}' WHERE Id={user.id};";
+    public UserRepository(IConfiguration configuration) : base(configuration)
+    {
+    }
+    //public void InsertOrUpdateUser(Usuario user)
+    //{
+    //    try
+    //    {
+    //        MySqlConnection connection = GetConnection();
+    //        connection.Open();
+    //        string sqlCommand = string.Empty;
+    //        if (user.id == 0)
+    //            sqlCommand = $"Insert into Usuarios (Nome, Email, Senha, TipoUsuario,DataCriacao, telefone) VALUES ( '{user.nome}', '{user.email}','{user.senha}', '{user.tipoUsuario}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{user.telefone}')";
+    //        else
+    //            sqlCommand = $"UPDATE Usuarios SET Name='{user.nome}', Email='{user.email}',Senha='{user.senha}', TipoUsuario='{user.tipoUsuario}', Telefone='{user.telefone}' WHERE Id={user.id};";
 
-        //        var command = new MySqlCommand(sqlCommand, connection);
-        //        command.ExecuteReader();
-        //        connection.Close();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //        throw;
-        //    }
-        //}
-        public Usuario GetUserId(Usuario user)
-        {
-            Usuario client = new Usuario();
+    //        var command = new MySqlCommand(sqlCommand, connection);
+    //        command.ExecuteReader();
+    //        connection.Close();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine(ex.ToString());
+    //        throw;
+    //    }
+    //}
+    public Usuario GetUserId(Usuario user)
+    {
+        Usuario client = new Usuario();
 
-            try
+        try
+        {
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
-                {
-                    connection.Open();
-                    var command = new MySqlCommand("SELECT * FROM Usuarios WHERE Id=@Id", connection);
-                    command.Parameters.AddWithValue("@Id", user.id);
+                connection.Open();
+                var command = new MySqlCommand("SELECT * FROM Usuarios WHERE Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", user.id);
 
-                    using (var reader = command.ExecuteReader())
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
                     {
-                        if (reader.Read())
+                        client = new Usuario
                         {
-                            client = new Usuario
-                            {
-                                id = reader.GetInt32("Id"),
-                                nome = reader.GetString("Nome"),
-                                email = reader.GetString("Email"),
-                                dataCriacao = reader.GetDateTime("DataCriacao"),
-                                senha = reader.GetString("Senha"),
-                                telefone = reader.GetString("Telefone"),
-                                tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
-                            };
-                        }
+                            id = reader.GetInt32("Id"),
+                            nome = reader.GetString("Nome"),
+                            email = reader.GetString("Email"),
+                            dataCriacao = reader.GetDateTime("DataCriacao"),
+                            senha = reader.GetString("Senha"),
+                            telefone = reader.GetString("Telefone"),
+                            tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
+                        };
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
-
-            return client;
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+
+        return client;
+    }
 
     public void InsertOrUpdateUser(Usuario user)
     {
@@ -83,7 +84,7 @@ public class UserRepository : DataBaseRepository
             {
                 // Comando de INSERT
                 InsertUser(user, connection);
-                user.id = GetLastInsertedId(connection); 
+                user.id = GetLastInsertedId(connection);
             }
             else
             {
@@ -123,4 +124,132 @@ public class UserRepository : DataBaseRepository
         return Convert.ToInt32(getIdCommand.ExecuteScalar()); // Executando o comando e pegando o ID inserido
     }
 
+    public Usuario GetUser(Usuario user)
+    {
+            try
+            {
+
+                Usuario userFound = null;
+                bool filtersWhereNecessary = false;
+
+                bool andNecessary = false;
+
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    string sql = "SELECT * FROM Usuarios";
+                    string whereSql = string.Empty;
+
+                    if (user.id != 0)
+                    {
+                        whereSql += "Id=@Id" + Environment.NewLine;
+                        andNecessary = true;
+                        filtersWhereNecessary = true;
+                    }
+
+                    if (user.nome != string.Empty && user.nome != null)
+                    {
+                        if (andNecessary)
+                        {
+                            whereSql += "AND ";
+                        }
+                        whereSql += "Nome=@Nome" + Environment.NewLine;
+                        andNecessary = true;
+                        filtersWhereNecessary = true;
+                    }
+
+                    if (user.senha != string.Empty && user.senha != null)
+                    {
+                        if (andNecessary)
+                        {
+                            whereSql += "AND ";
+                        }
+                        whereSql += "Senha=@Senha" + Environment.NewLine;
+                        andNecessary = true;
+                        filtersWhereNecessary = true;
+                    }
+
+
+                    if (user.email != string.Empty && user.email != null)
+                    {
+                        if (andNecessary)
+                        {
+                            whereSql += "AND ";
+                        }
+                        whereSql += "Email=@Email" + Environment.NewLine;
+                        andNecessary = true;
+                        filtersWhereNecessary = true;
+                    }
+
+                    if (user.telefone != string.Empty && user.telefone != null)
+                    {
+                        if (andNecessary)
+                        {
+                            whereSql += "AND ";
+                        }
+                        whereSql += "Telefone=@Telefone" + Environment.NewLine;
+                        andNecessary = true;
+                        filtersWhereNecessary = true;
+                    }
+                    if (filtersWhereNecessary)
+                        sql += Environment.NewLine + " Where " + Environment.NewLine;
+
+                    sql += whereSql;
+
+                    var command = new MySqlCommand(sql, connection);
+                    command.Parameters.AddWithValue("@Id", user.id);
+                    command.Parameters.AddWithValue("@Nome", user.nome);
+                    command.Parameters.AddWithValue("@Senha", user.senha);
+                    command.Parameters.AddWithValue("@Email", user.email);
+                    command.Parameters.AddWithValue("@Telefone", user.telefone);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            userFound = new Usuario
+                            {
+                                id = reader.GetInt32("Id"),
+                                nome = reader.GetString("Nome"),
+                                email = reader.GetString("Email"),
+                                dataCriacao = reader.GetDateTime("DataCriacao"),
+                                senha = reader.GetString("Senha"),
+                                telefone = reader.GetString("Telefone"),
+                                tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
+                            };
+                        }
+                    }
+                }
+
+
+                return userFound;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        
+    }
+
+    internal void UpdatePassword(Usuario userResetPassword)
+    {
+        try
+        {
+            var connection = GetConnection();
+            connection.Open();
+            string sqlCommand = $"UPDATE Usuarios SET Senha='{userResetPassword.senha}' WHERE Id={userResetPassword.id}";
+
+            var command = new MySqlCommand(sqlCommand, connection);
+            command.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+        
+
+    }
 }
