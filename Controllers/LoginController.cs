@@ -73,7 +73,7 @@ public class LoginController : Controller
         {
             Usuario user = _recoveryPasswordService.LoginConfirm(login);
             if (user != null)
-                return _recoveryPasswordService.SendCodConfirm(login);
+                return _recoveryPasswordService.SendCodConfirm(user);
             else
                 return false;
         }

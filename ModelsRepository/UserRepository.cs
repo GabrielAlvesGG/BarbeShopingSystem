@@ -243,6 +243,7 @@ public class UserRepository : DataBaseRepository
 
             var command = new MySqlCommand(sqlCommand, connection);
             command.ExecuteNonQuery();
+            connection.Close();
         }
         catch (Exception ex)
         {

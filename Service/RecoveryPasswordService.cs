@@ -44,14 +44,14 @@ public class RecoveryPasswordService
 		}
     }
 
-    public bool SendCodConfirm(string login) {
+    public bool SendCodConfirm(Usuario user) {
         try
         {
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfiguration configuration = builder.Build();
-            ProcessingConfirmationCode(login, configuration);
+            ProcessingConfirmationCode(user, configuration);
 
             return true;
         }
@@ -62,14 +62,15 @@ public class RecoveryPasswordService
         }
     }
 
-    private async Task ProcessingConfirmationCode(string login, IConfiguration configuration)
+    private async Task ProcessingConfirmationCode(Usuario user, IConfiguration configuration)
     {
         var resetToken = new RecoveryPassword
         {
-            email = login,
+            email = user.email,
             token = CreateToken(),
             expiration = DateTime.UtcNow.AddMinutes(30),
-            used = false
+            used = false,
+            idUser = user.id
         };
 
         new RecoveryPasswordRepository(configuration).SaveRecoveryRequest(resetToken);

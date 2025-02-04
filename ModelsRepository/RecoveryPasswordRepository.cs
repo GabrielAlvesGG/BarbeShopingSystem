@@ -30,8 +30,8 @@ public class RecoveryPasswordRepository : DataBaseRepository
 		{
             MySqlConnection connection = GetConnection();
             connection.Open();
-            string sqlCommand = $"INSERT INTO PasswordResetTokens (Id, Email,Token, Expiration, Used) " +
-                            $"VALUES ('{recoveryPassword.id}', '{recoveryPassword.email}', '{recoveryPassword.token}','{recoveryPassword.expiration.ToString("yyyy-MM-dd")}', {(recoveryPassword.used == false ? 0:1) })";
+            string sqlCommand = $"INSERT INTO PasswordResetTokens (Id, Email,Token, Expiration, Used, IdUser) " +
+                            $"VALUES ('{recoveryPassword.id}', '{recoveryPassword.email}', '{recoveryPassword.token}','{recoveryPassword.expiration.ToString("yyyy-MM-dd HH:mm:ss")}', {(recoveryPassword.used == false ? 0:1) }, {recoveryPassword.idUser})";
 
             var command = new MySqlCommand(sqlCommand, connection);
             command.ExecuteReader();
@@ -79,7 +79,7 @@ public class RecoveryPasswordRepository : DataBaseRepository
             using (var connection = GetConnection())
             {
                 connection.Open();
-                var command = new MySqlCommand("SELECT * FROM PasswordResetTokens p INNER JOIN USUARIOS u on u.email=p.email WHERE Token=@Token", connection);
+                var command = new MySqlCommand("SELECT u.Id as Id FROM PasswordResetTokens p INNER JOIN USUARIOS u on u.email=p.email WHERE Token=@Token", connection);
                 command.Parameters.AddWithValue("@Token", tokenUser);
 
                 using (var reader = command.ExecuteReader())
@@ -112,6 +112,7 @@ public class RecoveryPasswordRepository : DataBaseRepository
 
             var command = new MySqlCommand(sqlCommand, connection);
             command.ExecuteNonQuery();
+            connection.Close();
         }
         catch (Exception ex)
         {
