@@ -2,18 +2,26 @@
 using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.Service;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Bcpg.OpenPgp;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using BarberShopSystem.ModelsRepository;
+using BarberShopSystem.Enums;
 
 namespace BarberShopSystem.Controllers;
 
 public class LoginController : Controller
 {
     private readonly RecoveryPasswordService _recoveryPasswordService;
+    private readonly UserService _UserService;
 
-    public LoginController(RecoveryPasswordService recoveryPasswordService)
+    public LoginController(RecoveryPasswordService recoveryPasswordService, UserService userService)
     {
         _recoveryPasswordService = recoveryPasswordService;
+        _UserService = userService;
     }
     public IActionResult Login()
     {
@@ -107,5 +115,46 @@ public class LoginController : Controller
             Console.WriteLine(ex.Message);
             throw;
         }
+    }
+    public IActionResult LoginWithGoogle()
+    {
+        var authenticationProperties = new AuthenticationProperties
+        {
+            RedirectUri = Url.Action("GoogleResponse", "Login", null, Request.Scheme)
+        };
+        return Challenge(authenticationProperties, GoogleDefaults.AuthenticationScheme);
+    }
+
+    public async Task<IActionResult> GoogleResponse()
+    {
+        var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        if (!authenticateResult.Succeeded)
+            return RedirectToAction("Login");
+
+        var claims = authenticateResult.Principal.Identities
+                          .FirstOrDefault()?.Claims.Select(c => new { c.Type, c.Value });
+
+        Usuario user = new Usuario();
+        user.email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+        Usuario userFound = _UserService.GetUser(user); 
+
+        if (userFound == null)
+        {
+            user.nome = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            user.tipoUsuario = TipoUsuarioEnum.Cliente;
+            _UserService.InsertOrUpdateUser(user);
+        }
+        else
+        {
+            user = userFound;
+            SessionHelper.UserId = user.id;
+            SessionHelper.UserName = user.nome == null ? string.Empty : user.nome;
+            SessionHelper.UserType = user.tipoUsuario.ToString();
+        }
+
+
+        return RedirectToAction("Login", "Login");
     }
 }

@@ -50,6 +50,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.1.0, )"

@@ -72,6 +72,22 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Authentication.Google/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -582,6 +598,21 @@
         "lib/netstandard2.0/K4os.Hash.xxHash.xml",
         "lib/netstandard2.1/K4os.Hash.xxHash.dll",
         "lib/netstandard2.1/K4os.Hash.xxHash.xml"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.Google/9.0.1": {
+      "sha512": "s6xXDsJd5jZeYho6cLA7/GJSK4hHkUFmbLraQhqav+N3KJ5oMgTGN8g6viANtL8qEBlqea/WJxsulihgXluQsA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.google/9.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net9.0/Microsoft.AspNetCore.Authentication.Google.dll",
+        "lib/net9.0/Microsoft.AspNetCore.Authentication.Google.xml",
+        "microsoft.aspnetcore.authentication.google.9.0.1.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.google.nuspec"
       ]
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
@@ -1605,6 +1636,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "Microsoft.AspNetCore.Authentication.Google >= 9.0.1",
       "MySql.Data >= 9.1.0"
     ]
   },
@@ -1658,6 +1690,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": {
+            "target": "Package",
+            "version": "[9.0.1, )"
+          },
           "MySql.Data": {
             "target": "Package",
             "version": "[9.1.0, )"

@@ -1,6 +1,8 @@
 using BarberShopSystem.Data;
 using BarberShopSystem.ModelsRepository;
 using BarberShopSystem.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +19,19 @@ builder.Services.AddScoped<DataBaseRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<RecoveryPasswordService>();
 builder.Services.AddScoped<EmailService>(); 
-builder.Services.AddScoped<RecoveryPasswordService>(); 
+builder.Services.AddScoped<RecoveryPasswordService>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
 
 
+// Configurar autenticação com Google
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
 
 var app = builder.Build();
 

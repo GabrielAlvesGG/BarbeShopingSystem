@@ -6,6 +6,12 @@ namespace BarberShopSystem.Controllers
 {
     public class UserController : Controller
     {
+        private readonly UserService _userService;
+        public UserController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         public IActionResult UserRegister()
         {
             return View();
@@ -14,7 +20,7 @@ namespace BarberShopSystem.Controllers
         {
             try
             {
-                new UserService().InsertOrUpdateUser(user);
+                _userService.InsertOrUpdateUser(user);
             }
             catch (Exception ex)
             {

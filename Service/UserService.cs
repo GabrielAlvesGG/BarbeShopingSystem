@@ -1,11 +1,18 @@
 ﻿using BarberShopSyste.Models;
 using BarberShopSystem.Enums;
+using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 
 namespace BarberShopSystem.Service;
 
 public class UserService
 {
+    private readonly UserRepository _userRepository;
+    public UserService(UserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
     public void InsertOrUpdateUser(Usuario user)
     {
         try
@@ -18,11 +25,17 @@ public class UserService
             
             if (user.tipoUsuario == TipoUsuarioEnum.Barbeiro)
             {
+                if (user.barber == null)
+                    user.barber = new Barber();
+
                 user.barber.usuarioId = user.id;
                 new BarberRepository(configuration).InsertOrUpdateBarber(user.barber);
             }
             if (user.tipoUsuario == TipoUsuarioEnum.Cliente)
-            {
+            {   
+                if(user.client == null)
+                    user.client = new Cliente();
+
                 user.client.usuarioId = user.id;
                 new ClientRepository(configuration).InsertOrUpdateClient(user.client);
             }
@@ -30,6 +43,19 @@ public class UserService
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
+            throw;
+        }
+    }
+
+    public Usuario GetUser(Usuario user)
+    {
+        try
+        {
+            return _userRepository.GetUser(user); 
+        }
+        catch (Exception ex)
+        {
+
             throw;
         }
     }
