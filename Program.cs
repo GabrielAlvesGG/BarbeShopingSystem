@@ -22,16 +22,11 @@ builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<RecoveryPasswordService>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<SchedulingRepository>();
+builder.Services.AddScoped<SchedulingService>();
+builder.Services.AddScoped<AppointmentsRepository>();
 
 
-// Configurar autenticação com Google
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-})
-.AddCookie()
 
 var app = builder.Build();
 
