@@ -25,6 +25,10 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingRepository>();
 builder.Services.AddScoped<SchedulingService>();
 builder.Services.AddScoped<AppointmentsRepository>();
+builder.Services.AddScoped<ClientRepository>();
+builder.Services.AddScoped<CustomerRepository>();
+builder.Services.AddScoped<CustomerService>();
+
 
 
 

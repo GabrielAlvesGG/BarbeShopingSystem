@@ -9,7 +9,7 @@ namespace BarberShopSystem.Service;
 public class LoginService
 {
 
-    public Usuario LoginValidate(loginDto login)
+    public Client LoginValidate(loginDto login)
     {
         try
         {

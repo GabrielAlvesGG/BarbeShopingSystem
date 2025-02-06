@@ -5,49 +5,55 @@
 
 <div id="scheduling" class="container">
     <div class="row">
-        <div class="col-md-4 col-lg-5 order-md-last">
+        <div class="col-md-4 col-lg-5 order-md-last" v-show="isAppointmentCancellationVisible">
             <div class="card card-shadow-1 mb-1">
                 <div class="card-header calendar-header">
-                    <h3 class="card-title flex-grow-1 mb-0 w-100">Agendar Corte/ Serviço</h3>
-                    <p class="w-100 m-0"></p>
+                    <h3 class="card-title flex-grow-1 mb-0 w-100">Cancelar agendamento</h3>
                 </div>
-                <div class="card-body">
-                    <div v-if="listaDeHorarios.length" class="scheduling-container">
-                        <div v-for="(horario, index) in listaDeHorarios"
-                             :key="horario.time"
-                             v-if="index < maxButtons"
-                             class="scheduling-button-wrapper">
-                            <button v-on:click="selecionarHorario(horario.time)" v-show="horario.free">
-                                {{ formatTime(horario.time) }}
-                            </button>
-                            <button  v-show="!horario.free" class="indisponivel" disabled>
-                               {{ formatTime(horario.time) }}
-                            </button>
-                        </div>
-                        <div class="row">
-                            <h1>Serviços</h1>
-                            <div>
-                                <label>Selecione o serviço</label>
-                                <select class="form-select" v-model="selectedService">
-                                    <option v-for="customer in CustomersList" :value="customer.idCustomers">{{customer.name}} valor {{customer.price}}</option>
-                                    <
-                                </select>
-                            </div>
-                        </div>
-                        <div >
-                            <button v-on:click="selecionarHorario(horario.time)">
-                                Agendar
-                            </button>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <p>Não há horários disponíveis no momento.</p>
+                <div class="card-body" >
+                    <div class="scheduling-container">
+                        <table class="table table-striped table-hover table-bordered">
+                        <tr>
+                            <th>Id</th>
+                            <th>Descrição</th>
+                            <th>Horario</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                            <tr v-for="(appoint, index) in appointmentsList" :accesskey="appoint.idAppointments">
+                                <td>{{appoint.idAppointments}}</td>
+                                <td>{{appoint.customer.description}}</td>
+                                <td>{{formatedDateTime(appoint.dateTime)}}</td>
+                                <td>R${{appoint.customer.price}}</td>
+                                <td><button type="button" class="btn btn-danger text-white" v-on:Click="GetIdAppointment(appoint.idAppointments)" data-bs-toggle="modal" data-bs-target="#CancelAppointmentsModal">Cancelar Agendamentos </button></td>
+                                
+                        </tr>
+                    </table>
                     </div>
                 </div>
-               
             </div>
         </div>
     </div>
+
+    <!-- Modal Cancel Appointments -->
+    <div class="modal fade" id="CancelAppointmentsModal" tabindex="-1" aria-labelledby="CancelAppointmentsModalLabel" aria-hidden="true" ref="modalCancel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="CancelAppointmentsModalLabel">Deseja realmente Cancelar o agendamento?</h1>
+                    <button type="button" class="btn-close" v-on:Click="ResetPossibleCancelAppointments()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja cancelar o Agendamento ? 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleCancelAppointments()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="CancelAppoindment()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Cancel Appointments -->
 
     <!-- Modal the user not logged in -->
     <div class="modal fade" id="UserNotLoggedModal" tabindex="-1" aria-labelledby="UserNotLoggedModalLabel" aria-hidden="true" ref="modalLogin">
@@ -130,6 +136,8 @@
             return {
                 listaDeHorarios: [],
                 maxButtons: 10 ,
+                isAppointmentCancellationVisible: false,
+                appointmentsList: [],
                 possibleCancelAppointment: 0,
                 userLogged: false,
                 CustomersList:[],
@@ -159,14 +167,14 @@
                     let time = horario;
 
 
-                    const appointmentsDTO  = {
+                    const appoinments  = {
                         dateTime :time,
-                        customerId: this.selectedService,
+                        custom :{id: this.selectedService},
                     };
 
 
                     axios.post('/Scheduling/BookingATime', 
-                    appointmentsDTO, {
+                    appoinments, {
                     headers: {
                         'Content-Type': 'application/json'}
                     })
@@ -197,18 +205,74 @@
                    axios.post('/Login/IsUserLoggedIn')
                 .then(response => {
                   this.userLogged = response.data;  // passo 5 : Armazena a situação atual, deixando true se ele estiver logado e false se estiver como um usuário anônimo
+                  if(this.userLogged)
+                        this.hasScheduling(); // passo 6 : caso esteja com um login ativo o sistema ira verificar quais são os agendamentos referente a esse usuário.
                   
                 })
                 .catch(error => {
                     console.error('Erro ao carregar horários:', error);
                 });
             },
+            hasScheduling(){
+                      axios.post('/Scheduling/HasSchelulingClient',)// passo 7 : vai no back-end buscar todos os agendamentos referente ao usuário que está logado.
+                .then(response => {
+
+                  if( response.data.length > 0 ){
+                       this.appointmentsList = response.data;
+                       this.isAppointmentCancellationVisible = true;
+                  }
+                  else {
+                      this.appointmentsList = response.data;
+                       this.isAppointmentCancellationVisible = false;
+                  }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar horários:', error);
+                });
+            },
+            GetIdAppointment(idAppointment)
+            {
+                this.possibleCancelAppointment = idAppointment;
+            },
+            ResetPossibleCancelAppointments(){
+             this.possibleCancelAppointment = 0;
+          },
+            CancelAppoindment(){
+              let idAppointment = this.possibleCancelAppointment;
+                   axios.post('/Scheduling/CancelAppointment', idAppointment , { headers: {
+                    'Content-Type': 'application/json'}
+                })
+                .then(response => {
+
+                  if(response.data){
+                        this.GetScheduling();
+                        this.hiddenModelAppointmentsCancel();
+                    
+                       Swal.fire({
+                        title: 'Agendamento cancelado',
+                        text: 'O agendamento foi cancelado com sucesso!',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        footer: 'Verifique os dados preenchidos'
+                    });
+                  }
+
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar horários:', error);
+                });
+          },
             RedirectLoginPage(){
                 window.location.href = "/Login/Login";
             },
             OpenModalUserNotLoogedModal(){
                let modal = new bootstrap.Modal(document.getElementById("UserNotLoggedModal"));
                 modal.show();
+            },
+            hiddenModelAppointmentsCancel(){
+                const modalElement = document.getElementById('CancelAppointmentsModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
             },
             GetServices(){
                     axios.post('/Scheduling/GetCustomers')
@@ -220,6 +284,7 @@
                 });
             },
             formatedDateTime(date){
+
                     const dateTime = new Date(date);
                     return dateTime.toLocaleString('pt-BR');
             }

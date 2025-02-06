@@ -22,7 +22,7 @@ public class RecoveryPasswordService
     }
 
 
-    public Usuario LoginConfirm(string login)
+    public Client LoginConfirm(string login)
     {
         try
         {
@@ -32,7 +32,7 @@ public class RecoveryPasswordService
             IConfiguration configuration = builder.Build();
 
             UserRepository loginRepository = new UserRepository(configuration);
-            Usuario user = new Usuario();
+            Client user = new Client();
             user.email = login;
             return  loginRepository.GetUser(user);
 
@@ -44,7 +44,7 @@ public class RecoveryPasswordService
 		}
     }
 
-    public bool SendCodConfirm(Usuario user) {
+    public bool SendCodConfirm(Client user) {
         try
         {
             var builder = new ConfigurationBuilder()
@@ -62,7 +62,7 @@ public class RecoveryPasswordService
         }
     }
 
-    private async Task ProcessingConfirmationCode(Usuario user, IConfiguration configuration)
+    private async Task ProcessingConfirmationCode(Client user, IConfiguration configuration)
     {
         var resetToken = new RecoveryPassword
         {
@@ -121,7 +121,7 @@ public class RecoveryPasswordService
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfiguration configuration = builder.Build();
-            Usuario userResetPassword = new RecoveryPasswordRepository(configuration).FindUserByResetToken(resetPasswordDto.token);
+            Client userResetPassword = new RecoveryPasswordRepository(configuration).FindUserByResetToken(resetPasswordDto.token);
             userResetPassword.senha = resetPasswordDto.password;
             new UserRepository(configuration).UpdatePassword(userResetPassword);
             new RecoveryPasswordRepository(configuration).UpdateTokenUsed(resetPasswordDto.token);

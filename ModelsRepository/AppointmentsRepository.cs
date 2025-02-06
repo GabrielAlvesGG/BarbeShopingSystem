@@ -17,8 +17,8 @@ public class AppointmentsRepository : DataBaseRepository
             List<DateTime> appointMentss = new List<DateTime>();
             var connection = GetConnection();
             connection.Open();
-            var command = new MySqlCommand("SELECT DataHorario FROM Agendamentos WHERE DataHorario BETWEEN @StartDay AND @EndDay;", connection);
-            command.Parameters.AddWithValue("@StartDay", DateTime.Now.ToString("yyyy-MM-dd 00:00:00"));
+            var command = new MySqlCommand("SELECT DataHorario FROM Agendamentos WHERE DataHorario BETWEEN @StartDay AND @EndDay AND Status <> 'Cancelado';", connection);
+            command.Parameters.AddWithValue("@StartDay", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             command.Parameters.AddWithValue("@EndDay", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"));
             using (var reader = command.ExecuteReader())
             {
@@ -50,20 +50,20 @@ public class AppointmentsRepository : DataBaseRepository
             var connection = GetConnection();
             connection.Open();
             var command = new MySqlCommand("SELECT a.Id as Id, a.DataHorario as DataHorario, s.Descricao as Descricao, s.Preco as Preco FROM Agendamentos a inner join clientes c on c.Id = a.ClienteId inner join servicos s on s.Id = a.ServicoId  WHERE c.UsuarioId=@UsuarioId AND  a.DataHorario > @ComparisonDeadline AND a.status<>'Cancelado'", connection);
-            command.Parameters.AddWithValue("@ComparisonDeadline", DateTime.Now.ToString("yyyy-MM-dd 00:00:00"));
-            command.Parameters.AddWithValue("@UsuarioId", 12);// O id o usuário é necessário para conseguir filtrar 
+            command.Parameters.AddWithValue("@ComparisonDeadline", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            command.Parameters.AddWithValue("@UsuarioId", userId);
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    appointments.Add(
-                        new Appointments
-                        {
-                            idAppointments = reader.GetInt32("Id"),
-                            appointments = reader.GetDateTime("DataHorario").TimeOfDay,
-                            service = reader.GetString("Descricao"),
-                            val = reader.GetDouble("Preco")
-                        });
+                    Appointments appointment = new Appointments();
+
+                    appointment.idAppointments = reader.GetInt32("Id");
+                    appointment.dateTime = reader.GetDateTime("DataHorario");
+                    appointment.customer.description = reader.GetString("Descricao");
+                    appointment.customer.price = reader.GetDouble("Preco");
+                    appointments.Add(appointment);
+
                 }
             }
             connection.Close();
@@ -103,12 +103,6 @@ public class AppointmentsRepository : DataBaseRepository
         }
     }
 
-    public class Appointments
-    {
-        public int idAppointments { get; set; }
-        public TimeSpan appointments { get; set; }
-        public string service { get; set; }
-        public double val { get; set; }
-    }
+    
 
 }

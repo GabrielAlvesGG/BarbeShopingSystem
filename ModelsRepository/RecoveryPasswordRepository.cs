@@ -71,11 +71,11 @@ public class RecoveryPasswordRepository : DataBaseRepository
 			throw;
 		}
     }
-    public Usuario FindUserByResetToken(string tokenUser)
+    public BarberShopSyste.Models.Client FindUserByResetToken(string tokenUser)
     {
         try
         {
-            Usuario user = new Usuario();
+            BarberShopSyste.Models.Client user = new BarberShopSyste.Models.Client();
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -86,7 +86,7 @@ public class RecoveryPasswordRepository : DataBaseRepository
                 {
                     if (reader.Read())
                     {
-                        user = new Usuario()
+                        user = new BarberShopSyste.Models.Client()
                         {
                             id = reader.GetInt32("Id")
                         };

@@ -46,7 +46,7 @@ public class LoginController : Controller
     public bool Logar([FromBody] loginDto login)
     {
         LoginService loginService = new LoginService();
-        Usuario clientLoggedIn = loginService.LoginValidate(login);
+        Client clientLoggedIn = loginService.LoginValidate(login);
         SessionHelper.UserId = clientLoggedIn.id;
         SessionHelper.UserName = clientLoggedIn.nome == null ? string.Empty: clientLoggedIn.nome;
         SessionHelper.UserType = clientLoggedIn.tipoUsuario.ToString();
@@ -79,7 +79,7 @@ public class LoginController : Controller
     {
         try
         {
-            Usuario user = _recoveryPasswordService.LoginConfirm(login);
+            Client user = _recoveryPasswordService.LoginConfirm(login);
             if (user != null)
                 return _recoveryPasswordService.SendCodConfirm(user);
             else
@@ -135,10 +135,10 @@ public class LoginController : Controller
         var claims = authenticateResult.Principal.Identities
                           .FirstOrDefault()?.Claims.Select(c => new { c.Type, c.Value });
 
-        Usuario user = new Usuario();
+        Client user = new Client();
         user.email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-        Usuario userFound = _UserService.GetUser(user); 
+        Client userFound = _UserService.GetUser(user); 
 
         if (userFound == null)
         {

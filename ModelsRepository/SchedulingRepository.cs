@@ -47,17 +47,17 @@ namespace BarberShopSystem.ModelsRepository
             }
         }
 
-        public void BookingATime(string time)
+        public void BookingATime(Appointments appointments) // Ajustar esse insert
         {
             try
             {
                 var connection = GetConnection();
                 connection.Open();
                 var command = new MySqlCommand("INSERT INTO Agendamentos (ClienteId, BarbeiroId, ServicoId, DataHorario, Status) VALUES (@ClienteId, @BarbeiroId, @ServicoId,@DataHorario, @Status)", connection);
-                command.Parameters.AddWithValue("@ClienteId", 5);
+                command.Parameters.AddWithValue("@ClienteId", appointments.client.id);
                 command.Parameters.AddWithValue("@BarbeiroId", 1);
-                command.Parameters.AddWithValue("@ServicoId", 1);
-                command.Parameters.AddWithValue("@DataHorario", DateTime.Now.ToString($"yyyy-MM-dd {time}"));
+                command.Parameters.AddWithValue("@ServicoId", appointments.customer.id);
+                command.Parameters.AddWithValue("@DataHorario", appointments.dateTime.ToString($"yyyy-MM-dd HH:mm:ss"));
                 command.Parameters.AddWithValue("@Status", "Confirmado");
                 command.ExecuteNonQuery();
             }

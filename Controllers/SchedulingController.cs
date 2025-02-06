@@ -10,12 +10,18 @@ public class SchedulingController : Controller
 {
 
     private readonly SchedulingService _schedulingService;
+    private readonly CustomerService _customerService;
 
-    public SchedulingController(SchedulingService shedulingService)
+    public SchedulingController(SchedulingService shedulingService,CustomerService customerService)
     {
         _schedulingService = shedulingService;
+        _customerService = customerService;
     }
     public IActionResult Scheduling()
+    {
+        return View();
+    } 
+    public IActionResult MyScheduling()
     {
         return View();
     }
@@ -24,9 +30,9 @@ public class SchedulingController : Controller
     {        
         return _schedulingService.GetScheduling(); ;
     }
-    public void BookingATime([FromBody] string time)
+    public void BookingATime([FromBody] AppointmentsDto appointments)
     {
-      _schedulingService.BookingATime(time);
+      _schedulingService.BookingATime(appointments);
     }
 
     public List<Appointments> HasSchelulingClient()
@@ -47,6 +53,19 @@ public class SchedulingController : Controller
         try
         {
            return _schedulingService.CancelAppointment(idAppointment);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public List<Customer> GetCustomers()
+    {
+        try
+        {
+            return _customerService.GetCustomers();
         }
         catch (Exception ex)
         {

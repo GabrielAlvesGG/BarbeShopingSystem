@@ -6,6 +6,7 @@ using MySqlX.XDevAPI;
 using BarberShopSystem.ModelsRepository;
 using BarberShopSyste.Models;
 using System.Threading;
+using BarberShopSystem.Enums;
 
 namespace BarberShopSystem.ModelsRepository
 {
@@ -37,6 +38,40 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
         }
-        
+        public Cliente SearchClientWichUserId(int userId)
+        {
+            Cliente client = new Cliente();
+
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    var command = new MySqlCommand("SELECT * FROM clientes WHERE UsuarioId=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", userId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            client = new Cliente
+                            {
+                                id = reader.GetInt32("Id"),
+                                endereco = reader.GetString("Endereco"),
+                                usuarioId = reader.GetInt32("UsuarioId"),
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+
+            return client;
+        }
+
     }
 }

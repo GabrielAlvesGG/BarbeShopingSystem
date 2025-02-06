@@ -4,7 +4,7 @@ using BarberShopSystem.Models;
 
 namespace BarberShopSyste.Models;
 
-public class Usuario
+public class Client
 {
     public int id { get; set; }
     public string nome { get; set; }

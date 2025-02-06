@@ -13,9 +13,9 @@ namespace BarberShopSystem.ModelsRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Usuario LoginValidate(loginDto login)
+        public Client LoginValidate(loginDto login)
         {
-            Usuario client = new Usuario();
+            Client client = new Client();
 
             try
             {
@@ -30,7 +30,7 @@ namespace BarberShopSystem.ModelsRepository
                     {
                         if (reader.Read())
                         {
-                            client = new Usuario
+                            client = new Client
                             {
                                 id = reader.GetInt32("Id"),
                                 nome = reader.GetString("Nome"),

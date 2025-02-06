@@ -16,7 +16,7 @@ namespace BarberShopSystem.Controllers
         {
             return View();
         }
-        public void InsertUserAndUpdate([FromBody] Usuario user)
+        public void InsertUserAndUpdate([FromBody] Client user)
         {
             try
             {

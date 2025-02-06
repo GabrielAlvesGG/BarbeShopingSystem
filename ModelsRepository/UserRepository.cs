@@ -34,9 +34,9 @@ public class UserRepository : DataBaseRepository
     //        throw;
     //    }
     //}
-    public Usuario GetUserId(Usuario user)
+    public Client SearchUserId(int userId)
     {
-        Usuario client = new Usuario();
+        Client client = new Client();
 
         try
         {
@@ -44,13 +44,13 @@ public class UserRepository : DataBaseRepository
             {
                 connection.Open();
                 var command = new MySqlCommand("SELECT * FROM Usuarios WHERE Id=@Id", connection);
-                command.Parameters.AddWithValue("@Id", user.id);
+                command.Parameters.AddWithValue("@Id", userId);
 
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        client = new Usuario
+                        client = new Client
                         {
                             id = reader.GetInt32("Id"),
                             nome = reader.GetString("Nome"),
@@ -73,7 +73,7 @@ public class UserRepository : DataBaseRepository
         return client;
     }
 
-    public void InsertOrUpdateUser(Usuario user)
+    public void InsertOrUpdateUser(Client user)
     {
         try
         {
@@ -101,7 +101,7 @@ public class UserRepository : DataBaseRepository
         }
     }
 
-    private void InsertUser(Usuario user, MySqlConnection connection)
+    private void InsertUser(Client user, MySqlConnection connection)
     {
         string sqlCommand = $"INSERT INTO Usuarios (Nome, Email, Senha, TipoUsuario, DataCriacao, Telefone) " +
                             $"VALUES ('{user.nome}', '{user.email}', '{user.senha}', '{user.tipoUsuario}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{user.telefone}')";
@@ -110,7 +110,7 @@ public class UserRepository : DataBaseRepository
         command.ExecuteNonQuery(); // Usando ExecuteNonQuery para manipulação de comandos sem retorno de dados.
     }
 
-    private void UpdateUser(Usuario user, MySqlConnection connection)
+    private void UpdateUser(Client user, MySqlConnection connection)
     {
         string sqlCommand = $"UPDATE Usuarios SET Nome='{user.nome}', Email='{user.email}', Senha='{user.senha}', TipoUsuario='{user.tipoUsuario}', Telefone='{user.telefone}' WHERE Id={user.id}";
 
@@ -124,12 +124,12 @@ public class UserRepository : DataBaseRepository
         return Convert.ToInt32(getIdCommand.ExecuteScalar()); // Executando o comando e pegando o ID inserido
     }
 
-    public Usuario GetUser(Usuario user)
+    public Client GetUser(Client user)
     {
             try
             {
 
-                Usuario userFound = null;
+                Client userFound = null;
                 bool filtersWhereNecessary = false;
 
                 bool andNecessary = false;
@@ -207,7 +207,7 @@ public class UserRepository : DataBaseRepository
                     {
                         if (reader.Read())
                         {
-                            userFound = new Usuario
+                            userFound = new Client
                             {
                                 id = reader.GetInt32("Id"),
                                 nome = reader.GetString("Nome"),
@@ -233,7 +233,7 @@ public class UserRepository : DataBaseRepository
         
     }
 
-    internal void UpdatePassword(Usuario userResetPassword)
+    internal void UpdatePassword(Client userResetPassword)
     {
         try
         {
