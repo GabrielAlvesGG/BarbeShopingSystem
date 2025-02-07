@@ -6,40 +6,42 @@ using static BarberShopSystem.ModelsRepository.AppointmentsRepository;
 
 namespace BarberShopSystem.Controllers;
 
+[Route("Scheduling")] // Define a base da rota para evitar conflitos
 public class SchedulingController : Controller
 {
-
     private readonly SchedulingService _schedulingService;
     private readonly CustomerService _customerService;
 
-    public SchedulingController(SchedulingService shedulingService,CustomerService customerService)
+    public SchedulingController(SchedulingService shedulingService, CustomerService customerService)
     {
         _schedulingService = shedulingService;
         _customerService = customerService;
     }
-    public IActionResult Scheduling()
+    [HttpGet("Scheduling")]
+    public IActionResult Scheduling() => View();
+
+    [HttpGet("MyScheduling")]
+    public IActionResult MyScheduling() => View();
+
+    [HttpGet("GetScheduling")]
+    public IActionResult GetScheduling()
     {
-        return View();
-    } 
-    public IActionResult MyScheduling()
-    {
-        return View();
+        return Json(_schedulingService.GetScheduling());
     }
 
-    public List<Schedules> GetScheduling() // Por enquanto ele só está pegando o horário e dividindo durante o dia todo.
-    {        
-        return _schedulingService.GetScheduling(); ;
-    }
-    public void BookingATime([FromBody] AppointmentsDto appointments)
+    [HttpPost("BookingATime")]
+    public IActionResult BookingATime([FromBody] AppointmentsDto appointments)
     {
-      _schedulingService.BookingATime(appointments);
+        _schedulingService.BookingATime(appointments);
+        return Ok();
     }
 
-    public List<Appointments> HasSchelulingClient()
+    [HttpGet("HasSchelulingClient")]
+    public IActionResult HasSchelulingClient()
     {
         try
         {
-            return _schedulingService.HasClientScheduling(Convert.ToInt32(SessionHelper.UserId));
+            return Json(_schedulingService.HasClientScheduling(Convert.ToInt32(SessionHelper.UserId)));
         }
         catch (Exception ex)
         {
@@ -48,11 +50,12 @@ public class SchedulingController : Controller
         }
     }
 
-    public bool CancelAppointment([FromBody] int idAppointment)
+    [HttpPost("CancelAppointment")]
+    public IActionResult CancelAppointment([FromBody] int idAppointment)
     {
         try
         {
-           return _schedulingService.CancelAppointment(idAppointment);
+            return Json(_schedulingService.CancelAppointment(idAppointment));
         }
         catch (Exception ex)
         {
@@ -61,11 +64,12 @@ public class SchedulingController : Controller
         }
     }
 
-    public List<Customer> GetCustomers()
+    [HttpGet("GetCustomers")]
+    public IActionResult GetCustomers()
     {
         try
         {
-            return _customerService.GetCustomers();
+            return Json(_customerService.GetCustomers());
         }
         catch (Exception ex)
         {
@@ -74,3 +78,4 @@ public class SchedulingController : Controller
         }
     }
 }
+

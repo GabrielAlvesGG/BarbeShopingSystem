@@ -145,58 +145,6 @@
             }
         },
         methods: {
-            GetScheduling() { // passo 1 : Pega todos os horários 
-                axios.post('/Scheduling/GetScheduling')
-                .then(response => {
-                    Swal.fire({
-                        title: 'Horários carregados!',
-                        text: 'Selecione um horário disponível.',
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                        footer: 'Verifique os dados preenchidos'
-                    });
-                    this.listaDeHorarios = response.data; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
-                    this.LoggedInClient();// passo 3 : Verifica se o usuário está logado
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
-            },
-            selecionarHorario(horario) {
-                if(this.userLogged){
-                    let time = horario;
-
-
-                    const appoinments  = {
-                        dateTime :time,
-                        custom :{id: this.selectedService},
-                    };
-
-
-                    axios.post('/Scheduling/BookingATime', 
-                    appoinments, {
-                    headers: {
-                        'Content-Type': 'application/json'}
-                    })
-                    .then(response => {
-                        Swal.fire({
-                            title: 'Horários carregados!',
-                            text: 'Selecione um horário disponível.',
-                            icon: 'success',
-                            confirmButtonText: 'Ok',
-                            footer: 'Verifique os dados preenchidos'
-                        });
-                        this.GetScheduling();
-                    })
-                    .catch(error => {
-                        console.error('Erro ao carregar horários:', error);
-                    });
-                }
-                else{
-                    this.OpenModalUserNotLoogedModal();
-                }
-                       
-            },
             formatTime(horario) {
                 // Remove seconds from the time string
                 return horario.slice(0, -3);
@@ -214,7 +162,7 @@
                 });
             },
             hasScheduling(){
-                      axios.post('/Scheduling/HasSchelulingClient',)// passo 7 : vai no back-end buscar todos os agendamentos referente ao usuário que está logado.
+                      axios.get('/Scheduling/HasSchelulingClient',)// passo 7 : vai no back-end buscar todos os agendamentos referente ao usuário que está logado.
                 .then(response => {
 
                   if( response.data.length > 0 ){
@@ -239,13 +187,12 @@
           },
             CancelAppoindment(){
               let idAppointment = this.possibleCancelAppointment;
-                   axios.post('/Scheduling/CancelAppointment', idAppointment , { headers: {
-                    'Content-Type': 'application/json'}
-                })
+                   axios.post('/Scheduling/CancelAppointment', idAppointment,
+                   { headers : { 'Content-Type': 'application/json' }})
                 .then(response => {
 
                   if(response.data){
-                        this.GetScheduling();
+                        this.hasScheduling();
                         this.hiddenModelAppointmentsCancel();
                     
                        Swal.fire({
@@ -253,7 +200,16 @@
                         text: 'O agendamento foi cancelado com sucesso!',
                         icon: 'success',
                         confirmButtonText: 'Ok',
-                        footer: 'Verifique os dados preenchidos'
+                        footer: 'Cancelado com sucesso!'
+                    });
+                  }
+                  else{
+                      Swal.fire({
+                        title: 'Falha ao cancelar o agendamento',
+                        text: 'Durante a execução do cancelamento ocorreu um erro !',
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                        footer: 'Tente novamente !'
                     });
                   }
 
@@ -274,24 +230,13 @@
                 const modal = bootstrap.Modal.getInstance(modalElement);
                 modal.hide();
             },
-            GetServices(){
-                    axios.post('/Scheduling/GetCustomers')
-                .then(response => {
-                    this.CustomersList = response.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
-            },
             formatedDateTime(date){
-
                     const dateTime = new Date(date);
                     return dateTime.toLocaleString('pt-BR');
             }
         },
         mounted() {
-            this.GetServices();
-            this.GetScheduling();  
+               this.LoggedInClient();
         }
     });
 </script>

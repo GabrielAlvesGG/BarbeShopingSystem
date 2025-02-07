@@ -142,7 +142,7 @@
         },
         methods: {
             GetScheduling() { // passo 1 : Pega todos os horários 
-                axios.post('/Scheduling/GetScheduling')
+                axios.get('/Scheduling/GetScheduling')
                 .then(response => {
                     Swal.fire({
                         title: 'Horários carregados!',
@@ -221,7 +221,7 @@
                 modal.show();
             },
             GetServices(){
-                    axios.post('/Scheduling/GetCustomers')
+                    axios.get('/Scheduling/GetCustomers')
                 .then(response => {
                     this.CustomersList = response.data;
                 })
