@@ -129,7 +129,7 @@
                });
             },
             userLoggedIn(){
-                 axios.post('/Login/IsUserLoggedIn')
+                 axios.post('/Session/IsUserLoggedIn')
                  .then(response => {
                      this.isLoggedIn = response.data;
                  })

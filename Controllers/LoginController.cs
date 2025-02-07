@@ -1,6 +1,5 @@
-﻿using BarberShopSyste.Models;
+﻿using BarberShopSystem.Models;
 using BarberShopSystem.Helpers;
-using BarberShopSystem.Models;
 using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
@@ -16,57 +15,41 @@ namespace BarberShopSystem.Controllers;
 public class LoginController : Controller
 {
     private readonly RecoveryPasswordService _recoveryPasswordService;
-    private readonly UserService _UserService;
+    private readonly UserService _userService;
+    private readonly LoginService _loginService;
+    private readonly AuthenticationUserService _authenticationUserService;
 
-    public LoginController(RecoveryPasswordService recoveryPasswordService, UserService userService)
+    public LoginController(RecoveryPasswordService recoveryPasswordService,
+                           UserService userService, 
+                           LoginService loginService, 
+                           AuthenticationUserService authenticationUserService)
     {
         _recoveryPasswordService = recoveryPasswordService;
-        _UserService = userService;
+        _userService = userService;
+        _loginService = loginService;
+        _authenticationUserService = authenticationUserService;
     }
+
     public IActionResult Login()
     {
-        if (SessionHelper.IsUserLoggedIn())
-            return RedirectToAction("Index", "Home");
-        else
-            return View();
+        return SessionHelper.IsUserLoggedIn()
+            ? RedirectToAction("Index", "Home")
+            : View();
     }
 
     public IActionResult RecoveryPassword()
     {
-        if (SessionHelper.IsUserLoggedIn())
-            return RedirectToAction("Index", "Home");
-        else
-            return View();
-    }
-    public IActionResult teste()
-    {
-            return View();
+        return (SessionHelper.IsUserLoggedIn() ?
+            RedirectToAction("Index", "Home") :
+            View());
     }
 
-    public bool Logar([FromBody] loginDto login)
-    {
-        LoginService loginService = new LoginService();
-        Client clientLoggedIn = loginService.LoginValidate(login);
-        SessionHelper.UserId = clientLoggedIn.id;
-        SessionHelper.UserName = clientLoggedIn.nome == null ? string.Empty: clientLoggedIn.nome;
-        SessionHelper.UserType = clientLoggedIn.tipoUsuario.ToString();
-
-        return SessionHelper.IsUserLoggedIn(); 
-    }
-
-    public void Logout()
-    {
-        SessionHelper.ClearSession();
-    }
-    public bool IsUserLoggedIn()
-    {
-        return SessionHelper.IsUserLoggedIn();
-    }
-    public bool IsUserMaster()
+    public bool LoginUser([FromBody] loginDto login)
     {
         try
         {
-            return SessionHelper.IsMasterUser();
+            SessionHelper.StartSessionLogger(_loginService.LoginValidate(login));
+            return SessionHelper.IsUserLoggedIn();
         }
         catch (Exception ex)
         {
@@ -75,15 +58,17 @@ public class LoginController : Controller
         }
     }
 
-    public bool CallRecoveryPassword([FromBody] string login)
+    public void Logout()
+    {
+        SessionHelper.ClearSession();
+    }
+
+    public bool SendRecoveryCode([FromBody] string login)
     {
         try
         {
             Client user = _recoveryPasswordService.LoginConfirm(login);
-            if (user != null)
-                return _recoveryPasswordService.SendCodConfirm(user);
-            else
-                return false;
+            return user != null ? _recoveryPasswordService.SendCodConfirm(user) : false;
         }
         catch (Exception ex)
         {
@@ -104,7 +89,7 @@ public class LoginController : Controller
         }
     }
 
-    public void ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+    public void ChangePassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
         try
         {
@@ -129,32 +114,11 @@ public class LoginController : Controller
     {
         var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        if (!authenticateResult.Succeeded)
-            return RedirectToAction("Login");
+        bool userAuthenticated = _authenticationUserService.AuthenticateGoogleUser(authenticateResult);
 
-        var claims = authenticateResult.Principal.Identities
-                          .FirstOrDefault()?.Claims.Select(c => new { c.Type, c.Value });
-
-        Client user = new Client();
-        user.email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-        Client userFound = _UserService.GetUser(user); 
-
-        if (userFound == null)
-        {
-            user.nome = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            user.tipoUsuario = TipoUsuarioEnum.Cliente;
-            _UserService.InsertOrUpdateUser(user);
-        }
-        else
-        {
-            user = userFound;
-            SessionHelper.UserId = user.id;
-            SessionHelper.UserName = user.nome == null ? string.Empty : user.nome;
-            SessionHelper.UserType = user.tipoUsuario.ToString();
-        }
-
-
-        return RedirectToAction("Login", "Login");
+        return userAuthenticated
+            ? RedirectToAction("Index", "Home")
+            : RedirectToAction("Login", "Login");
     }
+
 }

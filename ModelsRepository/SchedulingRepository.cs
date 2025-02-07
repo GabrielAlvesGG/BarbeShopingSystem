@@ -1,5 +1,4 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.Data;
+﻿using BarberShopSystem.Data;
 using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
 using Microsoft.AspNetCore.Mvc;

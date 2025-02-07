@@ -1,5 +1,4 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.Helpers;
+﻿using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Google.Protobuf.WellKnownTypes;

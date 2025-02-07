@@ -29,9 +29,12 @@
                             <div>
                                 <label>Selecione o serviço</label>
                                 <select class="form-select" v-model="selectedService">
-                                    <option v-for="customer in CustomersList" :value="customer.idCustomers">{{customer.name}} valor {{customer.price}}</option>
+                                    <option v-for="customer in CustomersList" :value="customer.id">{{customer.name}} valor {{customer.price}}</option>
                                     <
                                 </select>
+                                <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
+                                    Selecione um serviço !
+                                </div>
                             </div>
                         </div>
                         <div >
@@ -134,6 +137,7 @@
                 userLogged: false,
                 CustomersList:[],
                 selectedService: 0,
+                alertSelectCustomerInvalidade:false
             }
         },
         methods: {
@@ -158,6 +162,11 @@
                 if(this.userLogged){
                     let time = horario;
 
+                    if(this.selectedService == 0){
+                        this.alertSelectCustomerInvalidade = true;
+                        return;
+                    }
+                        
 
                     const appointmentsDTO  = {
                         dateTime :time,
@@ -178,6 +187,7 @@
                             confirmButtonText: 'Ok',
                             footer: 'Verifique os dados preenchidos'
                         });
+                        this.alertSelectCustomerInvalidade = false;
                         this.GetScheduling();
                     })
                     .catch(error => {
@@ -194,7 +204,7 @@
                 return horario.slice(0, -3);
             },
             LoggedInClient(){ // passo 4 : vai até o back-end verificar qual é a situação do usuário no momento se ele está logado ou não 
-                   axios.post('/Login/IsUserLoggedIn')
+                   axios.post('/Session/IsUserLoggedIn')
                 .then(response => {
                   this.userLogged = response.data;  // passo 5 : Armazena a situação atual, deixando true se ele estiver logado e false se estiver como um usuário anônimo
                   

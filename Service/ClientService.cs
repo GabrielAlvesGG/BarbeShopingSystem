@@ -1,5 +1,4 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.ModelsRepository;
+﻿using BarberShopSystem.ModelsRepository;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 

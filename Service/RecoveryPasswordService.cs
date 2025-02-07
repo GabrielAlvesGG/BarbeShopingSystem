@@ -1,5 +1,4 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.Helpers;
+﻿using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Microsoft.Extensions.Configuration;
@@ -14,11 +13,18 @@ public class RecoveryPasswordService
 {
     private readonly EmailService _emailService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly UserRepository _userRepository;
+    private readonly RecoveryPasswordRepository _recoveryPasswordRepository;
 
-    public RecoveryPasswordService( EmailService emailService, IHttpContextAccessor httpContextAccessor)
+    public RecoveryPasswordService( EmailService emailService,
+                                    IHttpContextAccessor httpContextAccessor,
+                                    UserRepository userRepository,
+                                    RecoveryPasswordRepository recoveryPasswordRepository)
     {
         _emailService = emailService;
         _httpContextAccessor = httpContextAccessor;
+        _userRepository = userRepository;
+        _recoveryPasswordRepository = recoveryPasswordRepository;
     }
 
 
@@ -26,16 +32,9 @@ public class RecoveryPasswordService
     {
         try
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration configuration = builder.Build();
-
-            UserRepository loginRepository = new UserRepository(configuration);
             Client user = new Client();
             user.email = login;
-            return  loginRepository.GetUser(user);
-
+            return _userRepository.GetUser(user);
         }
 		catch (Exception ex)
 		{
@@ -47,11 +46,7 @@ public class RecoveryPasswordService
     public bool SendCodConfirm(Client user) {
         try
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration configuration = builder.Build();
-            ProcessingConfirmationCode(user, configuration);
+            ProcessingConfirmationCode(user);
 
             return true;
         }
@@ -62,32 +57,39 @@ public class RecoveryPasswordService
         }
     }
 
-    private async Task ProcessingConfirmationCode(Client user, IConfiguration configuration)
+    private async Task ProcessingConfirmationCode(Client user)
     {
-        var resetToken = new RecoveryPassword
+        try
         {
-            email = user.email,
-            token = CreateToken(),
-            expiration = DateTime.UtcNow.AddMinutes(30),
-            used = false,
-            idUser = user.id
-        };
+            var resetToken = new RecoveryPassword
+            {
+                email = user.email,
+                token = CreateToken(),
+                expiration = DateTime.UtcNow.AddMinutes(30),
+                used = false,
+                idUser = user.id
+            };
 
-        new RecoveryPasswordRepository(configuration).SaveRecoveryRequest(resetToken);
-        var request = _httpContextAccessor.HttpContext?.Request;
-        if (request == null)
-        {
-            throw new InvalidOperationException("HttpContext não está disponível.");
+            _recoveryPasswordRepository.SaveRecoveryRequest(resetToken);
+            var request = _httpContextAccessor.HttpContext?.Request;
+            if (request == null)
+            {
+                throw new InvalidOperationException("HttpContext não está disponível.");
+            }
+
+            string baseUrl = $"{request.Scheme}://{request.Host}";
+            string resetLink = $"{baseUrl}/Login/RecoveryPassword?token={resetToken.token}";
+
+            // Envia o e-mail com o link de recuperação
+            string subject = "Recuperação de Senha";
+            string body = $"Clique no link para redefinir sua senha: <a href='{resetLink}'>Redefinir Senha</a>";
+            await _emailService.SendEmailAsync(resetToken.email, subject, body);
         }
-
-        string baseUrl = $"{request.Scheme}://{request.Host}";
-        string resetLink =  $"{baseUrl}/Login/RecoveryPassword?token={resetToken.token}";
-
-        // Envia o e-mail com o link de recuperação
-        string subject = "Recuperação de Senha";
-        string body = $"Clique no link para redefinir sua senha: <a href='{resetLink}'>Redefinir Senha</a>";
-        await _emailService.SendEmailAsync(resetToken.email, subject, body);
-
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 
     private static string CreateToken()
@@ -99,12 +101,7 @@ public class RecoveryPasswordService
     {
         try
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration configuration = builder.Build();
-            return new RecoveryPasswordRepository(configuration).ValidateToken(token);
-            
+            return _recoveryPasswordRepository.ValidateToken(token);
         }
         catch (Exception ex)
         {
@@ -117,14 +114,10 @@ public class RecoveryPasswordService
     {
         try
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration configuration = builder.Build();
-            Client userResetPassword = new RecoveryPasswordRepository(configuration).FindUserByResetToken(resetPasswordDto.token);
+            Client userResetPassword = _recoveryPasswordRepository.FindUserByResetToken(resetPasswordDto.token);
             userResetPassword.senha = resetPasswordDto.password;
-            new UserRepository(configuration).UpdatePassword(userResetPassword);
-            new RecoveryPasswordRepository(configuration).UpdateTokenUsed(resetPasswordDto.token);
+            _userRepository.UpdatePassword(userResetPassword);
+            _recoveryPasswordRepository.UpdateTokenUsed(resetPasswordDto.token);
         }
         catch (Exception ex)
         {

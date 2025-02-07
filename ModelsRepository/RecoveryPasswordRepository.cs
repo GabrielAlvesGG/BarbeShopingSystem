@@ -1,9 +1,8 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.Data;
+﻿using BarberShopSystem.Data;
 using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
 using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
+//using MySqlX.XDevAPI;
 
 namespace BarberShopSystem.ModelsRepository;
 
@@ -71,11 +70,11 @@ public class RecoveryPasswordRepository : DataBaseRepository
 			throw;
 		}
     }
-    public BarberShopSyste.Models.Client FindUserByResetToken(string tokenUser)
+    public Client FindUserByResetToken(string tokenUser)
     {
         try
         {
-            BarberShopSyste.Models.Client user = new BarberShopSyste.Models.Client();
+            Client user = new Client();
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -86,7 +85,7 @@ public class RecoveryPasswordRepository : DataBaseRepository
                 {
                     if (reader.Read())
                     {
-                        user = new BarberShopSyste.Models.Client()
+                        user = new Client()
                         {
                             id = reader.GetInt32("Id")
                         };

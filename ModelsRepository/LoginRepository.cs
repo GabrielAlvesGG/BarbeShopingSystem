@@ -2,7 +2,6 @@
 using MySql.Data.MySqlClient;
 using BarberShopSystem.Models;
 using System.Data;
-using BarberShopSyste.Models;
 using BarberShopSystem.Enums;
 
 

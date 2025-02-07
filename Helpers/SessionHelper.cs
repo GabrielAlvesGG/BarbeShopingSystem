@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BarberShopSystem.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BarberShopSystem.Helpers
 {
@@ -38,12 +39,27 @@ namespace BarberShopSystem.Helpers
             Session.Clear();
         }
         public static bool IsUserLoggedIn()
-        {
+        {   
             return SessionHelper.UserId != 0 && SessionHelper.UserId != null;
         }
         public static bool IsMasterUser()
         {
             return SessionHelper.UserType == "Administrador";
+        }
+
+        public static void StartSessionLogger(Client clientLoggedIn)
+        {
+            try
+            {
+                SessionHelper.UserId = clientLoggedIn.id;
+                SessionHelper.UserName = clientLoggedIn.nome == null ? string.Empty : clientLoggedIn.nome;
+                SessionHelper.UserType = clientLoggedIn.tipoUsuario.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

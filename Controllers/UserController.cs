@@ -1,4 +1,4 @@
-﻿using BarberShopSyste.Models;
+﻿using BarberShopSystem.Models;
 using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 

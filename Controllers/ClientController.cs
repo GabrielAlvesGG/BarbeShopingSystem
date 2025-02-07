@@ -3,7 +3,6 @@ using BarberShopSystem;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BarberShopSystem.ModelsRepository;
-using BarberShopSyste.Models;
 
 namespace BarberShopSystem.Controllers
 {

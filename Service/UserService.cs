@@ -1,5 +1,4 @@
-﻿using BarberShopSyste.Models;
-using BarberShopSystem.Enums;
+﻿using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 
@@ -55,7 +54,7 @@ public class UserService
         }
         catch (Exception ex)
         {
-
+            Console.WriteLine(ex.Message);
             throw;
         }
     }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting.Server;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using BarberShopSystem.ModelsRepository;
-using BarberShopSyste.Models;
 using System.Threading;
 using BarberShopSystem.Enums;
 

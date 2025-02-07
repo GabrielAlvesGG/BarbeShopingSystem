@@ -19,7 +19,6 @@ builder.Services.AddScoped<DataBaseRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<RecoveryPasswordService>();
 builder.Services.AddScoped<EmailService>(); 
-builder.Services.AddScoped<RecoveryPasswordService>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingRepository>();
@@ -28,8 +27,12 @@ builder.Services.AddScoped<AppointmentsRepository>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<RecoveryPasswordRepository>();
+builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<AuthenticationUserService>();
 
 
+// Configurar autenticação com Google
 
 
 var app = builder.Build();

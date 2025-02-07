@@ -2,7 +2,7 @@ using BarberShopSystem;
 using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
 
-namespace BarberShopSyste.Models;
+namespace BarberShopSystem.Models;
 
 public class Client
 {

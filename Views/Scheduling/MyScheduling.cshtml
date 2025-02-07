@@ -202,7 +202,7 @@
                 return horario.slice(0, -3);
             },
             LoggedInClient(){ // passo 4 : vai até o back-end verificar qual é a situação do usuário no momento se ele está logado ou não 
-                   axios.post('/Login/IsUserLoggedIn')
+                   axios.post('/Session/IsUserLoggedIn')
                 .then(response => {
                   this.userLogged = response.data;  // passo 5 : Armazena a situação atual, deixando true se ele estiver logado e false se estiver como um usuário anônimo
                   if(this.userLogged)

@@ -17,44 +17,6 @@ namespace BarberShopSystem.Controllers
             return View();
         }
 
-        //public void InsertBarber([FromBody] Barber barber)
-        //{
-        //    try
-        //    {
-        //        new BarberService().InsertOrUpdateBarber(barber);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //        throw;
-        //    }
-        //}
-        //public List<Barber> ListAllBarbers()
-        //{
-        //    try
-        //    {
-        //        return new BarberService().ListAllBarber(); 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //        throw;
-        //    }
-        //}
-
-        //public Barber EditBarber([FromBody] int idOldBarber)
-        //{
-        //    try
-        //    {
-        //        return new BarberService().GetBarber(idOldBarber);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //        throw;
-        //    }
-        //}
         public void DeleteBarber([FromBody] int idBarber)
         {
             try
