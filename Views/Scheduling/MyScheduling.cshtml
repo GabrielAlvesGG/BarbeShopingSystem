@@ -15,6 +15,8 @@
                         <table class="table table-striped table-hover table-bordered">
                         <tr>
                             <th>Id</th>
+                                <th v-show="showNameBarber">Barbeiro</th>
+                                <th v-show="!showNameBarber">Cliente</th>
                             <th>Descrição</th>
                             <th>Horario</th>
                             <th>Valor</th>
@@ -23,11 +25,12 @@
                         </tr>
                             <tr v-for="(appoint, index) in appointmentsList" :accesskey="appoint.idAppointments">
                                 <td>{{appoint.idAppointments}}</td>
+                                <td>{{appoint.nameShowBarberOrCliente}}</td>
                                 <td>{{appoint.customer.description}}</td>
                                 <td>{{formatedDateTime(appoint.dateTime)}}</td>
                                 <td>R${{appoint.customer.price}}</td>
                                 <td>{{appoint.statusAppointment}}</td>
-                                <td><button type="button" class="btn btn-danger text-white" v-on:Click="GetIdAppointment(appoint.idAppointments)" data-bs-toggle="modal" data-bs-target="#CancelAppointmentsModal">Cancelar Agendamentos </button></td>
+                                <td><button type="button" class="btn btn-success text-white" v-show="!showNameBarber && appoint.statusAppointment != 'Confirmado'" v-on:Click="ConfirmeAppointments(appoint.idAppointments)" >Confirme</button><button type="button" class="btn btn-danger text-white" v-on:Click="GetIdAppointment(appoint.idAppointments)" data-bs-toggle="modal" data-bs-target="#CancelAppointmentsModal">Cancelar Agendamentos </button></td>
                         </tr>
                     </table>
                     </div>
@@ -143,6 +146,8 @@
                 userLogged: false,
                 CustomersList:[],
                 selectedService: 0,
+                showNameBarber: false,
+                showButtonConfirm: false,
             }
         },
         methods: {
@@ -150,12 +155,12 @@
                 // Remove seconds from the time string
                 return horario.slice(0, -3);
             },
-            LoggedInClient(){ // passo 4 : vai até o back-end verificar qual é a situação do usuário no momento se ele está logado ou não 
+            LoggedInClient(){
                    axios.post('/Session/IsUserLoggedIn')
                 .then(response => {
-                  this.userLogged = response.data;  // passo 5 : Armazena a situação atual, deixando true se ele estiver logado e false se estiver como um usuário anônimo
+                  this.userLogged = response.data;  
                   if(this.userLogged)
-                        this.hasScheduling(); // passo 6 : caso esteja com um login ativo o sistema ira verificar quais são os agendamentos referente a esse usuário.
+                        this.hasScheduling();
                   
                 })
                 .catch(error => {
@@ -163,15 +168,17 @@
                 });
             },
             hasScheduling(){
-                      axios.get('/Scheduling/HasSchelulingClient',)// passo 7 : vai no back-end buscar todos os agendamentos referente ao usuário que está logado.
+                      axios.get('/Scheduling/HasSchelulingClient',)
                 .then(response => {
-
-                  if( response.data.length > 0 ){
-                       this.appointmentsList = response.data;
+                    var result = JSON.parse(response.data)
+                  if( result.appointiments.length > 0 ){
+                       this.appointmentsList = result.appointiments;
+                       this.showNameBarber = result.showNameBarber;
                        this.isAppointmentCancellationVisible = true;
                   }
                   else {
-                      this.appointmentsList = response.data;
+                       this.appointmentsList = result.appointiments;
+                       this.showNameBarber = result.showNameBarber;
                        this.isAppointmentCancellationVisible = false;
                   }
                 })
@@ -234,6 +241,25 @@
             formatedDateTime(date){
                     const dateTime = new Date(date);
                     return dateTime.toLocaleString('pt-BR');
+            },
+            ConfirmeAppointments(idAppointment){
+                   axios.post('/Scheduling/ConfirmeAppointment', idAppointment,
+                   { headers : { 'Content-Type': 'application/json' }})
+                .then(response => {
+                   
+                       Swal.fire({
+                        title: 'Agendamento Foi confirmado',
+                        text: 'O agendamento foi confirmado com sucesso!',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        footer: 'Confirmado com sucesso!'
+
+                        })
+                        this.hasScheduling();
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar horários:', error);
+                });
             }
         },
         mounted() {

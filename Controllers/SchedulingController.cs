@@ -77,5 +77,19 @@ public class SchedulingController : Controller
             throw;
         }
     }
+    [HttpPost("ConfirmeAppointment")]
+    public IActionResult ConfirmeAppointment([FromBody]int idAppointment)
+    {
+        try
+        {
+            _schedulingService.ConfirmeAppointment(idAppointment);
+            return Ok();
+        }
+        catch (Exception ex) 
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
 }
 

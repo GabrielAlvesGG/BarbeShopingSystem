@@ -2,6 +2,7 @@
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Google.Protobuf.WellKnownTypes;
+using System.Collections.Generic;
 using System.Text.Json;
 using static BarberShopSystem.ModelsRepository.AppointmentsRepository;
 
@@ -49,9 +50,6 @@ public class SchedulingService
 
                 if (match)
                     agendamento.barbersIds.Add(appointments.Where(a => a.dateTime.TimeOfDay == agendamento.time).FirstOrDefault().barber.id);
-                
-                
-                
             }
 
            
@@ -107,11 +105,21 @@ public class SchedulingService
         }
     }
 
-    public List<Appointments> HasClientScheduling(int userId)
+    public string HasClientScheduling(int userId)
     {
         try
-        {   
-            return _appointmentsRepository.HasClientScheduling(userId);
+        {
+            List<Appointments> appointiments = _appointmentsRepository.HasClientScheduling(userId);
+
+            var jsonAppointiments = new
+            {
+
+                appointiments = appointiments,
+                showNameBarber = appointiments.Any(a => a.showNameBarber == true) 
+            };
+
+
+            return JsonSerializer.Serialize(jsonAppointiments);
         }
         catch (Exception ex)
         {
@@ -125,6 +133,20 @@ public class SchedulingService
         try
         {
             return _appointmentsRepository.CancelAppointment(idAppointment);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    internal void ConfirmeAppointment(int idAppointment)
+    {
+        try
+        {
+            _appointmentsRepository.ConfirmeAppointments(idAppointment);
+            _appointmentsRepository.RegisterConfirmeOrCancelAppointments(idAppointment);
         }
         catch (Exception ex)
         {
