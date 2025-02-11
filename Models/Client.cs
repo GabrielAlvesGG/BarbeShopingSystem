@@ -15,9 +15,9 @@ public class Client
     public TipoUsuarioEnum tipoUsuario { get; set; }
     
     public  DateTime dataCriacao {get ; set;} 
-    public  string telefone {get ; set;} 
+    public  string telefone {get ; set;}
 
-    public Barber barber { get; set;} 
-    public Cliente client { get; set;} 
+    public Barber barber { get; set; } = new Barber();
+    public Cliente client { get; set; } = new Cliente();
 }
 

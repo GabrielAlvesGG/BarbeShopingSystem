@@ -252,4 +252,45 @@ public class UserRepository : DataBaseRepository
         
 
     }
+
+    public List<Client> ListAllBarber()
+    {
+        try
+        {
+            MySqlConnection connection = GetConnection();
+            connection.Open();
+            var command = new MySqlCommand("select * from barbeiros b inner join usuarios u  on u.id = b.usuarioId ;", connection);
+            var reader = command.ExecuteReader();
+
+            List<Client> BarberObj = new List<Client>();
+
+            while (reader.Read())
+            {
+                BarberObj.Add(new Client
+                {
+                    id = reader.GetInt32("Id"),
+                    nome = reader.GetString("Nome"),
+                    email = reader.GetString("Email"),
+                    telefone = reader.GetString("Telefone"),
+                    dataCriacao = reader.GetDateTime("DataCriacao"),
+                    barber = new Barber
+                    {
+                        id = reader.GetInt32("Id"),
+                        usuarioId = reader.GetInt32("UsuarioId"),
+                        especialidade = reader.GetString("Especialidades"),
+                        disponibilidade = reader.GetString("Disponibilidade")
+                    }
+
+                });
+            }
+            connection.Close();
+            return BarberObj;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+
+    }
 }

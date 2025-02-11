@@ -10,21 +10,27 @@ public class AppointmentsRepository : DataBaseRepository
     public AppointmentsRepository(IConfiguration configuration) : base(configuration)
     {
     }
-    internal List<DateTime> AppointmentsMade()
+    internal List<Appointments> AppointmentsMade()
     {
         try
         {
-            List<DateTime> appointMentss = new List<DateTime>();
+            List<Appointments> appointMentss = new List<Appointments>();
             var connection = GetConnection();
             connection.Open();
-            var command = new MySqlCommand("SELECT DataHorario FROM Agendamentos WHERE DataHorario BETWEEN @StartDay AND @EndDay AND Status <> 'Cancelado';", connection);
+            var command = new MySqlCommand("SELECT DataHorario, BarbeiroId FROM Agendamentos WHERE DataHorario BETWEEN @StartDay AND @EndDay AND Status <> 'Cancelado';", connection);
             command.Parameters.AddWithValue("@StartDay", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             command.Parameters.AddWithValue("@EndDay", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"));
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    appointMentss.Add(reader.GetDateTime("DataHorario"));
+                    appointMentss.Add(new Appointments { 
+                     dateTime =  reader.GetDateTime("DataHorario"),
+                     barber = new Barber
+                     {
+                         id = reader.GetInt32("BarbeiroId")
+                     },
+                    });
                 }
             }
             connection.Close();
@@ -49,7 +55,7 @@ public class AppointmentsRepository : DataBaseRepository
 
             var connection = GetConnection();
             connection.Open();
-            var command = new MySqlCommand("SELECT a.Id as Id, a.DataHorario as DataHorario, s.Descricao as Descricao, s.Preco as Preco FROM Agendamentos a inner join clientes c on c.Id = a.ClienteId inner join servicos s on s.Id = a.ServicoId  WHERE c.UsuarioId=@UsuarioId AND  a.DataHorario > @ComparisonDeadline AND a.status<>'Cancelado'", connection);
+            var command = new MySqlCommand("SELECT a.Id as Id, a.DataHorario as DataHorario,a.Status as Status, s.Descricao as Descricao, s.Preco as Preco FROM Agendamentos a inner join clientes c on c.Id = a.ClienteId inner join servicos s on s.Id = a.ServicoId  WHERE c.UsuarioId=@UsuarioId AND  a.DataHorario > @ComparisonDeadline AND a.status<>'Cancelado'", connection);
             command.Parameters.AddWithValue("@ComparisonDeadline", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             command.Parameters.AddWithValue("@UsuarioId", userId);
             using (var reader = command.ExecuteReader())
@@ -62,6 +68,7 @@ public class AppointmentsRepository : DataBaseRepository
                     appointment.dateTime = reader.GetDateTime("DataHorario");
                     appointment.customer.description = reader.GetString("Descricao");
                     appointment.customer.price = reader.GetDouble("Preco");
+                    appointment.statusAppointment = reader.GetString("Status");
                     appointments.Add(appointment);
 
                 }

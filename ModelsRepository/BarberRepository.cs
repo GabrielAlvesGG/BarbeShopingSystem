@@ -1,6 +1,8 @@
 ﻿using BarberShopSystem.Data; // Adicione esta linha, substitua pelo namespace correto
 using MySql.Data.MySqlClient;
 using BarberShopSystem.ModelsRepository;
+using BarberShopSystem.Models;
+using System.Threading;
 
 namespace BarberShopSystem.ModelsRepository
 {
@@ -33,40 +35,7 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
         }
-        //public List<Barber> ListAllBarber()
-        //{
-        //    try
-        //    {
-        //        MySqlConnection connection = GetConnection();
-        //        connection.Open();
-        //        var command = new MySqlCommand("SELECT * FROM Barber", connection);
-        //        var reader = command.ExecuteReader();
-
-        //        List<Barber> Barber = new List<Barber>();
-
-        //        while (reader.Read())
-        //        {
-        //            Barber.Add(new Barber
-        //            {
-        //                Id = reader.GetInt32("Id"),
-        //                Name = reader.GetString("Name"),
-        //                Email = reader.GetString("Email"),
-        //                cpf = reader.GetString("CpfCnpj"),
-        //                DateOfBirth = reader.GetDateTime("DateOfBirth"),
-        //                PassWord = reader.GetString("PassWord"),
-        //                Phone = reader.GetString("Phone")
-        //            });
-        //        }
-        //        connection.Close();
-        //        return Barber;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //        throw ;
-        //    }
-
-        //}
+        
 
         //public Barber GetBarber(int idOldBarber)
         //{

@@ -6,6 +6,23 @@
 <div id="scheduling" class="container">
     <div class="row">
         <div class="col-md-4 col-lg-5 order-md-last">
+            <div class="card-body">
+                <div class="row">
+                    <h1>Barbeiros</h1>
+                    <div>
+                        <label>Selecione um barbeiro</label>
+                        <select class="form-select" v-model="selectedBarber" v-on:Change="FormShowScheduling()">
+                            <option value="0">Selecione um barbeiro</option>
+                            <option v-for="barber in BarberList" :value="barber.barber.id">{{barber.nome}}</option>
+                        </select>
+                        <div class="alert alert-danger mt-2" v-show="alertSelectBarbereInvalidade" role="alert">
+                            Selecione um Barbeiro !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-5 order-md-last" v-show="showScheduling">
             <div class="card card-shadow-1 mb-1">
                 <div class="card-header calendar-header">
                     <h3 class="card-title flex-grow-1 mb-0 w-100">Agendar Corte/ Serviço</h3>
@@ -29,14 +46,16 @@
                             <div>
                                 <label>Selecione o serviço</label>
                                 <select class="form-select" v-model="selectedService">
+                                    <option :value="0">Selecione um serviço</option>
                                     <option v-for="customer in CustomersList" :value="customer.id">{{customer.name}} valor {{customer.price}}</option>
-                                    <
+                                    
                                 </select>
                                 <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
                                     Selecione um serviço !
                                 </div>
                             </div>
-                        </div>
+                        </div>   
+                      
                         <div >
                             <button v-on:click="selecionarHorario(horario.time)">
                                 Agendar
@@ -136,8 +155,12 @@
                 possibleCancelAppointment: 0,
                 userLogged: false,
                 CustomersList:[],
+                BarberList: [],
                 selectedService: 0,
-                alertSelectCustomerInvalidade:false
+                selectedBarber: 0,
+                alertSelectCustomerInvalidade:false,
+                alertSelectBarbereInvalidade:false,
+                showScheduling: false,
             }
         },
         methods: {
@@ -151,26 +174,40 @@
                         confirmButtonText: 'Ok',
                         footer: 'Verifique os dados preenchidos'
                     });
-                    this.listaDeHorarios = response.data; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
+                    var result = JSON.parse(response.data);
+                    this.listaDeHorarios = result.schedules; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
+                    this.BarberList = result.clients; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
                     this.LoggedInClient();// passo 3 : Verifica se o usuário está logado
+                    this.FormShowScheduling();
                 })
                 .catch(error => {
                     console.error('Erro ao carregar horários:', error);
                 });
             },
             selecionarHorario(horario) {
+                this.resetAlertMeessage();
                 if(this.userLogged){
                     let time = horario;
 
                     if(this.selectedService == 0){
                         this.alertSelectCustomerInvalidade = true;
+                        if(this.selectedBarber == 0)
+                            this.alertSelectBarbereInvalidade = true;
+
                         return;
                     }
+                    if(this.selectedBarber == 0){
+                        this.alertSelectBarbereInvalidade = true;
+                        return;
+                    }
+                        
+
                         
 
                     const appointmentsDTO  = {
                         dateTime :time,
                         customerId: this.selectedService,
+                        barberId: this.selectedBarber,
                     };
 
 
@@ -188,6 +225,7 @@
                             footer: 'Verifique os dados preenchidos'
                         });
                         this.alertSelectCustomerInvalidade = false;
+                        this.alertSelectBarbereInvalidade = false; 
                         this.GetScheduling();
                     })
                     .catch(error => {
@@ -232,7 +270,35 @@
             formatedDateTime(date){
                     const dateTime = new Date(date);
                     return dateTime.toLocaleString('pt-BR');
+            },
+            resetAlertMeessage(){
+                this.alertSelectCustomerInvalidade =false;
+                this.alertSelectBarbereInvalidade = false;
+            },
+            FormShowScheduling(){
+                if(this.selectedBarber != "0"){
+                    this.showScheduling = true;
+                    this.schedulingFree();
+                }
+                else
+                    this.showScheduling = false;
+            },
+            schedulingFree(){
+                   this.listaDeHorarios.forEach(obj => {
+                        if (obj.barbersIds.some(num => num === this.selectedBarber)) {
+                            obj.free = false;
+                        }
+                        else {
+                            if(obj.timeHasPassed == true){
+                                obj.free= false ;
+                            }
+                            else{
+                                obj.free = true;
+                            }
+                        }
+                    });
             }
+
         },
         mounted() {
             this.GetServices();

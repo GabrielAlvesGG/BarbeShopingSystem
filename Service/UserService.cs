@@ -58,4 +58,17 @@ public class UserService
             throw;
         }
     }
+
+    public List<Client> GetAllBarbers()
+    {
+        try
+        {
+            return _userRepository.ListAllBarber();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
 }

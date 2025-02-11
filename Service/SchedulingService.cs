@@ -2,6 +2,7 @@
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Google.Protobuf.WellKnownTypes;
+using System.Text.Json;
 using static BarberShopSystem.ModelsRepository.AppointmentsRepository;
 
 namespace BarberShopSystem.Service;
@@ -21,7 +22,7 @@ public class SchedulingService
         _clientRepository = clientRepository;
     }
 
-    public List<Schedules> GetScheduling()
+    public string GetScheduling()
     {
 		try
 		{
@@ -34,27 +35,40 @@ public class SchedulingService
                 schedules.Add(new Schedules()
                 {
                     free = freeAppointiments,
-                    time = item
+                    time = item,
+                    timeHasPassed = freeAppointiments == true ? false : true
                 });
             }
-            List<DateTime> appointments = _appointmentsRepository.AppointmentsMade();
+            List<Appointments> appointments = _appointmentsRepository.AppointmentsMade();
+            List<Client> clients = _userRepository.ListAllBarber();
 
             foreach (var agendamento in schedules)
             {
 
-                bool match = appointments.Any(a => a.TimeOfDay == agendamento.time);
+                bool match = appointments.Any(a => a.dateTime.TimeOfDay == agendamento.time);
 
                 if (match)
-                    agendamento.free = false;
+                    agendamento.barbersIds.Add(appointments.Where(a => a.dateTime.TimeOfDay == agendamento.time).FirstOrDefault().barber.id);
+                
+                
                 
             }
 
-            return schedules;
+           
+
+
+            var jsonObject  = new
+            {
+                schedules = schedules,
+                clients = clients
+            };
+
+            return JsonSerializer.Serialize(jsonObject);
 
         }
 		catch (Exception ex)
 		{
-
+            Console.WriteLine(ex.Message);
 			throw;
 		}
     }
@@ -82,6 +96,7 @@ public class SchedulingService
             appointment.client.id = client.id;
             appointment.dateTime = DateTime.Now.Date + appointmentsDTO.dateTime;
             appointment.customer.id = appointmentsDTO.customerId;
+            appointment.barber.id = appointmentsDTO.barberId;
 
             _schedulingRepository.BookingATime(appointment);
         }

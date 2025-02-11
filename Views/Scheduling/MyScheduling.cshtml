@@ -18,6 +18,7 @@
                             <th>Descrição</th>
                             <th>Horario</th>
                             <th>Valor</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                             <tr v-for="(appoint, index) in appointmentsList" :accesskey="appoint.idAppointments">
@@ -25,8 +26,8 @@
                                 <td>{{appoint.customer.description}}</td>
                                 <td>{{formatedDateTime(appoint.dateTime)}}</td>
                                 <td>R${{appoint.customer.price}}</td>
+                                <td>{{appoint.statusAppointment}}</td>
                                 <td><button type="button" class="btn btn-danger text-white" v-on:Click="GetIdAppointment(appoint.idAppointments)" data-bs-toggle="modal" data-bs-target="#CancelAppointmentsModal">Cancelar Agendamentos </button></td>
-                                
                         </tr>
                     </table>
                     </div>
