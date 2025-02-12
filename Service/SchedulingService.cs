@@ -1,4 +1,5 @@
-﻿using BarberShopSystem.Helpers;
+﻿using BarberShopSystem.Enums;
+using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Google.Protobuf.WellKnownTypes;
@@ -14,13 +15,15 @@ public class SchedulingService
 	private readonly AppointmentsRepository _appointmentsRepository;
 	private readonly UserRepository _userRepository;
     private readonly ClientRepository _clientRepository;
+    private readonly HistoricalSchedulesRepository _historicalSchedulesRepository;
 
-	public SchedulingService(SchedulingRepository schedulingRepository, AppointmentsRepository appointmentsRepository,UserRepository userRepository, ClientRepository clientRepository)
+	public SchedulingService(SchedulingRepository schedulingRepository, AppointmentsRepository appointmentsRepository,UserRepository userRepository, ClientRepository clientRepository, HistoricalSchedulesRepository historicalSchedulesRepository)
     {
         _schedulingRepository = schedulingRepository;
         _appointmentsRepository = appointmentsRepository;
         _userRepository = userRepository;
         _clientRepository = clientRepository;
+        _historicalSchedulesRepository = historicalSchedulesRepository;
     }
 
     public string GetScheduling()
@@ -97,6 +100,8 @@ public class SchedulingService
             appointment.barber.id = appointmentsDTO.barberId;
 
             _schedulingRepository.BookingATime(appointment);
+
+            _historicalSchedulesRepository.RegisterConfirmeOrCancelAppointments(appointment.idAppointments, appointment, StatusAppointmentEnum.Pendente);
         }
         catch (Exception ex)
         {
@@ -132,7 +137,14 @@ public class SchedulingService
     {
         try
         {
-            return _appointmentsRepository.CancelAppointment(idAppointment);
+
+            Appointments oldAppointments = _appointmentsRepository.GetAppointmentsId(idAppointment);
+
+            bool appointmentsCanCancel = _appointmentsRepository.CancelAppointment(idAppointment);
+
+            _historicalSchedulesRepository.RegisterConfirmeOrCancelAppointments(idAppointment, oldAppointments, StatusAppointmentEnum.Cancelado);
+
+            return appointmentsCanCancel;
         }
         catch (Exception ex)
         {
@@ -145,8 +157,9 @@ public class SchedulingService
     {
         try
         {
+           Appointments oldAppointments = _appointmentsRepository.GetAppointmentsId(idAppointment); 
             _appointmentsRepository.ConfirmeAppointments(idAppointment);
-            _appointmentsRepository.RegisterConfirmeOrCancelAppointments(idAppointment);
+            _historicalSchedulesRepository.RegisterConfirmeOrCancelAppointments(idAppointment, oldAppointments, StatusAppointmentEnum.Confirmado);
         }
         catch (Exception ex)
         {

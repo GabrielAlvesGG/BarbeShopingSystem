@@ -174,28 +174,39 @@ public class AppointmentsRepository : DataBaseRepository
         }
     }
 
-    internal void RegisterConfirmeOrCancelAppointments(int idAppointment)
+    internal Appointments GetAppointmentsId(int idAppointment)
     {
         try
         {
-            MySqlConnection connection = GetConnection();
+         
+            Appointments appointment = new Appointments();
+
+            var connection = GetConnection();
             connection.Open();
-            string sqlCommand = string.Empty;
+            string query = "SELECT " + Environment.NewLine;
+            query += " * " + Environment.NewLine;
+            query += "FROM Agendamentos " + Environment.NewLine;
+            query += "WHERE id=@IdAppointment; " + Environment.NewLine;
 
-            sqlCommand = $"INSERT INTO AgendamentoHistorico (AgendamentoId, StatusAntigo, StatusNovo, Acao, UsuarioId, DataAcao)\r\nVALUES (@AgendamentoId, @StatusAntigo, @StatusNovo, @Acao, @UsuarioId, @DateTimeNow)";
-            var command = new MySqlCommand(sqlCommand, connection);
+            var command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@IdAppointment", idAppointment);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    
+                    appointment.idAppointments = reader.GetInt32("Id");
+                    appointment.client.id = reader.GetInt32("ClienteId");
+                    appointment.barber.id= reader.GetInt32("BarbeiroId");
+                    appointment.dateTime = reader.GetDateTime("DataHorario");
+                    appointment.statusAppointment = reader.GetString("Status");
 
-            command.Parameters.AddWithValue("@AgendamentoId", idAppointment);
-            command.Parameters.AddWithValue("@StatusAntigo", StatusAppointmentEnum.Pendente);
-            command.Parameters.AddWithValue("@StatusNovo", StatusAppointmentEnum.Confirmado);
-            command.Parameters.AddWithValue("@Acao", "Confirmando um agendamento");
-            command.Parameters.AddWithValue("@UsuarioId", SessionHelper.UserId);
-            command.Parameters.AddWithValue("@DateTimeNow", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-            
-
-            command.ExecuteReader();
+                }
+            }
             connection.Close();
+
+            return appointment;
+     
         }
         catch (Exception ex)
         {

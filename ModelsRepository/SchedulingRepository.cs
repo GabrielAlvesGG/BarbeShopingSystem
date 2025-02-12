@@ -60,6 +60,7 @@ namespace BarberShopSystem.ModelsRepository
                 command.Parameters.AddWithValue("@Status", "Pendente");
                 command.Parameters.AddWithValue("@BarbeariaId", 1);
                 command.ExecuteNonQuery();
+                appointments.idAppointments = GetLastInsertedId(connection);
                 connection.Close();
             }
             catch (Exception ex)
@@ -92,6 +93,10 @@ namespace BarberShopSystem.ModelsRepository
         //        return horariosDisponiveis;
         //    }
         //}
-
+        private int GetLastInsertedId(MySqlConnection connection)
+        {
+            var getIdCommand = new MySqlCommand("SELECT LAST_INSERT_ID();", connection);
+            return Convert.ToInt32(getIdCommand.ExecuteScalar()); // Executando o comando e pegando o ID inserido
+        }
     }
 }
