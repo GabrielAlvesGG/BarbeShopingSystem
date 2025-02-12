@@ -1,0 +1,116 @@
+﻿@using BarberShopSystem.Helpers
+@{
+    ViewData["Title"] = "Cadastro de Serviço";
+}
+<div id="RegisterServicesProvided" v-cloak>
+    <div class="container mt-5" >
+        <div class="row justify-content-center">
+            <div class="col-md-8 p-4 shadow-sm rounded bg-white">
+                <div class="col-12 text-center mb-4">
+                    <h1>Cadastro de Serviços</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name" class="form-label">Nome do Serviço:</label>
+                        <input type="text" v-model="form.name" class="form-control" id="form.name" placeholder="Nome" />@* Necessário colocar o v-model*@
+                        <div class="alert alert-danger mt-2" v-show="show.alertNameInvalidate" role="alert">
+                            É necessário preencher o nome do serviço.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="description" class="form-label">Descrição:</label>
+                        <input type="text" v-model="form.description"  id="description" class="form-control" placeholder="Descreva o serviço" /> @* Necessário colocar o v-model*@
+                        <div class="alert alert-danger mt-2" v-show="show.alertDescriptionInvalidate" role="alert">
+                            Está faltando a descrição.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="price" class="form-label">Price:</label>
+                        <input type="text" v-model="form.price" id="price" class="form-control" placeholder="Preço" />@* Necessário colocar o v-model*@
+                        <div class="alert alert-danger mt-2" v-show="show.alertPriceInvalidate" role="alert">
+                            O valor colocado no campo de preço está invalido!
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="button" class="btn btn-success btn-lg text-white" v-on:Click="registerServicesProvided()">Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/Helper.js?v=1.0.0"></script>
+<script>
+    var RegisterServicesProvided = new Vue({
+        el: '#RegisterServicesProvided',
+        data() {
+            return {
+                form:{
+                    name: '',
+                    description: '',
+                    price:''
+                },
+                show: {
+                    alertNameInvalidate : false,
+                    alertDescriptionInvalidate : false,
+                    alertPriceInvalidate : false,
+                }
+            }
+        },
+        methods: {
+            registerServicesProvided(){
+                if(this.ValidateForm()){
+
+                    var service = {
+                        name: this.form.name,
+                        description: this.form.description,
+                        price: this.form.price,
+                    }
+                    
+                    axios.post('/ServicesProvided/RegisterServer', service,
+                    {headers:{   'Content-Type': 'application/json'
+                    }})
+                    .then(response => {
+                            Swal.fire({
+                               title: 'Sucesso!',
+                               text: 'Serviço cadastrado com sucesso!',
+                               icon: 'success',
+                               confirmButtonText: 'Ok'
+                           });
+                    }).catch(error => {
+                        console.error('Erro ao cadastrar:', error);
+                      })
+                }
+            },
+            ValidateForm(){
+                const fields = {
+                 name: "alertNameInvalidate",
+                 description: "alertDescriptionInvalidate",
+                 price: "alertPriceInvalidate",
+             };
+
+             let fullForm = true;
+
+             for (const [field, alert] of Object.entries(fields)) {
+                  if (field === "address" && this.form[field] !== "2") {
+                       this.show[alert] = false;
+                        continue;
+                  }
+                 if (this.form[field] === "") {
+                     this.show[alert] = true;
+                     fullForm = false;
+                 } else {
+                     this.show[alert] = false;
+                 }
+             }
+
+             return fullForm;
+            }
+        }
+    });
+</script>

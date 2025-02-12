@@ -32,8 +32,8 @@ builder.Services.AddScoped<RecoveryPasswordRepository>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<AuthenticationUserService>();
 builder.Services.AddScoped<HistoricalSchedulesRepository>();
-
-
+builder.Services.AddScoped<ServicesProvidedService>();
+builder.Services.AddScoped<ServicesProvidedRepository>();
 
 
 

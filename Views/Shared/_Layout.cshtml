@@ -78,6 +78,16 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Serviços
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownList">
+                                        <li class="dropdown-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvided" asp-action="RegisterServicesProvided">Cadastrar Serviços</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                             <form class="d-flex">
                             <button class="btn btn-outline-success" type="button" v-on:click="Logout()" v-show="isLoggedIn">Sair </button>
