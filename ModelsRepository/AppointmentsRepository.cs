@@ -94,6 +94,11 @@ public class AppointmentsRepository : DataBaseRepository
             query += "a.DataHorario > @ComparisonDeadline" + Environment.NewLine; 
             query += "AND" + Environment.NewLine; 
             query += "a.status<>'Cancelado'" + Environment.NewLine; 
+            query += "AND" + Environment.NewLine; 
+            query += " ((@UsuarioId = b.UsuarioId AND uc.Nome IS NOT NULL) " + Environment.NewLine; 
+            query += " OR" + Environment.NewLine; 
+            query += "(@UsuarioId = c.UsuarioId AND ub.Nome IS NOT NULL)" + Environment.NewLine; 
+            query += ")" + Environment.NewLine; 
 
             var command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@ComparisonDeadline", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));

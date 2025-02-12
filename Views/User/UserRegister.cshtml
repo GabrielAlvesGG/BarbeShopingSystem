@@ -149,13 +149,17 @@
                  }})
                  .then(response => {
                       this.hideLoader();
-                      if(this.form.id ==0)
+                      if(this.form.id ==0){
                         Swal.fire({
                                title: 'Sucesso!',
                                text: 'Usuário cadastrado com sucesso!',
                                icon: 'success',
                                confirmButtonText: 'Ok'
                            });
+                              setTimeout(() => {
+                                             window.location.href = "/Login/Login";
+                                }, 3000);
+                      }
                            else
                              Swal.fire({
                                 title: 'Sucesso!',
