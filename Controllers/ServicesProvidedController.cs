@@ -60,4 +60,18 @@ public class ServicesProvidedController : Controller
             throw;
         }
     }
+    [HttpPost]
+    public IActionResult DeleteServices([FromBody] int idServices)
+    {
+        try
+        {
+            _servicesProvidedService.DeleteServieces(idServices);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
 }

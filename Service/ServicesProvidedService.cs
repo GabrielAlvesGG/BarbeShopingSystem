@@ -70,6 +70,19 @@ namespace BarberShopSystem.Service
                 throw;
             }
         }
+
+        internal void DeleteServieces(int idServices)
+        {
+            try
+            {
+                _servicesProvidedRepository.DeleteServices(idServices);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
     }
 }
 

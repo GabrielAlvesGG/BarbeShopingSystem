@@ -30,7 +30,7 @@
                         <td>{{service.price}}</td>
                         <td>
                             <button type="button" class="btn btn-primary text-white" v-on:Click="EditService(service)">Editar</button>
-                            <button type="button" class="btn btn-danger text-white" v-on:Click="GetIdService(service.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluir <i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn btn-danger text-white" v-on:Click="GetIdService(service.id)" data-bs-toggle="modal" data-bs-target="#DeleteServicesModal">Excluir <i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -44,19 +44,19 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+    <div class="modal fade" id="DeleteServicesModal" tabindex="-1" aria-labelledby="DeleteServicesModalLabel" aria-hidden="true" ref="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir?</h1>
-                    <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedClient()" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="DeleteServicesModalLabel">Deseja realmente excluir?</h1>
+                    <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedServices()" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Deseja excluir esse Serviço?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedClient()">Voltar</button>
-                    <button type="button" class="btn btn-danger" v-on:Click="DeleteClient()">Excluir</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedServices()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="DeleteServices()">Excluir</button>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
        data() {
          return {
              services:[],
-             possibleExcludedCustomer : 0,
+             possibleExcludedServices : 0,
              showPropts: {
                  listShow: false,
              },
@@ -101,17 +101,17 @@
          EditService(oldClient){
                 window.location.href = "/ServicesProvided/RegisterServicesProvided?id="+ oldClient.id;
          },
-         DeleteClient() {
+         DeleteServices() {
               this.showLoader();
-              const idClient = this.possibleExcludedCustomer;
-              axios.post('/Client/DeleteClient',idClient,
+              const idServices = this.possibleExcludedServices;
+              axios.post('/ServicesProvided/DeleteServices',idServices,
                {
                 headers: {
                 'Content-Type': 'application/json'
               }})
               .then(response => {
-                    this.clients = response.data;
-                    this.ListAllClients();
+                    this.services = response.data;
+                    this.ListAllServices();
                     this.hiddenModelDelete();
 
                       Swal.fire({
@@ -127,19 +127,19 @@
                 listClient.hideLoader();
               });
           },
-         GetIdClient(idClient)
+         GetIdService(idServices)
           {
-              this.possibleExcludedCustomer = idClient;
+              this.possibleExcludedServices = idServices;
           },
-         ResetPossibleDeletedClient(){
-              this.possibleExcludedCustomer = 0;
+         ResetPossibleDeletedServices(){
+              this.possibleExcludedServices = 0;
           },
          formatToPTBR(date) {
               const [year, month, day] = date.split("T")[0].split("-");
               return `${day}/${month}/${year}`;
           },
          hiddenModelDelete(){
-              const modalElement = document.getElementById('exampleModal');
+              const modalElement = document.getElementById('DeleteServicesModal');
               const modal = bootstrap.Modal.getInstance(modalElement);
               modal.hide();
          },
@@ -164,7 +164,7 @@
            this.showLoader();
            this.ListAllServices();
            const modalElement = this.$refs.modal;
-           modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
+           modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedServices());
          },
      });
 </script>

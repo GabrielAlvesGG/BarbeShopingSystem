@@ -154,5 +154,24 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
     }
-}
+
+        internal void DeleteServices(int idServices)
+        {
+            try
+            {
+                MySqlConnection connection = GetConnection();
+                connection.Open();
+                string sqlCommand = $"DELETE FROM SERVICOS WHERE Id={idServices}";
+
+                var command = new MySqlCommand(sqlCommand, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+    }
     }

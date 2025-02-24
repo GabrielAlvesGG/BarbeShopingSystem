@@ -36,6 +36,7 @@ builder.Services.AddScoped<ServicesProvidedService>();
 builder.Services.AddScoped<ServicesProvidedRepository>();
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
