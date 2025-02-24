@@ -1,0 +1,170 @@
+﻿@using BarberShopSystem.Helpers
+@{
+    ViewData["Title"] = "Lista de Serviços";
+}
+
+<div id="ListServices" v-cloak>
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+    <div class="container" v-show="showPropts.listShow">
+        <div class="row">
+            <h1>Lista de Serviços</h1>
+        </div>
+        <div class="row">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preços</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="service in paginatedList()" :key="service.id">
+                        <td>{{service.id}}</td>
+                        <td>{{service.name}}</td>
+                        <td>{{service.description}}</td>
+                        <td>{{service.price}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary text-white" v-on:Click="EditService(service)">Editar</button>
+                            <button type="button" class="btn btn-danger text-white" v-on:Click="GetIdService(service.id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Excluir <i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <v-app>
+                <div class="text-center">
+                    <v-pagination v-model="page" :length="totalPages()" rounded="0"></v-pagination>
+                </div>
+            </v-app>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja realmente excluir?</h1>
+                    <button type="button" class="btn-close" v-on:Click="ResetPossibleDeletedClient()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja excluir esse Serviço?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleDeletedClient()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="DeleteClient()">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.js"></script>
+
+<script>
+    listServices = new Vue({
+        el: '#ListServices',
+         vuetify: new Vuetify(),
+       data() {
+         return {
+             services:[],
+             possibleExcludedCustomer : 0,
+             showPropts: {
+                 listShow: false,
+             },
+              page: 1,
+              itemsPerPage: 10,
+         };
+       },
+       methods: {
+         ListAllServices() {
+              this.showLoader();
+            axios.get('/ServicesProvided/ListAllServices')
+             .then(response => {
+                 this.services = response.data;
+                  this.totalPages();
+             })
+             .catch(error => {
+               console.error('Erro ao Buscar Serviços:', error);
+             })
+               .finally(function () {
+                   listServices.hideLoader();
+               });
+         },
+         EditService(oldClient){
+                window.location.href = "/ServicesProvided/RegisterServicesProvided?id="+ oldClient.id;
+         },
+         DeleteClient() {
+              this.showLoader();
+              const idClient = this.possibleExcludedCustomer;
+              axios.post('/Client/DeleteClient',idClient,
+               {
+                headers: {
+                'Content-Type': 'application/json'
+              }})
+              .then(response => {
+                    this.clients = response.data;
+                    this.ListAllClients();
+                    this.hiddenModelDelete();
+
+                      Swal.fire({
+                               title: 'Sucesso!',
+                               text: 'Cliente Excluido com sucesso!',
+                               icon: 'success',
+                               confirmButtonText: 'Ok'
+                      });
+              })
+              .catch(error => {
+                console.error('Erro ao  cadastrar:', error);
+              }).finally(function (){
+                listClient.hideLoader();
+              });
+          },
+         GetIdClient(idClient)
+          {
+              this.possibleExcludedCustomer = idClient;
+          },
+         ResetPossibleDeletedClient(){
+              this.possibleExcludedCustomer = 0;
+          },
+         formatToPTBR(date) {
+              const [year, month, day] = date.split("T")[0].split("-");
+              return `${day}/${month}/${year}`;
+          },
+         hiddenModelDelete(){
+              const modalElement = document.getElementById('exampleModal');
+              const modal = bootstrap.Modal.getInstance(modalElement);
+              modal.hide();
+         },
+         showLoader() {
+             this.showPropts.listShow = false;
+             document.getElementById('loadingOverlay').style.display = 'flex';
+         },
+         hideLoader() {
+             this.showPropts.listShow = true;
+             document.getElementById('loadingOverlay').style.display = 'none';
+         },
+         totalPages() {
+             return Math.ceil(this.services.length / this.itemsPerPage);
+         },
+         paginatedList() {
+                 const start = (this.page - 1) * this.itemsPerPage;
+                 const end = start + this.itemsPerPage;
+                 return this.services.slice(start, end);
+         },
+       },
+        mounted() {
+           this.showLoader();
+           this.ListAllServices();
+           const modalElement = this.$refs.modal;
+           modalElement.addEventListener("hidden.bs.modal", this.ResetPossibleDeletedClient());
+         },
+     });
+</script>

@@ -15,12 +15,44 @@ public class ServicesProvidedController : Controller
     {
         return View();
     }
+    public IActionResult ListServices()
+    {
+        return View();
+    }
+    [HttpPost]
     public IActionResult RegisterServer([FromBody]ServicesProvided serviceProvided)
     {
         try
         {
             _servicesProvidedService.InsertOrUpdateServicesProvided(serviceProvided);
             return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+    [HttpGet]
+    public IActionResult ListAllServices()
+    {
+        try
+        {
+            return Json(_servicesProvidedService.GetAllServices());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public IActionResult EditServices([FromBody]int idServices)
+    {
+        try
+        {
+            return Json(_servicesProvidedService.GetServicesId(idServices));
         }
         catch (Exception ex)
         {

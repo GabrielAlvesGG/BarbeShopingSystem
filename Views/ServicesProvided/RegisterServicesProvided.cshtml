@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="price" class="form-label">Price:</label>
+                        <label for="price" class="form-label">Preço:</label>
                         <input type="text" v-model="form.price" id="price" class="form-control" placeholder="Preço" />@* Necessário colocar o v-model*@
                         <div class="alert alert-danger mt-2" v-show="show.alertPriceInvalidate" role="alert">
                             O valor colocado no campo de preço está invalido!
@@ -67,6 +67,7 @@
                 if(this.ValidateForm()){
 
                     var service = {
+                        id: this.form.id,
                         name: this.form.name,
                         description: this.form.description,
                         price: this.form.price,
@@ -76,9 +77,17 @@
                     {headers:{   'Content-Type': 'application/json'
                     }})
                     .then(response => {
+                        if(this.form.id == 0)
                             Swal.fire({
                                title: 'Sucesso!',
                                text: 'Serviço cadastrado com sucesso!',
+                               icon: 'success',
+                               confirmButtonText: 'Ok'
+                           }); 
+                           else
+                           Swal.fire({
+                               title: 'Sucesso!',
+                               text: 'Serviço editado com sucesso!',
                                icon: 'success',
                                confirmButtonText: 'Ok'
                            });
@@ -110,7 +119,38 @@
              }
 
              return fullForm;
-            }
+            },
+            getQueryString(){
+                let urlParams = new URLSearchParams(window.location.search);
+
+                if(urlParams.has('id')){
+                     let idClient = Number(urlParams.get('id'));
+                      this.editMode(idClient);
+                }
+            },
+            editMode(idClient){
+               let idOldClient = idClient;
+                axios.post('/ServicesProvided/EditServices', idOldClient,{
+               headers: {
+               'Content-Type': 'application/json'
+             }})
+             .then(response => {
+                 this.form.id = response.data.id;
+                 this.form.name= response.data.name;
+                 this.form.description= response.data.description;
+                 this.form.price= response.data.price;
+
+                 this.hideLoader();
+             })
+             .catch(error => {
+               console.error('Erro ao  cadastrar:', error);
+             });
+         },
+
+        },
+        mounted(){
+            this.getQueryString();
+
         }
     });
 </script>

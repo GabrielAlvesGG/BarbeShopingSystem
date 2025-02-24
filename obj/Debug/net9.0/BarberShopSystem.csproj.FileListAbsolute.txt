@@ -119,3 +119,9 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\uym6fboowe-wft1x3rerk.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\System.Data.SqlClient.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win-arm64\native\sni.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win-x64\native\sni.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win-x86\native\sni.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll

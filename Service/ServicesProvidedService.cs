@@ -1,5 +1,7 @@
-﻿using BarberShopSystem.Models;
+﻿using BarberShopSystem.Data;
+using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
+using MySql.Data.MySqlClient;
 
 namespace BarberShopSystem.Service
 {
@@ -11,17 +13,62 @@ namespace BarberShopSystem.Service
             _servicesProvidedRepository = servicesProvidedRepository;
         }
 
+        internal List<ServicesProvided> GetAllServices()
+        {
+            try
+            {
+               return _servicesProvidedRepository.AllServices();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        internal ServicesProvided GetServicesId(int idServices)
+        {
+            try
+            {
+                return _servicesProvidedRepository.GetServicesId(idServices);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
         internal void InsertOrUpdateServicesProvided(ServicesProvided serviceProvided)
         {
 			try
 			{
-                _servicesProvidedRepository.InsertOrUpdateProvided(serviceProvided);
+                InsertOrUpdateProvided(serviceProvided);
 			}
 			catch (Exception ex)
 			{
                 Console.WriteLine(ex.Message);
 				throw;
 			}
+        }
+        internal void InsertOrUpdateProvided(ServicesProvided serviceProvided)
+        {
+            try
+            {
+
+                if (serviceProvided.id == 0)
+                {
+                    _servicesProvidedRepository.InsertServicesProvided(serviceProvided);
+                }
+                else
+                    _servicesProvidedRepository.UpdateServicesProvided(serviceProvided);
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿using BarberShopSystem.Data;
 using BarberShopSystem.Enums;
 using BarberShopSystem.Models;
+using BarberShopSystem.Service;
+using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
+using System.Data.SqlClient;
 using System.Globalization;
 
 namespace BarberShopSystem.ModelsRepository
@@ -12,20 +16,26 @@ namespace BarberShopSystem.ModelsRepository
         {
         }
 
-        internal void InsertOrUpdateProvided(ServicesProvided serviceProvided)
+     
+
+
+        public void InsertServicesProvided(ServicesProvided servicesProvided)
         {
             try
             {
+
                 MySqlConnection connection = GetConnection();
                 connection.Open();
+                var command = new MySqlCommand($"INSERT INTO servicos (Nome, Descricao, preco) " +
+                                $"VALUES (@Name, @Description, @Price)", connection);
+                command.Parameters.AddWithValue("@Name", servicesProvided.name);
+                command.Parameters.AddWithValue("@Description", servicesProvided.description);
+                string priceString = servicesProvided.price.ToString().Replace(",", ".");
+                double price = Convert.ToDouble(priceString, CultureInfo.InvariantCulture);
 
-                if (serviceProvided.id == 0)
-                {
-                    InsertServicesProvided(serviceProvided, connection);
-                    serviceProvided.id = GetLastInsertedId(connection);
-                }
-                else
-                    UpdateServicesProvided(serviceProvided, connection);
+                command.Parameters.AddWithValue("@Price", price);
+
+                command.ExecuteNonQuery();
                 connection.Close();
             }
             catch (Exception ex)
@@ -35,28 +45,114 @@ namespace BarberShopSystem.ModelsRepository
             }
         }
 
-
-        private void InsertServicesProvided(ServicesProvided servicesProvided, MySqlConnection connection)
+        public void UpdateServicesProvided(ServicesProvided servicesProvided)
         {
-            string sqlCommand = $"INSERT INTO servicos (Nome, Descricao, preco) " +
-                                $"VALUES ('{servicesProvided.name}', '{servicesProvided.description}', '{Convert.ToDouble(servicesProvided.price, new CultureInfo("pt-BR"))}')";
+            try
+            {
+                MySqlConnection connection = GetConnection();
+                connection.Open();
+                string sqlCommand = $"UPDATE servicos SET Nome='{servicesProvided.name}', Descricao='{servicesProvided.description}', preco='{servicesProvided.price.ToString().Replace(",", ".")}' WHERE Id={servicesProvided.id}";
 
-            var command = new MySqlCommand(sqlCommand, connection);
-            command.ExecuteNonQuery(); 
+                var command = new MySqlCommand(sqlCommand, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
-        private void UpdateServicesProvided(ServicesProvided servicesProvided, MySqlConnection connection)
+        public int GetLastInsertedId(MySqlConnection connection)
         {
-            string sqlCommand = $"UPDATE servicos SET Nome='{servicesProvided.name}', Descricao='{servicesProvided.description}', preco='{Convert.ToDouble(servicesProvided.price, new CultureInfo("pt-BR"))}' WHERE Id={servicesProvided.id}";
-
-            var command = new MySqlCommand(sqlCommand, connection);
-            command.ExecuteNonQuery(); 
+            try
+            {
+                var getIdCommand = new MySqlCommand("SELECT LAST_INSERT_ID();", connection);
+                return Convert.ToInt32(getIdCommand.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            
         }
 
-        private int GetLastInsertedId(MySqlConnection connection)
+        internal List<ServicesProvided> AllServices()
         {
-            var getIdCommand = new MySqlCommand("SELECT LAST_INSERT_ID();", connection);
-            return Convert.ToInt32(getIdCommand.ExecuteScalar()); 
+            try
+            {
+                List<ServicesProvided> ServicesProvideds = new List<ServicesProvided>();
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    var command = new MySqlCommand("SELECT * FROM Servicos", connection);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ServicesProvideds.Add(new ServicesProvided
+                            {
+                                id = reader.GetInt32("Id"),
+                                name = reader.GetString("Nome"),
+                                description = reader.GetString("Descricao"),
+                                price = reader.GetDouble("Preco").ToString()
+                            });
+                        }
+                    }
+                    connection.Close();
+
+                }
+
+                return ServicesProvideds;
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
+
+        internal ServicesProvided GetServicesId(int idServices)
+        {
+            try
+            {
+                ServicesProvided ServicesProvided = new ServicesProvided();
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    var command = new MySqlCommand("SELECT * FROM Servicos WHERE Id=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", idServices);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+
+                            ServicesProvided.id = reader.GetInt32("Id");
+                            ServicesProvided.name = reader.GetString("Nome");
+                            ServicesProvided.description = reader.GetString("Descricao");
+                            ServicesProvided.price = reader.GetDouble("Preco").ToString();
+
+                        }
+                    }
+                    connection.Close();
+
+                }
+
+                return ServicesProvided;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
     }
 }
+    }

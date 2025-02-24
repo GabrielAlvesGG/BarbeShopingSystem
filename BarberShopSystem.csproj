@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ListServicesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\lib\vue\Vue.js" />
   </ItemGroup>
 
@@ -17,6 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.1" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
