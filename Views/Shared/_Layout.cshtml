@@ -8,17 +8,17 @@
     <title>@ViewData["Title"] - BarberShopSystem</title>
     <script type="importmap"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    
+
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BarberShopSystem.styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
-    
+
     <!-- PrimeVue e PrimeIcons -->
     <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/lara-light-blue/theme.css">
     <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
@@ -26,26 +26,26 @@
 
 </head>
 <body>
-    
+
     <header>
         <div id="layout">
-                    <nav class="navbar navbar-expand-lg navbar-dark">
-                    <div class="container-fluid">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BarberShopSystem</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarScroll">
-                            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BarberShopSystem</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            @if (SessionHelper.UserType == "Administrador")
+                            {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="UserRegister">Cadastrar</a>
                                 </li>
-                                 @if (SessionHelper.UserType == "Administrador")
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="UserRegister">Cadastrar</a>
-                                    </li>
-                                }
+                            }
                             <li class="nav-item">
                                 <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownListScheduling" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Agendamentos
@@ -62,22 +62,24 @@
                                     </li>
                                 </ul>
                             </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Listas
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownList">
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="ListClients">Lista de Clientes</a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Barber" asp-action="ListBarber">Lista de Barbeiros</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Listas
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownList">
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="ListClients">Lista de Clientes</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Barber" asp-action="ListBarber">Lista de Barbeiros</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @if (SessionHelper.UserType == "Administrador")
+                            {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Serviços
@@ -85,11 +87,14 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownList">
                                         <li class="dropdown-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvided" asp-action="RegisterServicesProvided">Cadastrar Serviços</a>
+                                        </li>
+                                        <li class="dropdown-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvided" asp-action="ListServices">Lista de Serviços</a>
                                         </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            }
+                        </ul>
                             <form class="d-flex">
                             <button class="btn btn-outline-success" type="button" v-on:click="Logout()" v-show="isLoggedIn">Sair </button>
                             <button class="btn btn-outline-success" type="button" v-on:click="Login()" v-show="!isLoggedIn">Logar </button>

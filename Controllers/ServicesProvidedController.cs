@@ -1,4 +1,5 @@
-﻿using BarberShopSystem.Models;
+﻿using BarberShopSystem.Helpers;
+using BarberShopSystem.Models;
 using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,18 @@ public class ServicesProvidedController : Controller
     }
     public IActionResult RegisterServicesProvided()
     {
-        return View();
+        if (SessionHelper.IsUserLoggedIn() && SessionHelper.IsMasterUser())
+            return View();
+
+            return RedirectToAction("Index", "Home");
     }
     public IActionResult ListServices()
     {
-        return View();
+        if (SessionHelper.IsUserLoggedIn() && SessionHelper.IsMasterUser())
+            return View();
+
+        return RedirectToAction("Index", "Home");
+
     }
     [HttpPost]
     public IActionResult RegisterServer([FromBody]ServicesProvided serviceProvided)
