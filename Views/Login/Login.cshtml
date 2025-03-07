@@ -73,6 +73,9 @@
                 messages: {
                     alertLoginInvalidade: false,
                     alertPasswordInvalidade: false,
+                },
+                queryString: {
+                    isSheduling : false,
                 }
             };
         },
@@ -93,8 +96,12 @@
                     }
                 })
                 .then(response => {
-                    if (response.data)
-                        window.location.href = "/Home/Index";
+                    if (response.data){
+                        if(this.queryString.isSheduling)
+                            window.location.href = "/Scheduling/Scheduling";
+                        else   
+                            window.location.href = "/Home/Index";
+                    }
                     else
                         Swal.fire({
                             title: 'Login Invalido!',
@@ -132,7 +139,17 @@
             },
             recoveryPassWord() {
                 window.location.href = "/Login/RecoveryPassword";
-            }
+            },
+            getQueryString(){
+                let urlParams = new URLSearchParams(window.location.search);
+
+                if(urlParams.has('sheduling')){
+                     this.queryString.isSheduling = urlParams.get('sheduling');
+                }
+            },
+        },
+        mounted(){
+            this.getQueryString()
         }
     })
 </script>
