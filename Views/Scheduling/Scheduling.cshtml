@@ -24,46 +24,44 @@
         </div>
         <div class="col-md-4 col-lg-5 order-md-last" v-show="showScheduling">
             <div class="card card-shadow-1 mb-1">
+            
                 <div class="card-header calendar-header">
                     <h3 class="card-title flex-grow-1 mb-0 w-100">Agendar Corte/ Serviço</h3>
                     <p class="w-100 m-0"></p>
                 </div>
                 <div class="card-body">
-                    <div v-if="listaDeHorarios.length" class="scheduling-container">
-                        <div v-for="(horario, index) in listaDeHorarios"
-                             :key="horario.time"
-                             v-if="index < maxButtons"
-                             class="scheduling-button-wrapper">
-                            <button v-on:click="selecionarHorario(horario.time)" v-show="horario.free">
-                                {{ formatTime(horario.time) }}
-                            </button>
-                            <button  v-show="!horario.free" class="indisponivel" disabled>
-                               {{ formatTime(horario.time) }}
-                            </button>
-                        </div>
-                        <div class="row">
-                            <h1>Serviços</h1>
-                            <div>
-                                <label>Selecione o serviço</label>
-                                <select class="form-select" v-model="selectedService">
-                                    <option :value="0">Selecione um serviço</option>
-                                    <option v-for="customer in CustomersList" :value="customer.id">{{customer.name}} valor {{customer.price}}</option>
-                                    
-                                </select>
-                                <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
-                                    Selecione um serviço !
-                                </div>
+                    <div class="row">
+                        <h1>Serviços</h1>
+                        <div>
+                            <label>Selecione o serviço</label>
+                            <select class="form-select" v-model="selectedService">
+                                <option :value="0">Selecione um serviço</option>
+                                <option v-for="customer in CustomersList" :value="customer.id">{{customer.name}} valor {{customer.price}}</option>
+
+                            </select>
+                            <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
+                                Selecione um serviço !
                             </div>
-                        </div>   
-                      
-                        <div >
-                            <button v-on:click="selecionarHorario(horario.time)">
-                                Agendar
-                            </button>
                         </div>
                     </div>
-                    <div v-else>
-                        <p>Não há horários disponíveis no momento.</p>
+                    <div class="row">
+                        <h1>Horários</h1>
+                        <div v-if="listaDeHorarios.length" class="scheduling-container">
+                            <div v-for="(horario, index) in listaDeHorarios"
+                                 :key="horario.time"
+                                 v-if="index < maxButtons"
+                                 class="scheduling-button-wrapper">
+                                <button v-on:click="selecionarHorario(horario.time)" v-show="horario.free">
+                                    {{ formatTime(horario.time) }}
+                                </button>
+                                <button  v-show="!horario.free" class="indisponivel" disabled>
+                                   {{ formatTime(horario.time) }}
+                                </button>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p>Não há horários disponíveis no momento.</p>
+                        </div>
                     </div>
                 </div>
                

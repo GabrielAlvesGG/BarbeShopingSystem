@@ -51,6 +51,7 @@
         data() {
             return {
                 form:{
+                    id:0,
                     name: '',
                     description: '',
                     price:''
@@ -85,12 +86,12 @@
                                confirmButtonText: 'Ok'
                            }); 
                            else
-                           Swal.fire({
-                               title: 'Sucesso!',
-                               text: 'Serviço editado com sucesso!',
-                               icon: 'success',
-                               confirmButtonText: 'Ok'
-                           });
+                               Swal.fire({
+                                   title: 'Sucesso!',
+                                   text: 'Serviço editado com sucesso!',
+                                   icon: 'success',
+                                   confirmButtonText: 'Ok'
+                               });
                     }).catch(error => {
                         console.error('Erro ao cadastrar:', error);
                       })
