@@ -162,20 +162,14 @@
             }
         },
         methods: {
-            GetScheduling() { // passo 1 : Pega todos os horários 
+            GetScheduling() { 
                 axios.get('/Scheduling/GetScheduling')
                 .then(response => {
-                    Swal.fire({
-                        title: 'Horários carregados!',
-                        text: 'Selecione um horário disponível.',
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                        footer: 'Verifique os dados preenchidos'
-                    });
+
                     var result = JSON.parse(response.data);
-                    this.listaDeHorarios = result.schedules; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
-                    this.BarberList = result.clients; // passo 2 : Armazena os periodos de horários com seus valores de livres e agendados
-                    this.LoggedInClient();// passo 3 : Verifica se o usuário está logado
+                    this.listaDeHorarios = result.schedules; 
+                    this.BarberList = result.clients; 
+                    this.LoggedInClient();
                     this.FormShowScheduling();
                 })
                 .catch(error => {
@@ -199,9 +193,6 @@
                         return;
                     }
                         
-
-                        
-
                     const appointmentsDTO  = {
                         dateTime :time,
                         customerId: this.selectedService,
@@ -216,11 +207,11 @@
                     })
                     .then(response => {
                         Swal.fire({
-                            title: 'Horários carregados!',
-                            text: 'Selecione um horário disponível.',
+                            title: 'Horário Agendado!',
+                            text: 'Seu horário foi agendado com sucesso.',
                             icon: 'success',
                             confirmButtonText: 'Ok',
-                            footer: 'Verifique os dados preenchidos'
+                            footer: 'Aguarde a confirmação do barbeiro'
                         });
                         this.alertSelectCustomerInvalidade = false;
                         this.alertSelectBarbereInvalidade = false; 
@@ -239,10 +230,10 @@
                 // Remove seconds from the time string
                 return horario.slice(0, -3);
             },
-            LoggedInClient(){ // passo 4 : vai até o back-end verificar qual é a situação do usuário no momento se ele está logado ou não 
+            LoggedInClient(){ 
                    axios.post('/Session/IsUserLoggedIn')
                 .then(response => {
-                  this.userLogged = response.data;  // passo 5 : Armazena a situação atual, deixando true se ele estiver logado e false se estiver como um usuário anônimo
+                  this.userLogged = response.data;  
                   
                 })
                 .catch(error => {
