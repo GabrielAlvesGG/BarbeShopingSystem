@@ -12,7 +12,7 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public void InsertOrUpdateUser(Client user)
+    public void InsertOrUpdateUser(User user)
     {
         try
         {
@@ -46,7 +46,7 @@ public class UserService
         }
     }
 
-    public Client GetUser(Client user)
+    public User GetUser(User user)
     {
         try
         {
@@ -59,7 +59,7 @@ public class UserService
         }
     }
 
-    public List<Client> GetAllBarbers()
+    public List<User> GetAllBarbers()
     {
         try
         {

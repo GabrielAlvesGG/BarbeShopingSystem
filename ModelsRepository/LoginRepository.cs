@@ -12,9 +12,9 @@ namespace BarberShopSystem.ModelsRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Client LoginValidate(loginDto login)
+        public User LoginValidate(loginDto login)
         {
-            Client client = new Client();
+            User client = new User();
 
             try
             {
@@ -29,11 +29,11 @@ namespace BarberShopSystem.ModelsRepository
                     {
                         if (reader.Read())
                         {
-                            client = new Client
+                            client = new User
                             {
                                 id = reader.GetInt32("Id"),
                                 nome = reader.GetString("Nome"),
-                                tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
+                                tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
                             };
                         }
                     }

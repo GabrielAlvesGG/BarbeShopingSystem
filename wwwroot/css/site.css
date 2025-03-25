@@ -24,6 +24,7 @@ body {
     min-height: 100vh;
 }
 
+
 .container-layout {
     flex: 1;
 }
@@ -135,5 +136,37 @@ body {
     font-size: 16px;
 }
 /* Estilização dos alertas do swal.js*/
+
+/*  Estilização da página de layout */
+
+/* Remove o display flex do body */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Ajuste se necessário */
+}
+
+/* Estrutura principal flexível */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que a altura da tela seja 100% */
+}
+
+/* Faz o conteúdo ocupar todo o espaço disponível */
+.content {
+    flex: 1;
+}
+
+/* Estiliza o footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}
+
+/*  Estilização da página de layout *
+
 
 /* termina as estilizações personalizadas */

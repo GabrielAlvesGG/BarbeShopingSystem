@@ -23,10 +23,10 @@ public class AuthenticationUserService
         var claims = authenticate.Principal.Identities
                           .FirstOrDefault()?.Claims.Select(c => new { c.Type, c.Value });
 
-        Client user = new Client();
+        User user = new User();
         user.email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-        Client userFound = _userService.GetUser(user);
+        User userFound = _userService.GetUser(user);
 
         if (userFound == null)
         {

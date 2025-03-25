@@ -1,0 +1,493 @@
+﻿.carousel-inner img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+
+.carousel-caption {
+    position: absolute;
+    top: 65%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    width: 30vw;
+    max-width: 90%;
+    min-width: 220px;
+    min-height: 20vh; 
+    max-height: 48vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 📱 Ajuste para Telas Pequenas (Celulares) */
+@media (max-width: 768px) {
+    .carousel-caption {
+        top: 73%;
+        width: 80vw; 
+        padding: 15px;
+        min-height: 25vh; 
+        max-height: 50vh; 
+        font-size: 1.2rem;
+    }
+
+        .carousel-caption h3 {
+            font-size: clamp(20px, 5vw, 28px); 
+        }
+
+        .carousel-caption p {
+            font-size: clamp(14px, 4vw, 20px);
+        }
+
+        .carousel-caption a {
+            font-size: clamp(12px, 3.5vw, 18px);
+        }
+}
+
+/* 🖥️ Ajuste para Telas Muito Grandes */
+@media (min-width: 1400px) {
+    .carousel-caption {
+        width: 28%;
+        min-height: 30vh;
+        max-height: 60vh;
+        font-size: 1.5rem;
+    }
+
+        .carousel-caption a {
+            font-size: 1.5rem;
+        }
+}
+
+/*carousel-caption-1 estilizações */
+
+.carousel-caption-1 {
+    position: absolute;
+    top: 67%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    width: 44%; 
+    height: auto; 
+    max-height: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+    .carousel-caption-1 h3,
+    .carousel-caption-1 h2,
+    .carousel-caption-1 a {
+        align-self: flex-start;
+    }
+
+/* 📱 Ajuste para Telas Pequenas (Celulares) */
+@media (max-width: 768px) {
+    .carousel-caption-1 {
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        text-align: center;
+        height: auto;
+        padding: 15px;
+    }
+        /* Ajusta tamanho da fonte para não ficar gigante no celular */
+        .carousel-caption-1 h3 {
+            font-size: 18px;
+        }
+
+        .carousel-caption-1 h2 {
+            font-size: 20px;
+        }
+        /* Botão menor para caber na tela */
+        .carousel-caption-1 a {
+            font-size: 16px;
+            padding: 8px 15px;
+        }
+}
+
+/* 🖥️ Ajuste para Telas Muito Grandes */
+@media (min-width: 1400px) {
+    .carousel-caption-1 {
+        width: 21%;
+    }
+}
+
+/*carousel-caption-1 estilizações */
+
+/*carousel-caption-2 estilizações */
+
+.carousel-caption-2 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    width: 61%;
+    height: auto;
+    max-height: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 📱 Ajuste para Telas Pequenas (Celulares) */
+@media (max-width: 768px) {
+    .carousel-caption-2 {
+        top: 30%; 
+        width: 80%; 
+        padding: 15px; 
+        max-height: none; 
+    }
+        /* Ajusta tamanho da fonte para caber bem */
+        .carousel-caption-2 h3 {
+            font-size: 18px;
+        }
+
+        .carousel-caption-2 h2 {
+            font-size: 20px;
+        }
+}
+
+/* 🖥️ Ajuste para Telas Muito Grandes */
+@media (min-width: 1400px) {
+    .carousel-caption-2 {
+        width: 50%; 
+        max-height: 20%;
+    }
+}
+
+/*carousel-caption-2 estilizações */
+
+
+
+
+
+.quem-Somos {
+    background: url('../Images/quemSomos.jpg') no-repeat center center;
+    background-size: cover; 
+    width: 100%; 
+    min-height: 80vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 10px; 
+    padding: 50px; 
+}
+.context {
+    color: white;
+    text-shadow: -1px -1px 0 #0b0a0a, 1px -1px 0 #000000, -1px 1px 0 #030303, 1px 1px 0 #000000;
+    background-color: rgb(0 0 0 / 80%);
+    width: 100%;
+}
+
+.quem-Somos .context h1 {
+    text-align: center;
+}
+
+
+.imagens-textos {
+    display: flex;
+    gap: 81px; 
+    flex-wrap: wrap; 
+    justify-content: center;
+}
+.imagem-container {
+    position: relative;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 1000px;
+    aspect-ratio: 9 / 10;
+    perspective: 1000px;
+}
+
+    .imagens-textos .imagem-container {
+        width: 500px; 
+        height: 700px; 
+        overflow: hidden; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .imagens-textos .imagem-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+        }
+
+
+
+ 
+
+   
+
+/* 📱 Responsividade para telas menores */
+@media (max-width: 768px) {
+    .imagens-textos {
+        flex-direction: column; 
+        align-items: center;
+    }
+    .imagem-container {
+        position: relative;
+        width: 80%;
+        max-width: 315px;
+        max-height: 315px;
+        aspect-ratio: 9 / 10;
+        perspective: 1000px;
+    }
+}
+
+
+
+    /* 📌 Mantém as imagens sempre do mesmo tamanho */
+    .imagem-container img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        backface-visibility: hidden;
+        transition: transform 0.6s ease-in-out, opacity 0.3s ease-in-out;
+        border-radius: 10px;
+    }
+
+/* Mantém o efeito de rotação */
+.imagem-container {
+    transform-style: preserve-3d;
+}
+
+    .imagem-container .frente {
+        transform: rotateY(0deg);
+    }
+
+    .imagem-container .verso {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    .imagem-container:hover .frente {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+
+    .imagem-container:hover .verso {
+        transform: rotateY(360deg);
+        opacity: 1;
+    }
+
+/* 📱 Responsividade para telas menores */
+@media (max-width: 768px) {
+    .imagem-container {
+        width: 90%;
+        max-width: 250px;
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .imagem-container {
+        width: 100%;
+        max-width: 220px;
+        max-height: 220px;
+    }
+}
+
+
+    /* Estilizando as informações de serviços */
+
+
+.Servicos {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Servicos {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+
+.images-service, .informacoes {
+    flex: 1;
+    max-width: 48%;
+}
+
+    .images-service h1, .informacoes h1 {
+        font-family:serif;
+        font-size: 3.5rem;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ccc;
+        text-align: left;
+    }
+
+
+    .images-service .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 69px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .images-service img {
+        width: 104%; 
+        height: 85%; 
+        object-fit: cover; 
+        border-radius: 5px;
+    }
+
+    .informacoes table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.8rem;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+        .informacoes table tr {
+            border-bottom: 2px solid #ccc;
+        }
+        .informacoes table td {
+            padding: 10px 0;
+        }
+@media (max-width: 992px) {
+    .images-service .grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .images-service .grid {
+        grid-template-columns: 1fr; 
+    }
+}
+@media (max-width: 768px) {
+    .Servicos {
+        flex-direction: column;
+        align-items: center; 
+        text-align: center; 
+    }
+
+    .images-service, .informacoes {
+        max-width: 100%;
+        flex: none; 
+    }
+
+        .images-service h1, .informacoes h1 {
+            font-size: 2.5rem; 
+            text-align: center;
+        }
+
+        .informacoes p {
+            font-size: 1.5rem;
+            padding: 10px; 
+        }
+
+        .images-service .grid {
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+        }
+}
+
+/* 📌 Para telas muito pequenas (menos de 480px) */
+@media (max-width: 480px) {
+    .images-service .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .images-service h1, .informacoes h1 {
+        font-size: 2rem; 
+    }
+
+    .informacoes p {
+        font-size: 1.2rem;
+    }
+}
+
+
+.funcionamento-semanas {
+    background: url('../Images/tesouras.jpg') no-repeat center center;
+    background-size: cover;
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 50px;
+    gap: 20px; 
+    text-align: center;
+    font-family: serif;
+}
+
+    .funcionamento-semanas p {
+        background: #0b5ed7;
+        border-radius: 200px;
+        padding: 15px 30px; 
+        font-size: 2rem; 
+        font-weight: bold;
+        color: white;
+        text-shadow: -1px -1px 0 #0b0a0a, 1px -1px 0 #000000, -1px 1px 0 #030303, 1px 1px 0 #000000;
+        flex: 1 1 200px; 
+        max-width: 300px; 
+    }
+
+/* Estiliza o "Fechado" de forma diferente */
+.fechado {
+    background: #828282 !important;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .funcionamento-semanas {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+
+        .funcionamento-semanas p {
+            font-size: 1.8rem; 
+            padding: 10px 20px;
+            width: 90%; 
+        }
+}
+
+/* Para telas muito pequenas, como celulares */
+@media (max-width: 480px) {
+    .funcionamento-semanas {
+        padding: 20px;
+    }
+
+        .funcionamento-semanas p {
+            font-size: 1.5rem; 
+            padding: 8px 15px;
+            width: 100%;
+        }
+}
+
+
+    /* Estilizando as informações de serviços */

@@ -2,11 +2,91 @@
   "Files": [
     {
       "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\BarberShopSystem.bundle.scp.css",
-      "PackagePath": "staticwebassets\\BarberShopSystem.ix4yfl4xiv.bundle.scp.css"
+      "PackagePath": "staticwebassets\\BarberShopSystem.9ndktwuiki.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\PhotoLogin.png",
       "PackagePath": "staticwebassets\\Images\\PhotoLogin.png"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\agendamentos.jpg",
+      "PackagePath": "staticwebassets\\Images\\agendamentos.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\backgroundimages.jpeg",
+      "PackagePath": "staticwebassets\\Images\\backgroundimages.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\barbeiro.jpeg",
+      "PackagePath": "staticwebassets\\Images\\barbeiro.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\botox.webp",
+      "PackagePath": "staticwebassets\\Images\\botox.webp"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\carroselDois.jpeg",
+      "PackagePath": "staticwebassets\\Images\\carroselDois.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\carroselTres.jpg",
+      "PackagePath": "staticwebassets\\Images\\carroselTres.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\corte1.jpg",
+      "PackagePath": "staticwebassets\\Images\\corte1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\corte2.jpeg",
+      "PackagePath": "staticwebassets\\Images\\corte2.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\corte3.jpeg",
+      "PackagePath": "staticwebassets\\Images\\corte3.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\corte4.jpeg",
+      "PackagePath": "staticwebassets\\Images\\corte4.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\degrade.jpg",
+      "PackagePath": "staticwebassets\\Images\\degrade.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\descolorir.jpeg",
+      "PackagePath": "staticwebassets\\Images\\descolorir.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\financeiro.jpg",
+      "PackagePath": "staticwebassets\\Images\\financeiro.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\funcionarios.jpeg",
+      "PackagePath": "staticwebassets\\Images\\funcionarios.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\hidratacao.jpg",
+      "PackagePath": "staticwebassets\\Images\\hidratacao.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\quemSomos.jpg",
+      "PackagePath": "staticwebassets\\Images\\quemSomos.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\terceira-imagem.jpg",
+      "PackagePath": "staticwebassets\\Images\\terceira-imagem.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\Images\\tesouras.jpg",
+      "PackagePath": "staticwebassets\\Images\\tesouras.jpg"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\css\\Scheduling.css",
+      "PackagePath": "staticwebassets\\css\\Scheduling.css"
     },
     {
       "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\wwwroot\\css\\site.css",

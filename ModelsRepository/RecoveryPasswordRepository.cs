@@ -70,11 +70,11 @@ public class RecoveryPasswordRepository : DataBaseRepository
 			throw;
 		}
     }
-    public Client FindUserByResetToken(string tokenUser)
+    public User FindUserByResetToken(string tokenUser)
     {
         try
         {
-            Client user = new Client();
+            User user = new User();
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -85,7 +85,7 @@ public class RecoveryPasswordRepository : DataBaseRepository
                 {
                     if (reader.Read())
                     {
-                        user = new Client()
+                        user = new User()
                         {
                             id = reader.GetInt32("Id")
                         };

@@ -28,11 +28,11 @@ public class RecoveryPasswordService
     }
 
 
-    public Client LoginConfirm(string login)
+    public User LoginConfirm(string login)
     {
         try
         {
-            Client user = new Client();
+            User user = new User();
             user.email = login;
             return _userRepository.GetUser(user);
         }
@@ -43,7 +43,7 @@ public class RecoveryPasswordService
 		}
     }
 
-    public bool SendCodConfirm(Client user) {
+    public bool SendCodConfirm(User user) {
         try
         {
             ProcessingConfirmationCode(user);
@@ -57,7 +57,7 @@ public class RecoveryPasswordService
         }
     }
 
-    private async Task ProcessingConfirmationCode(Client user)
+    private async Task ProcessingConfirmationCode(User user)
     {
         try
         {
@@ -114,7 +114,7 @@ public class RecoveryPasswordService
     {
         try
         {
-            Client userResetPassword = _recoveryPasswordRepository.FindUserByResetToken(resetPasswordDto.token);
+            User userResetPassword = _recoveryPasswordRepository.FindUserByResetToken(resetPasswordDto.token);
             userResetPassword.senha = resetPasswordDto.password;
             _userRepository.UpdatePassword(userResetPassword);
             _recoveryPasswordRepository.UpdateTokenUsed(resetPasswordDto.token);

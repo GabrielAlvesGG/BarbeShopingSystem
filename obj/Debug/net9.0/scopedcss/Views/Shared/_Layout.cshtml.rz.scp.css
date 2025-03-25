@@ -34,15 +34,19 @@ a[b-1q0t3eoltf] {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-button.accept-policy[b-1q0t3eoltf] {
-  font-size: 1rem;
-  line-height: inherit;
+html[b-1q0t3eoltf], body[b-1q0t3eoltf] {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.container-layout[b-1q0t3eoltf] {
+    flex: 1;
 }
 
-.footer[b-1q0t3eoltf] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+footer[b-1q0t3eoltf] {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 10px;
 }

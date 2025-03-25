@@ -28,6 +28,7 @@ public class CustomerRepository : DataBaseRepository
                             name = reader.GetString("Nome"),
                             description = reader.GetString("Descricao"),
                             price = reader.GetDouble("Preco"),
+                            duration = reader.GetInt32("duracao"),
                         }); 
                     }
                 }

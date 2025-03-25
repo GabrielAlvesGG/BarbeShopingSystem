@@ -31,6 +31,13 @@
                             O valor colocado no campo de preço está invalido!
                         </div>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="price" class="form-label">Duração:</label>
+                        <input type="text" v-model="form.duration" id="duration" class="form-control" placeholder="duração em minutos" />
+                        <div class="alert alert-danger mt-2" v-show="show.alertPriceInvalidate" role="alert">
+                            O valor colocado no campo de duracao está invalido!
+                        </div>
+                    </div>
                     <div class="col-12 text-center">
                         <button type="button" class="btn btn-success btn-lg text-white" v-on:Click="registerServicesProvided()">Cadastrar</button>
                     </div>
@@ -54,7 +61,8 @@
                     id:0,
                     name: '',
                     description: '',
-                    price:''
+                    price:'',
+                    duration:0
                 },
                 show: {
                     alertNameInvalidate : false,
@@ -72,6 +80,7 @@
                         name: this.form.name,
                         description: this.form.description,
                         price: this.form.price,
+                        duration: this.form.duration,
                     }
                     
                     axios.post('/ServicesProvided/RegisterServer', service,

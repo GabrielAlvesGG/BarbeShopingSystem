@@ -2,7 +2,120 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+
+<div id="carouselExampleControls" class="carousel slide" @* data-bs-ride="carousel" *@>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Images/carroselTres.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption-1 d-flex flex-column align-items-center">
+                <h3>Agende</h3>
+                <h2>Um corte ou serviço</h2>
+                <a href="/Scheduling/Scheduling" class="btn btn-primary">Agendar</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Images/PhotoLogin.png" class="d-block w-100" alt="...">
+            <div class="carousel-caption-2 d-flex flex-column">
+                <h3>Quem Somos! </h3>
+                <p>Bem-vindo à BarberShopSystem, a solução definitiva para a gestão de barbearias! Nosso sistema foi desenvolvido para facilitar o dia a dia dos barbeiros e donos de barbearias, oferecendo ferramentas eficientes para organização de agendamentos, controle financeiro e fidelização de clientes..</p>
+                <a href="#" class="btn btn-success" id="scroll-btn">Ver Mais</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Images/terceira-imagem.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-flex flex-column align-items-center">
+                <h3>Melhores Cortes</h3>
+                <p>Veja os melhores cortes e preços</p>
+                <a href="#" id="btn-scroll-servicos" class="btn btn-danger">Veja mais</a>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
+ <div id="quem-somos" class="quem-Somos">
+    <div class="container">
+        <div class="col-12 context">
+            <h1> Bem-vindo à BarberShopSystem </h1>
+            <p>A solução definitiva para a gestão de barbearias! Nosso sistema foi desenvolvido para facilitar o dia a dia dos barbeiros e donos de barbearias, oferecendo ferramentas eficientes para organização de agendamentos, controle financeiro e fidelização de clientes.</p>
+            <p>Com uma interface intuitiva e funcionalidades inovadoras, a BarberShopSystem permite que você:</p>
+        
+            <div class="imagens-textos">
+                <div>
+                    <div class="imagem-container">
+                        <img src="~/Images/agendamentos.jpg" class="d-block w-100 frente" alt="agendamento" />
+                        <img src="~/Images/financeiro.jpg" class="d-block w-100 verso" alt="financeiro" />
+                    </div>
+                    <p>Facilidade em agendamentos</p>
+                </div>
+                <div>
+                    <div class="imagem-container">
+                        <img src="~/Images/financeiro.jpg" class="d-block w-100 frente" alt="financeiro" />
+                        <img src="~/Images/funcionarios.jpeg" class="d-block w-100 verso" alt="funcionarios" />
+                    </div>
+                    <p>Facilidade em gerenciamento financeiro</p>
+                </div>
+                <div>
+                    <div class="imagem-container">
+                        <img src="~/Images/funcionarios.jpeg" class="d-block w-100 frente" alt="funcionarios" />
+                        <img src="~/Images/financeiro.jpg" class="d-block w-100 verso" alt="financeiro" />
+                    </div>
+                    <p>Facilidade em gerenciamento dos funcionários</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<div id="Servicos" class="Servicos">
+    <div class="images-service">
+        <h1>Cortes de cabelos populares</h1>
+        <div class="grid">
+            <img src="~/Images/degrade.jpg" alt="...">
+            <img src="~/Images/botox.webp" alt="...">
+            <img src="~/Images/hidratacao.jpg" alt="...">
+            <img src="~/Images/descolorir.jpeg" alt="...">
+            <img src="~/Images/corte1.jpg" alt="...">
+            <img src="~/Images/corte2.jpeg" alt="...">
+            <img src="~/Images/corte3.jpeg" alt="...">
+            <img src="~/Images/corte4.jpeg" alt="...">
+        </div>
+    </div>
+    <div class="informacoes">
+        <h1>Confira nossos melhores preços</h1>
+        <table>
+            <tr><td>Degrade</td><td>50,00 R$</td></tr>
+            <tr><td>Botox</td><td>80,00 R$</td></tr>
+            <tr><td>Hidratação</td><td>35,00 R$</td></tr>
+            <tr><td>Descolorir</td><td>100,00 R$</td></tr>
+            <tr><td>Barba</td><td>20,00 R$</td></tr>
+        </table>
+    </div>
+</div>
+<div class="funcionamento-semanas">
+    <p>Segunda <br />  08:00 - 20:00</p>
+    <p>Terça <br />  08:00 - 20:00</p>
+    <p>Quarta <br />  08:00 - 20:00</p>
+      <p>Quinta <br/> 08:00 - 20:00</p>
+      <p>Sexta <br/> 08:00 - 20:00</p>
+    <p>Sábado <br />  08:00 - 20:00</p>
+      <p class="fechado">Domingo <br/> Fechado</p>
+</div>
+
+<script>
+    document.getElementById("scroll-btn").addEventListener("click", function(event) {
+        event.preventDefault(); // Impede o comportamento padrão do link
+        document.getElementById("quem-somos").scrollIntoView({ behavior: "smooth" });
+    });
+
+       document.getElementById("btn-scroll-servicos").addEventListener("click", function(event) {
+        event.preventDefault(); // Impede o comportamento padrão do link
+        document.getElementById("Servicos").scrollIntoView({ behavior: "smooth" });
+    });
+</script>

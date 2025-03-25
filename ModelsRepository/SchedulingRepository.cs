@@ -13,28 +13,28 @@ namespace BarberShopSystem.ModelsRepository
         {
         }
 
-        public OpeningHours GetScheduling() 
+        public List<OpeningHours> GetScheduling() 
         {
             try
             {
-                OpeningHours openingHours = new OpeningHours();
+                List<OpeningHours> openingHours = new List<OpeningHours>();
                 var connection = GetConnection();
                 connection.Open();
-                var command = new MySqlCommand("SELECT * FROM HorariosFuncionamento WHERE BarbeariaId=@BarbeariaId and DiaSemana=@DiaSemana ", connection);
-                command.Parameters.AddWithValue("@BarbeariaId", 1);
-                command.Parameters.AddWithValue("@DiaSemana", 1);
+                var command = new MySqlCommand("SELECT * FROM HorariosFuncionamento WHERE BarbeariaId=@BarbeariaId ", connection);
+                command.Parameters.AddWithValue("@BarbeariaId", 1); // Precisa ajustar no config para caso tenha mais de uma empresa.
+                //command.Parameters.AddWithValue("@DiaSemana", 1); // Aqui também 
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        openingHours = new OpeningHours
+                         openingHours.Add(new OpeningHours()
                         {
                             id = reader.GetInt32("Id"),
                             barbeariaId = reader.GetInt32("BarbeariaId"),
                             diaSemana = reader.GetInt32("DiaSemana"),
                             horaAbertura = reader.GetTimeSpan("HoraAbertura"),
                             horaFechamento= reader.GetTimeSpan("HoraFechamento"),
-                        };
+                        });
                     }
                 }
                 return openingHours;
@@ -49,7 +49,7 @@ namespace BarberShopSystem.ModelsRepository
         public void BookingATime(Appointments appointments) 
         {
             try
-            {
+            {   
                 var connection = GetConnection();
                 connection.Open();
                 var command = new MySqlCommand("INSERT INTO Agendamentos (ClienteId, BarbeiroId, ServicoId, DataHorario, Status, BarbeariaId) VALUES (@ClienteId, @BarbeiroId, @ServicoId,@DataHorario, @Status, @BarbeariaId)", connection);
@@ -69,34 +69,39 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
         }
-
-
-
-        //public List<TimeSpan> GerarHorariosDeUmaEmUmaHora(int barbeariaId, DateTime data)
-        //{
-        //    using (var db = new MeuDbContext())
-        //    {
-        //        var horario = db.HorariosFuncionamento
-        //            .FirstOrDefault(h => h.BarbeariaId == barbeariaId && h.DiaSemana == (int)data.DayOfWeek);
-
-        //        if (horario == null) return new List<TimeSpan>(); 
-
-        //        var horariosDisponiveis = new List<TimeSpan>();
-        //        var horaAtual = horario.HoraAbertura;
-
-        //        while (horaAtual < horario.HoraFechamento)
-        //        {
-        //            horariosDisponiveis.Add(horaAtual);
-        //            horaAtual = horaAtual.Add(TimeSpan.FromHours(1));
-        //        }
-
-        //        return horariosDisponiveis;
-        //    }
-        //}
         private int GetLastInsertedId(MySqlConnection connection)
         {
             var getIdCommand = new MySqlCommand("SELECT LAST_INSERT_ID();", connection);
             return Convert.ToInt32(getIdCommand.ExecuteScalar()); // Executando o comando e pegando o ID inserido
+        }
+
+        internal bool IsTimeBooked(int? id, DateTime dateTime)
+        {
+            try
+            {
+
+                var connection = GetConnection();
+                connection.Open();
+                var command = new MySqlCommand("SELECT * FROM Agendamentos WHERE ClienteId=@ClienteId AND BarbeariaId=@BarbeariaId AND DataHorario=@DataHorario", connection);
+                command.Parameters.AddWithValue("@ClienteId", id);
+                command.Parameters.AddWithValue("@DataHorario", dateTime.ToString($"yyyy-MM-dd HH:mm:ss"));
+                command.Parameters.AddWithValue("@BarbeariaId", 1);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return true;
+                    }
+                }
+                connection.Close();
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                throw;
+            }
         }
     }
 }

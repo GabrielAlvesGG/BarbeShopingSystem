@@ -4,8 +4,10 @@ using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
 using Google.Protobuf.WellKnownTypes;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using static BarberShopSystem.ModelsRepository.AppointmentsRepository;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BarberShopSystem.Service;
 
@@ -25,53 +27,165 @@ public class SchedulingService
         _clientRepository = clientRepository;
         _historicalSchedulesRepository = historicalSchedulesRepository;
     }
-
     public string GetScheduling()
-    {
-		try
-		{
+     {
+        try
+        {
+            List<User> usersBarber = new List<User>();
 
-            OpeningHours openingHours =  _schedulingRepository.GetScheduling();
+            if (SessionHelper.IsBarberUser())
+                usersBarber = _userRepository.ListBarberId(SessionHelper.UserId);
+            else
+                usersBarber = _userRepository.ListAllBarber();
+
+            List<WeekDays> weekDays = ObterProximosSeteDias();
+
+            List<OpeningHours> openingHours = _schedulingRepository.GetScheduling();
             List<Schedules> schedules = new List<Schedules>();
-            foreach (var item in GerarHorarios(openingHours.horaAbertura, openingHours.horaFechamento))
+
+            foreach (var day in weekDays)
             {
-                bool freeAppointiments = item > DateTime.Now.TimeOfDay;
-                schedules.Add(new Schedules()
+                TimeSpan horaAbertura = new TimeSpan();
+                TimeSpan horaFechamento = new TimeSpan();
+                    for (int i = 0; i < openingHours.Count; i++)
+                    {
+                        if (day.dayString == "segunda-feira")
+                        if (openingHours[i].diaSemana == 1)
+                            {
+                            horaAbertura = openingHours[i].horaAbertura;
+                            horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+                            
+                        if (day.dayString == "terça-feira")
+                            if (openingHours[i].diaSemana == 2)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+                        if (day.dayString == "quarta-feira")
+                            if (openingHours[i].diaSemana == 3)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+                        if (day.dayString == "quinta-feira")
+                            if (openingHours[i].diaSemana == 4)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+                        if (day.dayString == "sexta-feira")
+                            if (openingHours[i].diaSemana == 5)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                                break;
+                            }
+                        if (day.dayString == "sábado")
+                            if (openingHours[i].diaSemana == 6)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+                        if (day.dayString == "domingo")
+                            if (openingHours[i].diaSemana == 7)
+                            {
+                                horaAbertura = openingHours[i].horaAbertura;
+                                horaFechamento = openingHours[i].horaFechamento;
+                            break;
+                        }
+
+                    }
+                foreach (var item in GerarHorarios(horaAbertura, horaFechamento))
                 {
-                    free = freeAppointiments,
-                    time = item,
-                    timeHasPassed = freeAppointiments == true ? false : true
-                });
+                    bool freeAppointiments = false;
+                    if (day.dayDateTime.Date == DateTime.Now.Date)
+                        freeAppointiments = item > DateTime.Now.TimeOfDay;
+                    else
+                        freeAppointiments = true;
+
+
+                    day.schedules.Add(new Schedules()
+                    {
+                        free = freeAppointiments,
+                        time = item,
+                        timeHasPassed = freeAppointiments == true ? false : true
+                    });
+                }
             }
+           
             List<Appointments> appointments = _appointmentsRepository.AppointmentsMade();
-            List<Client> clients = _userRepository.ListAllBarber();
 
-            foreach (var agendamento in schedules)
+            foreach (var item in weekDays)
             {
+                foreach (var agendamento in item.schedules)
+                {
 
-                bool match = appointments.Any(a => a.dateTime.TimeOfDay == agendamento.time);
+                    bool match = appointments.Any(a => a.dateTime.TimeOfDay == agendamento.time && a.dateTime == item.dayDateTime + agendamento.time);
 
-                if (match)
-                    agendamento.barbersIds.Add(appointments.Where(a => a.dateTime.TimeOfDay == agendamento.time).FirstOrDefault().barber.id);
+                    if (match)
+                        agendamento.barbersIds.AddRange(appointments.Where(a => a.dateTime.TimeOfDay == agendamento.time && usersBarber.Any(ub => ub.id == a.barber.id)).Select(a => a.barber.id).Distinct());
+                }
             }
-
            
 
 
-            var jsonObject  = new
+            List<ScheduleseBarbers> scheduleseBarbers = new List<ScheduleseBarbers>();
+
+            foreach (var barber in usersBarber)
             {
-                schedules = schedules,
-                clients = clients
+                ScheduleseBarbers scheduleseBarber = new ScheduleseBarbers();
+                scheduleseBarber.user = barber;
+                foreach (var item in weekDays)
+                {
+                    item.schedules
+                  .Where(i => i.barbersIds.Contains(barber.id))
+                  .ToList()
+                  .ForEach(i => i.free = false);
+                }
+                scheduleseBarber.weekDays = weekDays;
+                scheduleseBarbers.Add(scheduleseBarber);
+            }
+
+
+            bool isBarber = SessionHelper.IsBarberUser();
+
+            var jsonObject = new
+            {
+                schedulesBarbers = scheduleseBarbers,
+                isBarber = isBarber,
             };
 
             return JsonSerializer.Serialize(jsonObject);
 
         }
-		catch (Exception ex)
-		{
+        catch (Exception ex)
+        {
             Console.WriteLine(ex.Message);
-			throw;
-		}
+            throw;
+        }
+    }
+
+    public List<WeekDays> ObterProximosSeteDias()
+    {
+        List<WeekDays> proximosDias = new List<WeekDays>();
+
+        for (int i = 0; i < 7; i++)
+        {
+            WeekDays weekday = new WeekDays();
+            DateTime dia = DateTime.Today.AddDays(i);
+            string diaSemana = dia.ToString("dddd", new System.Globalization.CultureInfo("pt-BR")); // Nome do dia da semana
+            weekday.dayString = diaSemana;
+            weekday.dayDateTime = dia;
+            proximosDias.Add((weekday));
+        }
+
+        return proximosDias;
     }
     public List<TimeSpan> GerarHorarios(TimeSpan horaAbertura, TimeSpan horaFechamento)
     {
@@ -87,21 +201,52 @@ public class SchedulingService
         return horarios;
     }
 
-    public void BookingATime(AppointmentsDto appointmentsDTO)
+    public string ObterDiaDaSemanaPorExtenso(int diaSemana)
+    {
+        return diaSemana switch
+        {
+            1 => "Segunda-feira",
+            2 => "Terça-feira",
+            3 => "Quarta-feira",
+            4 => "Quinta-feira",
+            5 => "Sexta-feira",
+            6 => "Sábado",
+            7 => "Domingo",
+            _ => "Desconhecido"
+        };
+    }
+
+
+    public bool BookingATime(AppointmentsDto appointmentsDTO)
     {
         try
         {  
             Cliente client = _clientRepository.SearchClientWichUserId(Convert.ToInt32(SessionHelper.UserId));
-            Appointments appointment = new Appointments();
 
-            appointment.client.id = client.id;
-            appointment.dateTime = DateTime.Now.Date + appointmentsDTO.dateTime;
-            appointment.customer.id = appointmentsDTO.customerId;
-            appointment.barber.id = appointmentsDTO.barberId;
+            foreach (var item in appointmentsDTO.dateTime)
+            {
+                if (_schedulingRepository.IsTimeBooked(client.id, appointmentsDTO.dayDateTime + item))
+                {
+                    return false;
+                }
+            }
+                Appointments appointment = new Appointments();
+                foreach (var date in appointmentsDTO.dateTime)
+                {
 
-            _schedulingRepository.BookingATime(appointment);
+                    appointment.client.id = client.id;
 
-            _historicalSchedulesRepository.RegisterConfirmeOrCancelAppointments(appointment.idAppointments, appointment, StatusAppointmentEnum.Pendente);
+                    appointment.dateTime = appointmentsDTO.dayDateTime + date; 
+                    appointment.customer.id = appointmentsDTO.customerId;
+                    appointment.barber.id = appointmentsDTO.barberId;
+
+                    _schedulingRepository.BookingATime(appointment);
+
+                    _historicalSchedulesRepository.RegisterConfirmeOrCancelAppointments(appointment.idAppointments, appointment, StatusAppointmentEnum.Pendente);
+                }
+            
+            return true;
+           
         }
         catch (Exception ex)
         {

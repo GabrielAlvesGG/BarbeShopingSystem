@@ -3,72 +3,104 @@
     ViewData["Title"] = "Agendamentos";
 }
 
-<div id="scheduling" class="container">
-    <div class="row">
-        <div class="col-md-4 col-lg-5 order-md-last">
-            <div class="card-body">
-                <div class="row">
-                    <h1>Barbeiros</h1>
-                    <div>
-                        <label>Selecione um barbeiro</label>
-                        <select class="form-select" v-model="selectedBarber" v-on:Change="FormShowScheduling()">
-                            <option value="0">Selecione um barbeiro</option>
-                            <option v-for="barber in BarberList" :value="barber.barber.id">{{barber.nome}}</option>
-                        </select>
-                        <div class="alert alert-danger mt-2" v-show="alertSelectBarbereInvalidade" role="alert">
-                            Selecione um Barbeiro !
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-lg-5 order-md-last" v-show="showScheduling">
-            <div class="card card-shadow-1 mb-1">
-            
-                <div class="card-header calendar-header">
-                    <h3 class="card-title flex-grow-1 mb-0 w-100">Agendar Corte/ Serviço</h3>
-                    <p class="w-100 m-0"></p>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <h1>Serviços</h1>
-                        <div>
-                            <label>Selecione o serviço</label>
-                            <select class="form-select" v-model="selectedService">
-                                <option :value="0">Selecione um serviço</option>
-                                <option v-for="customer in CustomersList" :value="customer.id">{{customer.name}} valor {{customer.price}}</option>
+<link href="~/css/Scheduling.css" rel="stylesheet" />
 
-                            </select>
-                            <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
-                                Selecione um serviço !
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <h1>Horários</h1>
-                        <div v-if="listaDeHorarios.length" class="scheduling-container">
-                            <div v-for="(horario, index) in listaDeHorarios"
-                                 :key="horario.time"
-                                 v-if="index < maxButtons"
-                                 class="scheduling-button-wrapper">
-                                <button v-on:click="selecionarHorario(horario.time)" v-show="horario.free">
-                                    {{ formatTime(horario.time) }}
-                                </button>
-                                <button  v-show="!horario.free" class="indisponivel" disabled>
-                                   {{ formatTime(horario.time) }}
-                                </button>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <p>Não há horários disponíveis no momento.</p>
+
+<div id="scheduling" class="container">
+    <div class="novo-padrao container py-4">
+        <div v-for="(schedules, index) in schedules" :key="index" class="card p-4 shadow-sm mb-4">
+            <div class="row">
+                <!-- Informações do Barbeiro -->
+
+                <div class="col-md-5">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-2 text-primary">{{ schedules.user.nome }}</h3>
+                        @* <img src="{{ schedules.user.foto }}" alt="Foto do Funcionário" class="rounded-circle employee-img"> *@
+                        <img src="~/Images/barbeiro.jpeg"alt="Foto do Funcionário" class="rounded-circle employee-img">
+                        <p class="text-muted"><strong>Especialidade: {{ schedules.user.barber.especialidade }}</strong></p>
+                        <div class="alert alert-info">Implementar o feedback aqui</div>
+                        <div class="barber-details mt-4 p-3 rounded">
+                            <p><strong>Nome:</strong> Gabriel Alves</p>
+                            <p><strong>Fumante:</strong> Não</p>
+                            <p><strong>Estilo Musical:</strong> Rock</p>
+                            <p><strong>Experiência:</strong> 26 anos</p>
                         </div>
                     </div>
                 </div>
-               
+
+
+                <!-- Seleção de Serviços e Horários -->
+                <div class="col-md-7">
+                    <!-- Seleção de Serviço -->
+                    <div class="mb-3">
+                        <h5 class="text-secondary">Serviços</h5>
+                        <label class="form-label">Selecione o serviço:</label>
+                        <select class="form-select" v-model="selectedService">
+                            <option :value="0">Selecione um serviço</option>
+                            <option v-for="service in CustomersList" :value="service.id">
+                                {{ service.name }} - R$ {{ service.price.toFixed(2) }} - Tempo: {{service.duration }} min
+                            </option>
+                        </select>
+                        <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
+                            Selecione um serviço!
+                        </div>
+                    </div>
+
+                    <div class="schedule-container mb-3">
+                        <h5 class="text-secondary">Horários Disponíveis</h5>
+
+                        <!-- Modo Desktop: Grade de horários -->
+                        <div v-if="!isMobileView" class="schedule-grid">
+                            <div class="week-day-header"></div>
+                            <div v-for="weekDay in schedules.weekDays" class="week-day-header">
+                                <h5>{{ weekDay.dayString }}</h5>
+                            </div>
+
+                            <template v-for="(horario, index) in schedules.weekDays[0]?.schedules">
+                                <div class="time-slot">
+                                    {{ formatTime(horario.time) }}
+                                </div>
+
+                                <div v-for="weekDay in schedules.weekDays"  class="schedule-cell">
+                                    <button v-if="weekDay.schedules[index]"
+                                            class="btn"
+                                            :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-secondary'"
+                                            :disabled="!weekDay.schedules[index].free"
+                                            @@click="selecionarHorario(weekDay.schedules[index].time, schedules.user.id, weekDay.dayDateTime)">
+                                        {{ formatTime(weekDay.schedules[index].time) }}
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Modo Mobile: Lista de dias com dropdown de horários -->
+                        <div v-else class="mobile-schedule">
+                            <div v-for="weekDay in schedules.weekDays" >
+                                <button class="week-day-button" @@click="toggleDay(weekDay.dayString)">
+                                    {{ weekDay.dayString }}
+                                </button>
+                                <div v-if="selectedDay === weekDay.dayString" class="mobile-schedule-list">
+                                    <button v-for="horario in weekDay.schedules"
+                                            :key="horario.time"
+                                            class="btn"
+                                            :class="horario.free ? 'btn-success' : 'btn-secondary'"
+                                            :disabled="!horario.free"
+                                            @@click="selecionarHorario(horario.time, schedules.user.id, weekDay.dayDateTime)">
+                                        {{ formatTime(horario.time) }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--Dias da semana-->
+                  
+                </div>
             </div>
         </div>
     </div>
-
     <!-- Modal the user not logged in -->
     <div class="modal fade" id="UserNotLoggedModal" tabindex="-1" aria-labelledby="UserNotLoggedModalLabel" aria-hidden="true" ref="modalLogin">
         <div class="modal-dialog">
@@ -89,56 +121,29 @@
     </div>
     <!-- Modal the user not logged in -->
 
+    <!-- Modal the user barber -->
+    <div class="modal fade" id="UserBarberLoggedModal" tabindex="-1" aria-labelledby="UserBarberLoggedModalLabel" aria-hidden="true" ref="modalLogin">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="UserBarberLoggedModalLabel">Deseja oculpar esse horário</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Ao oculpar esse horário clientes não conseguiram agendar nenhum serviço nesse horário.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    <button type="button" class="btn btn-info" v-on:Click="occupySchedule()">Oculpar horário</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal the user barber -->
+
 
 </div>
 
-<style>
-    .scheduling-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .scheduling-button-wrapper {
-        flex: 1 1 20%; /* Ajusta a porcentagem para controlar o número de botões por linha */
-        display: flex;
-        justify-content: center;
-    }
-
-    .scheduling-container button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .scheduling-container button:hover {
-            background-color: #0056b3;
-        }
-
-    .indisponivel {
-        background-color: #dc3545; /* Cor de fundo para "Indisponível" */
-        text-decoration: line-through; /* Riscar o texto */
-    }
-
-        .indisponivel:hover {
-            background-color: #c82333; /* Cor ao passar o mouse em "Indisponível" */
-        }
-
-    .card-shadow-1 {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .calendar-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-    }
-</style>
 
 
 <script src="~/lib/vue/vue.js"></script>
@@ -148,7 +153,7 @@
         el: '#scheduling',
         data() {
             return {
-                listaDeHorarios: [],
+                schedules: [],
                 maxButtons: 10 ,
                 possibleCancelAppointment: 0,
                 userLogged: false,
@@ -159,6 +164,11 @@
                 alertSelectCustomerInvalidade:false,
                 alertSelectBarbereInvalidade:false,
                 showScheduling: false,
+                userLoggerIsBarber: false,
+                modalBarberId: 0,
+                timeOccupySchedule:0,
+                isMobileView: false,
+                selectedDay: null
             }
         },
         methods: {
@@ -167,45 +177,91 @@
                 .then(response => {
 
                     var result = JSON.parse(response.data);
-                    this.listaDeHorarios = result.schedules; 
-                    this.BarberList = result.clients; 
+                    this.schedules = result.schedulesBarbers;
+                    this.BarberList = result.barber; 
+                    this.userLoggerIsBarber = result.isBarber;
                     this.LoggedInClient();
-                    this.FormShowScheduling();
+                    this.schedulingFree();
                 })
                 .catch(error => {
                     console.error('Erro ao carregar horários:', error);
                 });
             },
-            selecionarHorario(horario) {
+            selecionarHorario(horario, barberId, dayDateTime) 
+            {
                 this.resetAlertMeessage();
+
+
                 if(this.userLogged){
                     let time = horario;
 
                     if(this.selectedService == 0){
                         this.alertSelectCustomerInvalidade = true;
-                        if(this.selectedBarber == 0)
-                            this.alertSelectBarbereInvalidade = true;
+
+                    if(this.barberId == 0)
+                        this.alertSelectBarbereInvalidade = true;
 
                         return;
                     }
-                    if(this.selectedBarber == 0){
-                        this.alertSelectBarbereInvalidade = true;
+
+                    let timeList = this.validateDurationService(time, barberId,dayDateTime); // Verificar se no dia tem o tempo necessário disponivel
+
+                    if(timeList.length == 0)
+                    {
+                        Swal.fire({
+                            title: 'Perído muito longo do serviço !',
+                            text: 'O horário agendado não é suficiente para conseguir realizar esse serviço veja outro período.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                            footer: 'Tente outro período ou outro barbeiro'
+                        });
+
                         return;
                     }
                         
-                    const appointmentsDTO  = {
+
+                    if(this.userLoggerIsBarber){
+                          this.OpenModalUserBarberLogged(time, barberId);
+                        return;
+                    }
+                        
+                   this.BookingATime(timeList, barberId,dayDateTime) // Passar aqui o dia para fazer o agendamento.
+                }
+                
+                else{
+                    this.OpenModalUserNotLoogedModal();
+                }
+                       
+            },
+            BookingATime(time, barberId, dayDateTime){
+                 const appointmentsDTO  = { // Implementar aqui também o dia que deve ser agendado 
                         dateTime :time,
                         customerId: this.selectedService,
-                        barberId: this.selectedBarber,
+                        barberId: barberId,
+                        dayDateTime : dayDateTime
                     };
 
 
-                    axios.post('/Scheduling/BookingATime', 
+                    axios.post('/Scheduling/BookingATime',
                     appointmentsDTO, {
                     headers: {
                         'Content-Type': 'application/json'}
                     })
                     .then(response => {
+                        if(!response.data){
+                              Swal.fire({
+                                title: 'Horário já está agendado !',
+                                text: 'Você tem um horário agendado nesse mesmo período.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok',
+                                footer: 'Verifique os horários que você já agendou'
+                            });
+                        }
+                        else
+                        {
+                             if(this.userLoggerIsBarber)
+                                this.closeModalUserBarberLogged();
+
                         Swal.fire({
                             title: 'Horário Agendado!',
                             text: 'Seu horário foi agendado com sucesso.',
@@ -214,17 +270,14 @@
                             footer: 'Aguarde a confirmação do barbeiro'
                         });
                         this.alertSelectCustomerInvalidade = false;
-                        this.alertSelectBarbereInvalidade = false; 
+                        this.alertSelectBarbereInvalidade = false;
                         this.GetScheduling();
+                        }
+                       
                     })
                     .catch(error => {
                         console.error('Erro ao carregar horários:', error);
                     });
-                }
-                else{
-                    this.OpenModalUserNotLoogedModal();
-                }
-                       
             },
             formatTime(horario) {
                 // Remove seconds from the time string
@@ -242,9 +295,18 @@
             },
             RedirectLoginPage(){
                 window.location.href = "/Login/Login?sheduling=true";
+            },  
+            occupySchedule(){
+                 this.BookingATime(this.timeOccupySchedule, this.modalBarberId)
             },
             OpenModalUserNotLoogedModal(){
                let modal = new bootstrap.Modal(document.getElementById("UserNotLoggedModal"));
+                modal.show();
+            },
+            OpenModalUserBarberLogged(time, barberId){
+                this.timeOccupySchedule = time;
+                this.modalBarberId = barberId;
+               let modal = new bootstrap.Modal(document.getElementById("UserBarberLoggedModal"));
                 modal.show();
             },
             GetServices(){
@@ -264,34 +326,120 @@
                 this.alertSelectCustomerInvalidade =false;
                 this.alertSelectBarbereInvalidade = false;
             },
-            FormShowScheduling(){
-                if(this.selectedBarber != "0"){
-                    this.showScheduling = true;
-                    this.schedulingFree();
-                }
-                else
-                    this.showScheduling = false;
-            },
             schedulingFree(){
-                   this.listaDeHorarios.forEach(obj => {
-                        if (obj.barbersIds.some(num => num === this.selectedBarber)) {
-                            obj.free = false;
+                    this.schedules.forEach(obj => {
+                        this.schedules.forEach(obj => {
+                            obj.weekDays.forEach(weekDay => {
+                            weekDay.schedules.forEach(item => {
+                                if (item.barbersIds.length > 0) {
+                                    const barberFound = item.barbersIds.some(barberId => barberId === obj.user.id);
+                                    item.free = !barberFound;
+                                }
+                                else {
+                                    item.free = !item.timeHasPassed;
+                                }
+                            });
+                            });
+                        });
+                   });
+            },
+            closeModalUserBarberLogged(){
+                let modalElement = document.getElementById("UserBarberLoggedModal");
+                let modalInstance = bootstrap.Modal.getInstance(modalElement);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            },
+            validateDurationService(time, barberId,dayDateTime){
+                let durationService = 0;
+                this.CustomersList.forEach(item => {
+                    if(item.id == this.selectedService)
+                        {
+                           durationService = item.duration
                         }
-                        else {
-                            if(obj.timeHasPassed == true){
-                                obj.free= false ;
-                            }
-                            else{
-                                obj.free = true;
-                            }
+                });
+                return this.testeDuration(durationService,time, barberId,dayDateTime);
+            },
+
+        testeDuration(durationService, time, barberId, dayDateTime) {
+        let listSchedule = [];
+        let interval = 60; // Intervalo de agendamento (pode ser alterado)
+
+        let qtdPeriodos = Math.ceil(durationService / interval);
+
+        this.schedules.forEach(shedule => {
+            shedule.weekDays.forEach(weekDay => {
+                if (weekDay.dayDateTime !== dayDateTime) return; // Filtra apenas o dia correto
+
+                if (shedule.user.barber.id !== barberId) return; // Filtra apenas o barbeiro correto
+
+                weekDay.schedules.forEach((schedule, index, schedules) => {
+                    if (schedule.time !== time) return; // Filtra apenas o horário correto
+
+                    let horariosLivres = true;
+                    let horariosSelecionados = [schedule.time];
+
+                    let horarioAtual = new Date();
+                    let [horas, minutos, segundos] = schedule.time.split(":").map(Number);
+                    horarioAtual.setHours(horas, minutos, segundos);
+
+                    for (let i = 1; i < qtdPeriodos; i++) {
+                        horarioAtual.setMinutes(horarioAtual.getMinutes() + interval);
+                        let proximoHorario = horarioAtual.toTimeString().split(" ")[0];
+
+                        let proximoSchedule = schedules.find(s => s.time === proximoHorario);
+                        if (!proximoSchedule || !proximoSchedule.free) {
+                            horariosLivres = false;
+                            break;
                         }
-                    });
+
+                        horariosSelecionados.push(proximoSchedule.time);
+                    }
+
+                    if (horariosLivres) {
+                        listSchedule.push(...horariosSelecionados);
+                    }
+                });
+            });
+        });
+
+        return listSchedule;
+    },
+            toggleSchedule(dayId) {
+            const schedule = document.getElementById(dayId);
+            if (schedule.style.display === "block") {
+                schedule.style.display = "none";
+            } else {
+                schedule.style.display = "block";
             }
+        },
+      
+        toggleDay(day) {
+            this.selectedDay = this.selectedDay === day ? null : day;
+        },
+        checkScreenSize() {
+            const width = window.innerWidth;
+
+                if (width <= 768) {
+                    this.isMobileView = true; // 📱 Modo mobile (lista de dias)
+                } else if (width <= 1024) {
+                    this.isTabletView = true; // 📱📟 Modo tablet (grade menor)
+                    this.isMobileView = false;
+                } else {
+                    this.isMobileView = false; // 🖥️ Modo desktop normal
+                    this.isTabletView = false;
+                }
+        },
 
         },
         mounted() {
+            this.checkScreenSize();
+            window.addEventListener("resize", this.checkScreenSize);
             this.GetServices();
-            this.GetScheduling();  
-        }
+            this.GetScheduling();
+        },
+        beforeDestroy() {
+            window.removeEventListener("resize", this.checkScreenSize);
+        },
     });
 </script>

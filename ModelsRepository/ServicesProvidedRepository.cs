@@ -26,14 +26,15 @@ namespace BarberShopSystem.ModelsRepository
 
                 MySqlConnection connection = GetConnection();
                 connection.Open();
-                var command = new MySqlCommand($"INSERT INTO servicos (Nome, Descricao, preco) " +
-                                $"VALUES (@Name, @Description, @Price)", connection);
+                var command = new MySqlCommand($"INSERT INTO servicos (Nome, Descricao, preco,duracao) " +
+                                $"VALUES (@Name, @Description, @Price,@duration)", connection);
                 command.Parameters.AddWithValue("@Name", servicesProvided.name);
                 command.Parameters.AddWithValue("@Description", servicesProvided.description);
                 string priceString = servicesProvided.price.ToString().Replace(",", ".");
                 double price = Convert.ToDouble(priceString, CultureInfo.InvariantCulture);
 
                 command.Parameters.AddWithValue("@Price", price);
+                command.Parameters.AddWithValue("@duration", servicesProvided.duration);
 
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -51,7 +52,7 @@ namespace BarberShopSystem.ModelsRepository
             {
                 MySqlConnection connection = GetConnection();
                 connection.Open();
-                string sqlCommand = $"UPDATE servicos SET Nome='{servicesProvided.name}', Descricao='{servicesProvided.description}', preco='{servicesProvided.price.ToString().Replace(",", ".")}' WHERE Id={servicesProvided.id}";
+                string sqlCommand = $"UPDATE servicos SET Nome='{servicesProvided.name}', Descricao='{servicesProvided.description}', preco='{servicesProvided.price.ToString().Replace(",", ".")}', duracao={servicesProvided.duration} WHERE Id={servicesProvided.id}";
 
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteNonQuery();
@@ -98,7 +99,8 @@ namespace BarberShopSystem.ModelsRepository
                                 id = reader.GetInt32("Id"),
                                 name = reader.GetString("Nome"),
                                 description = reader.GetString("Descricao"),
-                                price = reader.GetDouble("Preco").ToString()
+                                price = reader.GetDouble("Preco").ToString(),
+                                duration = reader.GetInt32("duracao")
                             });
                         }
                     }
@@ -139,6 +141,7 @@ namespace BarberShopSystem.ModelsRepository
                             ServicesProvided.name = reader.GetString("Nome");
                             ServicesProvided.description = reader.GetString("Descricao");
                             ServicesProvided.price = reader.GetDouble("Preco").ToString();
+                            ServicesProvided.duration= reader.GetInt32("duracao");
 
                         }
                     }

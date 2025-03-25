@@ -12,7 +12,7 @@ namespace BarberShopSystem.Models
         public Customer customer { get; set; } = new Customer();
         public DateTime dateTime { get; set; }
         public string statusAppointment { get; set; }
-        public string nameShowBarberOrCliente { get; set; }
+        public string? nameShowBarberOrCliente { get; set; }
         public bool showNameBarber { get; set; }
     }
 }

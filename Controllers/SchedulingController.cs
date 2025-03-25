@@ -32,8 +32,8 @@ public class SchedulingController : Controller
     [HttpPost("BookingATime")]
     public IActionResult BookingATime([FromBody] AppointmentsDto appointments)
     {
-        _schedulingService.BookingATime(appointments);
-        return Ok();
+        
+        return Json(_schedulingService.BookingATime(appointments));
     }
 
     [HttpGet("HasSchelulingClient")]
@@ -90,6 +90,6 @@ public class SchedulingController : Controller
             Console.WriteLine(ex.Message);
             throw;
         }
-    }
+    } 
 }
 

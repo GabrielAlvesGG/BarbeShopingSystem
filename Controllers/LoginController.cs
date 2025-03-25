@@ -67,7 +67,7 @@ public class LoginController : Controller
     {
         try
         {
-            Client user = _recoveryPasswordService.LoginConfirm(login);
+            User user = _recoveryPasswordService.LoginConfirm(login);
             return user != null ? _recoveryPasswordService.SendCodConfirm(user) : false;
         }
         catch (Exception ex)

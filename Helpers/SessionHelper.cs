@@ -46,8 +46,12 @@ namespace BarberShopSystem.Helpers
         {
             return SessionHelper.UserType == "Administrador";
         }
+        public static bool IsBarberUser()
+        {
+            return SessionHelper.UserType == "Barbeiro";
+        }
 
-        public static void StartSessionLogger(Client clientLoggedIn)
+        public static void StartSessionLogger(User clientLoggedIn)
         {
             try
             {

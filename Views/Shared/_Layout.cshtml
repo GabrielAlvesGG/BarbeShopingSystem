@@ -54,12 +54,15 @@
                                     <li class="dropdown-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Scheduling" asp-action="Scheduling">Agendamentos</a>
                                     </li>
+                                    @if (SessionHelper.UserType != null)
+                                    {
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Scheduling" asp-action="MyScheduling">Meus agendamentos</a>
-                                    </li>
+                                            <li class="dropdown-item">
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Scheduling" asp-action="MyScheduling">Meus agendamentos</a>
+                                            </li>
+                                    }
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -107,8 +110,8 @@
             @* </div> *@
         @* </nav> *@
     </header>
-    <div class="container container-layout">
-        <main role="main" class="pb-3">
+    <div class="wrapper">
+        <main class="content">
             @RenderBody()
         </main>
     </div>

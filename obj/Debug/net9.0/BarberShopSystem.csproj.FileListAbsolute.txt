@@ -78,8 +78,6 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\hku53kzuj7-muycvpuwrr.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\q3qpmjov88-87fc7y1x7t.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\zkmrnch4fi-mlv21k5csn.gz
-C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\ri041upj2q-ix4yfl4xiv.gz
-C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\zkrs4xn091-ix4yfl4xiv.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -116,7 +114,6 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\BarberSh.F026FA0F.Up2Date
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\il2lmmelb4-6h31kfu8vp.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\bo370fvk4h-wt1176vk2r.gz
-C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\uym6fboowe-wft1x3rerk.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\System.Data.SqlClient.dll
@@ -125,3 +122,8 @@ C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\Ba
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win-x86\native\sni.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\ri041upj2q-9ndktwuiki.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\zkrs4xn091-9ndktwuiki.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\uym6fboowe-c9ogwb7kuo.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\9fhw9c4lc0-kcdal2zc6c.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\obj\Debug\net9.0\compressed\cmnp87leue-esrfyzdth9.gz

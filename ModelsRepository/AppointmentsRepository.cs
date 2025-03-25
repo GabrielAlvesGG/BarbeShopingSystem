@@ -3,6 +3,7 @@ using BarberShopSystem.Enums;
 using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace BarberShopSystem.ModelsRepository;
 
@@ -18,7 +19,7 @@ public class AppointmentsRepository : DataBaseRepository
             List<Appointments> appointMentss = new List<Appointments>();
             var connection = GetConnection();
             connection.Open();
-            var command = new MySqlCommand("SELECT DataHorario, BarbeiroId FROM Agendamentos WHERE DataHorario BETWEEN @StartDay AND @EndDay AND Status <> 'Cancelado';", connection);
+            var command = new MySqlCommand("SELECT DataHorario, BarbeiroId FROM Agendamentos WHERE DataHorario > @StartDay AND Status <> 'Cancelado';", connection);
             command.Parameters.AddWithValue("@StartDay", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             command.Parameters.AddWithValue("@EndDay", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"));
             using (var reader = command.ExecuteReader())
@@ -70,7 +71,7 @@ public class AppointmentsRepository : DataBaseRepository
             query += "END AS NomeExibido" + Environment.NewLine; 
             query += "FROM " + Environment.NewLine; 
             query += "Agendamentos a" + Environment.NewLine; 
-            query += "INNER JOIN" + Environment.NewLine; 
+            query += "LEFT JOIN" + Environment.NewLine; 
             query += "Clientes c" + Environment.NewLine; 
             query += "ON" + Environment.NewLine; 
             query += "a.ClienteId = c.Id" + Environment.NewLine; 
@@ -82,7 +83,7 @@ public class AppointmentsRepository : DataBaseRepository
             query += "Barbeiros b" + Environment.NewLine; 
             query += "ON" + Environment.NewLine; 
             query += "a.BarbeiroId= b.Id" + Environment.NewLine; 
-            query += "INNER JOIN" + Environment.NewLine; 
+            query += "LEFT JOIN" + Environment.NewLine; 
             query += "Usuarios uc" + Environment.NewLine; 
             query += "ON" + Environment.NewLine; 
             query += "uc.Id = c.UsuarioId" + Environment.NewLine; 
@@ -95,7 +96,7 @@ public class AppointmentsRepository : DataBaseRepository
             query += "AND" + Environment.NewLine; 
             query += "a.status<>'Cancelado'" + Environment.NewLine; 
             query += "AND" + Environment.NewLine; 
-            query += " ((@UsuarioId = b.UsuarioId AND uc.Nome IS NOT NULL) " + Environment.NewLine; 
+            query += " ((@UsuarioId = b.UsuarioId AND (uc.Nome IS NOT NULL OR uc.Nome IS NULL)) " + Environment.NewLine; 
             query += " OR" + Environment.NewLine; 
             query += "(@UsuarioId = c.UsuarioId AND ub.Nome IS NOT NULL)" + Environment.NewLine; 
             query += ")" + Environment.NewLine; 
@@ -114,12 +115,13 @@ public class AppointmentsRepository : DataBaseRepository
                     appointment.customer.description = reader.GetString("Descricao");
                     appointment.customer.price = reader.GetDouble("Preco");
                     appointment.statusAppointment = reader.GetString("Status");
-                    appointment.nameShowBarberOrCliente = reader.GetString("NomeExibido");
+                    appointment.nameShowBarberOrCliente = reader.IsDBNull("NomeExibido") ? "Ocupado" : reader.GetString("NomeExibido");
                     appointment.showNameBarber = appointment.nameShowBarberOrCliente == reader.GetString("NomeBarbeiro");
                     appointments.Add(appointment);
 
                 }
             }
+            
             connection.Close();
 
             return appointments;
