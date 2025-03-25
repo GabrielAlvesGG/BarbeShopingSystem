@@ -258,7 +258,8 @@ public class UserRepository : DataBaseRepository
                         usuarioId = reader.GetInt32("UsuarioId"),
                         especialidade = reader.GetString("Especialidades"),
                         disponibilidade = reader.GetString("Disponibilidade"),
-                        smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante")
+                        smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante"),
+                        experience = reader.IsDBNull("Experiencia") ? 0 : reader.GetInt32("Experiencia"),
                     },
                     tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
 
@@ -302,7 +303,8 @@ public class UserRepository : DataBaseRepository
                         usuarioId = reader.GetInt32("UsuarioId"),
                         especialidade = reader.GetString("Especialidades"),
                         disponibilidade = reader.GetString("Disponibilidade"),
-                        smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante")
+                        smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante"),
+                        experience = reader.IsDBNull("Experiencia") ? 0 : reader.GetInt32("Experiencia"),
                     },
                     tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
 
