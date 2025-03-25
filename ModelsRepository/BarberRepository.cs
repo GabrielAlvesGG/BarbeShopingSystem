@@ -21,9 +21,9 @@ namespace BarberShopSystem.ModelsRepository
                 connection.Open();
                 string sqlCommand = string.Empty;
                 if (barber.id == 0)
-                    sqlCommand = $"Insert into Barbeiros ( UsuarioId, Especialidades, Disponibilidade) VALUES ( '{barber.usuarioId}', '{barber.especialidade}','{barber.disponibilidade}')";
+                    sqlCommand = $"Insert into Barbeiros ( UsuarioId, Especialidades, Disponibilidade, Fumante) VALUES ( '{barber.usuarioId}', '{barber.especialidade}','{barber.disponibilidade}', '{barber.smoker}')";
                 else
-                    sqlCommand = $"UPDATE Barbeiros SET UsuarioId='{barber.usuarioId}', Especialidades='{barber.especialidade}', Disponibilidade='{barber.disponibilidade}' WHERE Id={barber.id};";
+                    sqlCommand = $"UPDATE Barbeiros SET UsuarioId='{barber.usuarioId}', Especialidades='{barber.especialidade}', Disponibilidade='{barber.disponibilidade}', Fumante='{barber.smoker}' WHERE Id={barber.id};";
 
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
@@ -35,43 +35,7 @@ namespace BarberShopSystem.ModelsRepository
                 throw;
             }
         }
-        
-
-        //public Barber GetBarber(int idOldBarber)
-        //{
-        //    try
-        //    {
-
-        //        MySqlConnection connection = GetConnection();
-        //        connection.Open();
-
-        //        var command = new MySqlCommand($"SELECT * FROM Barber WHERE id={idOldBarber}", connection);
-        //        var reader = command.ExecuteReader();
-
-        //        Barber Barber = new Barber();
-
-        //        while (reader.Read())
-        //        {
-        //            Barber = new Barber
-        //            {
-        //                Id = reader.GetInt32("Id"),
-        //                Name = reader.GetString("Name"),
-        //                Email = reader.GetString("Email"),
-        //                cpf = reader.GetString("CpfCnpj"),
-        //                DateOfBirth = reader.GetDateTime("DateOfBirth"),
-        //                PassWord = reader.GetString("PassWord"),
-        //                Phone = reader.GetString("Phone")
-        //            };
-        //        }
-        //        connection.Close();
-        //        return Barber;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //        throw;
-        //    }
-        //}
+       
 
         public void DeleteBarber(int idBarber)
         {
