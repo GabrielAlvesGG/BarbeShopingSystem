@@ -14,11 +14,13 @@
 
                 <div class="col-md-5">
                     <div class="card-body text-center">
+                        <div>
                         <h3 class="card-title mb-2 text-primary">{{ schedules.user.nome }}</h3>
-                        @* <img src="{{ schedules.user.foto }}" alt="Foto do Funcionário" class="rounded-circle employee-img"> *@
-                        <img src="~/Images/barbeiro.jpeg"alt="Foto do Funcionário" class="rounded-circle employee-img">
-                        <p class="text-muted"><strong>Especialidade: {{ schedules.user.barber.especialidade }}</strong></p>
+                        <img :src="schedules.user.barber.imgUrl" alt="Foto do Funcionário" class="rounded-circle employee-img img-fluid">
+                        </div>
+                        </br>
                         <div class="alert alert-info">Implementar o feedback aqui</div>
+                        <p class="text-muted"><strong>Especialidade: {{ schedules.user.barber.especialidade }}</strong></p>
                         <div class="barber-details mt-4 p-3 rounded">
                             <p><strong>Fumante:</strong> <label v-show="schedules.user.barber.smoker == 1">Sim</label> <label v-show="schedules.user.barber.smoker == 0">Não</label></p>
                             <p><strong>Estilo Musical:</strong> Rock</p>

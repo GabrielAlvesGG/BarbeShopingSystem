@@ -260,6 +260,7 @@ public class UserRepository : DataBaseRepository
                         disponibilidade = reader.GetString("Disponibilidade"),
                         smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante"),
                         experience = reader.IsDBNull("Experiencia") ? 0 : reader.GetInt32("Experiencia"),
+                        imgUrl = reader.IsDBNull("Imagem_Caminho") ? "/Images/barbeiro.jpeg" : reader.GetString("Imagem_Caminho"),
                     },
                     tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
 
@@ -305,6 +306,7 @@ public class UserRepository : DataBaseRepository
                         disponibilidade = reader.GetString("Disponibilidade"),
                         smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante"),
                         experience = reader.IsDBNull("Experiencia") ? 0 : reader.GetInt32("Experiencia"),
+                        imgUrl = reader.IsDBNull("Imagem_Caminho") ? "~/Images/barbeiro.jpeg" : reader.GetString("Imagem_Caminho"),
                     },
                     tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
 
