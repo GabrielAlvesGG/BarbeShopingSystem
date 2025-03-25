@@ -32,7 +32,7 @@ public class AuthenticationUserService
         {
             user.nome = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
             user.tipoUsuario = TipoUsuarioEnum.Cliente;
-            _userService.InsertOrUpdateUser(user);
+            _userService.InsertOrUpdateUserAsync(user,null);
         }
         else
         {

@@ -12,7 +12,7 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public void InsertOrUpdateUser(User user)
+    public async Task InsertOrUpdateUserAsync(User user, IFormFile file)
     {
         try
         {
@@ -28,6 +28,33 @@ public class UserService
                     user.barber = new Barber();
 
                 user.barber.usuarioId = user.id;
+            
+                if (file != null)
+                {
+                    try
+                    {
+                        string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Barbers");
+                        Directory.CreateDirectory(uploadPath); // Cria a pasta, se não existir
+
+                        string fileName = $"{Guid.NewGuid()}_{file.FileName}"; // Evita nomes duplicados
+                        string filePath = Path.Combine(uploadPath, fileName);
+
+                        Console.WriteLine($"Salvando arquivo: {filePath}");
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                            Console.WriteLine("Arquivo salvo com sucesso!");
+                        }
+
+                        user.barber.imgUrl = "/Images/Barbers/" + fileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erro ao salvar o arquivo: {ex.Message}");
+                        throw;
+                    }
+                }
                 new BarberRepository(configuration).InsertOrUpdateBarber(user.barber);
             }
             if (user.tipoUsuario == TipoUsuarioEnum.Cliente)

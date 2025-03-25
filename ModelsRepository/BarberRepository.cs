@@ -21,9 +21,9 @@ namespace BarberShopSystem.ModelsRepository
                 connection.Open();
                 string sqlCommand = string.Empty;
                 if (barber.id == 0)
-                    sqlCommand = $"Insert into Barbeiros ( UsuarioId, Especialidades, Disponibilidade, Fumante, Experiencia) VALUES ( '{barber.usuarioId}', '{barber.especialidade}','{barber.disponibilidade}', '{barber.smoker}', '{barber.experience}')";
+                    sqlCommand = $"Insert into Barbeiros ( UsuarioId, Especialidades, Disponibilidade, Fumante, Experiencia,Imagem_Caminho) VALUES ( '{barber.usuarioId}', '{barber.especialidade}','{barber.disponibilidade}', '{barber.smoker}', '{barber.experience}', '{barber.imgUrl}')";
                 else
-                    sqlCommand = $"UPDATE Barbeiros SET UsuarioId='{barber.usuarioId}', Especialidades='{barber.especialidade}', Disponibilidade='{barber.disponibilidade}', Fumante='{barber.smoker}', Experiencia='{barber.experience}' WHERE Id={barber.id};";
+                    sqlCommand = $"UPDATE Barbeiros SET UsuarioId='{barber.usuarioId}', Especialidades='{barber.especialidade}', Disponibilidade='{barber.disponibilidade}', Fumante='{barber.smoker}', Experiencia='{barber.experience}', Imagem_Caminho='{barber.imgUrl}' WHERE Id={barber.id};";
 
                 var command = new MySqlCommand(sqlCommand, connection);
                 command.ExecuteReader();
