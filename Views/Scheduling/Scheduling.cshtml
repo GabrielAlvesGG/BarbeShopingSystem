@@ -29,74 +29,42 @@
                     </div>
                 </div>
 
-
-                <!-- Seleção de Serviços e Horários -->
+                <!-- Seleção de Serviços -->
                 <div class="col-md-7">
                     <!-- Seleção de Serviço -->
                     <div class="mb-3">
                         <h5 class="text-secondary">Serviços</h5>
-                        <label class="form-label">Selecione o serviço:</label>
-                        <select class="form-select" v-model="selectedService">
-                            <option :value="0">Selecione um serviço</option>
-                            <option v-for="service in CustomersList" :value="service.id">
-                                {{ service.name }} - R$ {{ service.price.toFixed(2) }} - Tempo: {{service.duration }} min
-                            </option>
-                        </select>
+
+                        
+
+                        <div >
+                            <div v-for="service in CustomersList" :key="service.id" class="service-item d-flex justify-content-between align-items-center" style="display: flex !important;
+                            justify-content: space-between !important;
+                            align-items: center !important;
+                            padding: 12px 0 !important;
+                            border-bottom: 3px solid #ddd !important;">
+                                <div class="service-details">
+                                    <h5 class="service-name font-weight-bold">{{ service.name }}</h5>
+                                    <span class="service-description text-muted" v-if="service.description">{{ service.description }}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="text-right mr-3">
+                                        <span class="service-price font-weight-bold">R$ {{ service.price.toFixed(2) }}</span>
+                                        <br>
+                                        <span class="service-duration text-muted" style="font-size: 0.9rem;">{{ service.duration }} min</span>
+                                    </div>
+                                    <div style="padding:5px">
+                                        <button type="button" class="btn btn-info reserve-button" style="color:white;" v-on:Click="modalReserveSchedules(schedules.weekDays,service.id,  schedules.user.id)">Reservar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
                             Selecione um serviço!
                         </div>
                     </div>
-
-                    <div class="schedule-container mb-3">
-                        <h5 class="text-secondary">Horários Disponíveis</h5>
-
-                        <!-- Modo Desktop: Grade de horários -->
-                        <div v-if="!isMobileView" class="schedule-grid">
-                            <div class="week-day-header"></div>
-                            <div v-for="weekDay in schedules.weekDays" class="week-day-header">
-                                <h5>{{ weekDay.dayString }}</h5>
-                            </div>
-
-                            <template v-for="(horario, index) in schedules.weekDays[0]?.schedules">
-                                <div class="time-slot">
-                                    {{ formatTime(horario.time) }}
-                                </div>
-
-                                <div v-for="weekDay in schedules.weekDays"  class="schedule-cell">
-                                    <button v-if="weekDay.schedules[index]"
-                                            class="btn"
-                                            :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-secondary'"
-                                            :disabled="!weekDay.schedules[index].free"
-                                            @@click="selecionarHorario(weekDay.schedules[index].time, schedules.user.id, weekDay.dayDateTime)">
-                                        {{ formatTime(weekDay.schedules[index].time) }}
-                                    </button>
-                                </div>
-                            </template>
-                        </div>
-
-                        <!-- Modo Mobile: Lista de dias com dropdown de horários -->
-                        <div v-else class="mobile-schedule">
-                            <div v-for="weekDay in schedules.weekDays" >
-                                <button class="week-day-button" @@click="toggleDay(weekDay.dayString)">
-                                    {{ weekDay.dayString }}
-                                </button>
-                                <div v-if="selectedDay === weekDay.dayString" class="mobile-schedule-list">
-                                    <button v-for="horario in weekDay.schedules"
-                                            :key="horario.time"
-                                            class="btn"
-                                            :class="horario.free ? 'btn-success' : 'btn-secondary'"
-                                            :disabled="!horario.free"
-                                            @@click="selecionarHorario(horario.time, schedules.user.id, weekDay.dayDateTime)">
-                                        {{ formatTime(horario.time) }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <!--Dias da semana-->
                   
                 </div>
             </div>
@@ -143,9 +111,71 @@
     <!-- Modal the user barber -->
 
 
+    <!-- Modal Agendar um horários -->
+    <div class="modal fade" id="ScheduleModal" tabindex="-1" aria-labelledby="ScheduleModalLabel" aria-hidden="true" ref="modalLogin">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ScheduleModalLabel">Agende um horário</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="schedule-container mb-3">
+                        <h5 class="text-secondary">Horários Disponíveis</h5>
+
+                        <!-- Modo Desktop: Grade de horários -->
+                        <div v-if="!isMobileView" class="schedule-grid">
+                            <div class="week-day-header"></div>
+                            <div v-for="weekDay in daysWeekModal" class="week-day-header">
+                                <h5>{{ weekDay.dayString }}</h5>
+                            </div>
+
+                            <template v-for="(horario, index) in daysWeekModal[0]?.schedules">
+                                <div class="time-slot">
+                                    {{ formatTime(horario.time) }}
+                                </div>
+
+                                <div v-for="weekDay in daysWeekModal" class="schedule-cell">
+                                    <button v-if="weekDay.schedules[index]"
+                                            class="btn"
+                                            :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-secondary'"
+                                            :disabled="!weekDay.schedules[index].free"
+                                            @@click="selecionarHorario(weekDay.schedules[index].time, barberIdSelect, weekDay.dayDateTime)">
+                                        {{ formatTime(weekDay.schedules[index].time) }}
+                                    </button>
+                                </div>
+                            </template> 
+                        </div>
+
+                        <!-- Modo Mobile: Lista de dias com dropdown de horários -->
+                        <div v-else class="mobile-schedule">
+                            <div v-for="weekDay in daysWeekModal">
+                                <button class="week-day-button" @@click="toggleDay(weekDay.dayString)">
+                                    {{ weekDay.dayString }}
+                                </button>
+                                <div v-if="selectedDay === weekDay.dayString" class="mobile-schedule-list">
+                                    <button v-for="horario in weekDay.schedules"
+                                            :key="horario.time"
+                                            class="btn"
+                                            :class="horario.free ? 'btn-success' : 'btn-secondary'"
+                                            :disabled="!horario.free"
+                                            @@click="selecionarHorario(horario.time, barberIdSelect, weekDay.dayDateTime)">
+                                        {{ formatTime(horario.time) }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Agendar um horários -->
+
 </div>
-
-
 
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -169,7 +199,10 @@
                 modalBarberId: 0,
                 timeOccupySchedule:0,
                 isMobileView: false,
-                selectedDay: null
+                selectedDay: null,
+                daysWeekModal:[],
+                barberIdSelect: 0,
+                
             }
         },
         methods: {
@@ -230,6 +263,7 @@
                 }
                 
                 else{
+                    this.closeModalreserveSchedules();
                     this.OpenModalUserNotLoogedModal();
                 }
                        
@@ -250,6 +284,7 @@
                     })
                     .then(response => {
                         if(!response.data){
+                            
                               Swal.fire({
                                 title: 'Horário já está agendado !',
                                 text: 'Você tem um horário agendado nesse mesmo período.',
@@ -257,11 +292,15 @@
                                 confirmButtonText: 'Ok',
                                 footer: 'Verifique os horários que você já agendou'
                             });
+                            
+                            
                         }
                         else
                         {
                              if(this.userLoggerIsBarber)
                                 this.closeModalUserBarberLogged();
+
+                                this.closeModalreserveSchedules();
 
                         Swal.fire({
                             title: 'Horário Agendado!',
@@ -431,7 +470,20 @@
                     this.isTabletView = false;
                 }
         },
-
+        modalReserveSchedules(daysWeek, serviceId, barberId){
+            this.daysWeekModal = daysWeek;
+            this.selectedService = serviceId;
+            this.barberIdSelect = barberId
+             let modal = new bootstrap.Modal(document.getElementById("ScheduleModal"));
+                modal.show();
+        },
+         closeModalreserveSchedules(){
+                let modalElement = document.getElementById("ScheduleModal");
+                let modalInstance = bootstrap.Modal.getInstance(modalElement);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            },
         },
         mounted() {
             this.checkScreenSize();
