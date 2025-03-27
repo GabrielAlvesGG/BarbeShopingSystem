@@ -3,7 +3,9 @@
     ViewData["Title"] = "Agendamentos";
 }
 
-<link href="~/css/Scheduling.css" rel="stylesheet" />
+@section Styles {
+    <link href="~/css/Scheduling.css" rel="stylesheet" asp-append-version="true" />
+}
 
 
 <div id="scheduling" class="container">
@@ -16,9 +18,9 @@
                     <div class="card-body text-center">
                         <div>
                         <h3 class="card-title mb-2 text-primary">{{ schedules.user.nome }}</h3>
-                        <img :src="schedules.user.barber.imgUrl" alt="Foto do Funcionário" class="rounded-circle employee-img img-fluid">
+                            <img :src="schedules.user.barber.imgUrl" alt="Foto do Funcionário" class="rounded-circle employee-img img-fluid" />
                         </div>
-                        </br>
+                        <br>
                         <div class="alert alert-info">Implementar o feedback aqui</div>
                         <p class="text-muted"><strong>Especialidade: {{ schedules.user.barber.especialidade }}</strong></p>
                         <div class="barber-details mt-4 p-3 rounded">

@@ -21,7 +21,7 @@
     transition: background-color 0.3s;
 }
 
-    .scheduling-container button:hover {
+.scheduling-container button:hover {
         background-color: #0056b3;
     }
 
@@ -30,7 +30,7 @@
     text-decoration: line-through; /* Riscar o texto */
 }
 
-    .indisponivel:hover {
+.indisponivel:hover {
         background-color: #c82333; /* Cor ao passar o mouse em "Indisponível" */
     }
 
@@ -95,7 +95,7 @@
     transition: background-color 0.3s;
 }
 
-    .week-day-button:hover {
+.week-day-button:hover {
         background-color: #0056b3;
     }
 
@@ -110,3 +110,40 @@
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+
+
+.employee-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+@media (min-width: 576px) { /* Telas pequenas (sm) */
+    .employee-img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (min-width: 768px) { /* Telas médias (md) */
+    .employee-img {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media (min-width: 992px) { /* Telas grandes (lg) */
+    .employee-img {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (min-width: 1200px) { /* Telas extra grandes (xl) */
+    .employee-img {
+        width: 380px;
+        height: 380px;
+    }
+}
+
