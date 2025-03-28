@@ -1,0 +1,45 @@
+.scheduling-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.scheduling-button-wrapper {
+    flex: 1 1 20%; /* Ajusta a porcentagem para controlar o número de botões por linha */
+    display: flex;
+    justify-content: center;
+}
+
+.scheduling-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .scheduling-container button:hover {
+        background-color: #0056b3;
+    }
+
+.indisponivel {
+    background-color: #dc3545; /* Cor de fundo para "Indisponível" */
+    text-decoration: line-through; /* Riscar o texto */
+}
+
+    .indisponivel:hover {
+        background-color: #c82333; /* Cor ao passar o mouse em "Indisponível" */
+    }
+
+.card-shadow-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}

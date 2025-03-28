@@ -61,6 +61,7 @@ public class AppointmentsRepository : DataBaseRepository
             query += "a.DataHorario as DataHorario," + Environment.NewLine;
             query += "a.Status as Status," + Environment.NewLine;
             query += "s.Descricao as Descricao," + Environment.NewLine;
+            query += "s.Duracao as Duracao," + Environment.NewLine;
             query += "s.Preco as Preco," + Environment.NewLine;
             query += "uc.Nome AS NomeCliente," + Environment.NewLine;
             query += "ub.Nome AS NomeBarbeiro," + Environment.NewLine;
@@ -114,6 +115,7 @@ public class AppointmentsRepository : DataBaseRepository
                     appointment.dateTime = reader.GetDateTime("DataHorario");
                     appointment.customer.description = reader.GetString("Descricao");
                     appointment.customer.price = reader.GetDouble("Preco");
+                    appointment.customer.duration = reader.GetInt32("Duracao");
                     appointment.statusAppointment = reader.GetString("Status");
                     appointment.nameShowBarberOrCliente = reader.IsDBNull("NomeExibido") ? "Ocupado" : reader.GetString("NomeExibido");
                     appointment.showNameBarber = appointment.nameShowBarberOrCliente == reader.GetString("NomeBarbeiro");

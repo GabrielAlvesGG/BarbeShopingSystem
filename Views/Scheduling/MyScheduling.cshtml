@@ -2,8 +2,9 @@
 @{
     ViewData["Title"] = "Agendamentos";
 }
+<link href="~/css/MyScheduling.css" rel="stylesheet"/>
 
-<div id="scheduling" class="container">
+<div id="myScheduling" class="container">
     <div class="row">
         <div class="col-md-4 col-lg-5 order-md-last" v-show="isAppointmentCancellationVisible">
             <div class="card card-shadow-1 mb-1">
@@ -18,6 +19,7 @@
                                 <th v-show="showNameBarber">Barbeiro</th>
                                 <th v-show="!showNameBarber">Cliente</th>
                             <th>Descrição</th>
+                            <th>Tempo</th>
                             <th>Horario</th>
                             <th>Valor</th>
                             <th>Status</th>
@@ -27,6 +29,7 @@
                                 <td>{{appoint.idAppointments}}</td>
                                 <td>{{appoint.nameShowBarberOrCliente}}</td>
                                 <td>{{appoint.customer.description}}</td>
+                                <td>{{convertMinutesToHours(appoint.customer.duration)}}</td>
                                 <td>{{formatedDateTime(appoint.dateTime)}}</td>
                                 <td>R${{appoint.customer.price}}</td>
                                 <td>{{appoint.statusAppointment}}</td>
@@ -82,60 +85,11 @@
 
 </div>
 
-<style>
-    .scheduling-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .scheduling-button-wrapper {
-        flex: 1 1 20%; /* Ajusta a porcentagem para controlar o número de botões por linha */
-        display: flex;
-        justify-content: center;
-    }
-
-    .scheduling-container button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .scheduling-container button:hover {
-            background-color: #0056b3;
-        }
-
-    .indisponivel {
-        background-color: #dc3545; /* Cor de fundo para "Indisponível" */
-        text-decoration: line-through; /* Riscar o texto */
-    }
-
-        .indisponivel:hover {
-            background-color: #c82333; /* Cor ao passar o mouse em "Indisponível" */
-        }
-
-    .card-shadow-1 {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .calendar-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-    }
-</style>
-
-
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    var scheduling = new Vue({
-        el: '#scheduling',
+    var myScheduling = new Vue({
+        el: '#myScheduling',
         data() {
             return {
                 listaDeHorarios: [],
@@ -260,6 +214,16 @@
                 .catch(error => {
                     console.error('Erro ao carregar horários:', error);
                 });
+            },
+            convertMinutesToHours(minutes) {
+                if (typeof minutes !== "number" || minutes < 0) {
+                    return "Entrada inválida. Insira um número positivo de minutos.";
+                }
+
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+
+                return `${hours} hora(s) e ${remainingMinutes} minuto(s)`;
             }
         },
         mounted() {
