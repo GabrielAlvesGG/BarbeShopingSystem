@@ -18,22 +18,24 @@ builder.Services.AddHttpContextAccessor();
 // Add database repository
 builder.Services.AddScoped<DataBaseRepository>();
 builder.Services.AddScoped<LoginRepository>();
-builder.Services.AddScoped<RecoveryPasswordService>();
-builder.Services.AddScoped<EmailService>(); 
 builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingRepository>();
-builder.Services.AddScoped<SchedulingService>();
 builder.Services.AddScoped<AppointmentsRepository>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<CustomerRepository>();
-builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RecoveryPasswordRepository>();
-builder.Services.AddScoped<LoginService>();
-builder.Services.AddScoped<AuthenticationUserService>();
 builder.Services.AddScoped<HistoricalSchedulesRepository>();
-builder.Services.AddScoped<ServicesProvidedService>();
 builder.Services.AddScoped<ServicesProvidedRepository>();
+
+builder.Services.AddScoped<RecoveryPasswordService>();
+builder.Services.AddScoped<EmailService>(); 
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<SchedulingService>();
+builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<IAuthenticationUserService, AuthenticationUserService>();
+builder.Services.AddScoped<ServicesProvidedService>();
+
 
 
 

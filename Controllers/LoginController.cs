@@ -17,12 +17,12 @@ public class LoginController : Controller
     private readonly RecoveryPasswordService _recoveryPasswordService;
     private readonly UserService _userService;
     private readonly LoginService _loginService;
-    private readonly AuthenticationUserService _authenticationUserService;
+    private readonly IAuthenticationUserService _authenticationUserService;
 
     public LoginController(RecoveryPasswordService recoveryPasswordService,
                            UserService userService, 
                            LoginService loginService, 
-                           AuthenticationUserService authenticationUserService)
+                           IAuthenticationUserService authenticationUserService)
     {
         _recoveryPasswordService = recoveryPasswordService;
         _userService = userService;

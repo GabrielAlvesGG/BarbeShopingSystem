@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace BarberShopSystem.Service;
 
-public class AuthenticationUserService
+public class AuthenticationUserService : IAuthenticationUserService
 {
     private readonly UserService _userService;
     public AuthenticationUserService(UserService userService)
