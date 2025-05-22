@@ -3,7 +3,7 @@ using System.Net;
 
 namespace BarberShopSystem.Service;
 
-public class EmailService
+public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
 

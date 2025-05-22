@@ -11,12 +11,12 @@ namespace BarberShopSystem.Service;
 
 public class RecoveryPasswordService
 {
-    private readonly EmailService _emailService;
+    private readonly IEmailService _emailService;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly UserRepository _userRepository;
     private readonly RecoveryPasswordRepository _recoveryPasswordRepository;
 
-    public RecoveryPasswordService( EmailService emailService,
+    public RecoveryPasswordService( IEmailService emailService,
                                     IHttpContextAccessor httpContextAccessor,
                                     UserRepository userRepository,
                                     RecoveryPasswordRepository recoveryPasswordRepository)

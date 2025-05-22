@@ -28,7 +28,7 @@ builder.Services.AddScoped<HistoricalSchedulesRepository>();
 builder.Services.AddScoped<ServicesProvidedRepository>();
 
 builder.Services.AddScoped<RecoveryPasswordService>();
-builder.Services.AddScoped<EmailService>(); 
+builder.Services.AddScoped<IEmailService, EmailService>(); 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
