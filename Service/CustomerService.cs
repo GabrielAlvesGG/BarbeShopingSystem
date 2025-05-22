@@ -3,7 +3,7 @@ using BarberShopSystem.ModelsRepository;
 
 namespace BarberShopSystem.Service;
 
-public class CustomerService
+public class CustomerService : ICustomerService
 {
     private readonly CustomerRepository _customerRepository;   
 

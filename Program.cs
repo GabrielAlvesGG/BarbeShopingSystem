@@ -31,7 +31,7 @@ builder.Services.AddScoped<RecoveryPasswordService>();
 builder.Services.AddScoped<EmailService>(); 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingService>();
-builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<IAuthenticationUserService, AuthenticationUserService>();
 builder.Services.AddScoped<ServicesProvidedService>();

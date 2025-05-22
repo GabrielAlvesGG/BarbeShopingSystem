@@ -10,9 +10,9 @@ namespace BarberShopSystem.Controllers;
 public class SchedulingController : Controller
 {
     private readonly SchedulingService _schedulingService;
-    private readonly CustomerService _customerService;
+    private readonly ICustomerService _customerService;
 
-    public SchedulingController(SchedulingService shedulingService, CustomerService customerService)
+    public SchedulingController(SchedulingService shedulingService, ICustomerService customerService)
     {
         _schedulingService = shedulingService;
         _customerService = customerService;
