@@ -32,7 +32,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SchedulingService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IAuthenticationUserService, AuthenticationUserService>();
 builder.Services.AddScoped<ServicesProvidedService>();
 

@@ -5,7 +5,7 @@ using System.Configuration;
 
 namespace BarberShopSystem.Service;
 
-public class LoginService
+public class LoginService : ILoginService
 {
 
     public User LoginValidate(loginDto login)
