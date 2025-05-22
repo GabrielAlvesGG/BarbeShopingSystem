@@ -14,12 +14,12 @@ namespace BarberShopSystem.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly RecoveryPasswordService _recoveryPasswordService;
+    private readonly IRecoveryPasswordService _recoveryPasswordService;
     private readonly UserService _userService;
     private readonly ILoginService _loginService;
     private readonly IAuthenticationUserService _authenticationUserService;
 
-    public LoginController(RecoveryPasswordService recoveryPasswordService,
+    public LoginController(IRecoveryPasswordService recoveryPasswordService,
                            UserService userService, 
                            ILoginService loginService, 
                            IAuthenticationUserService authenticationUserService)

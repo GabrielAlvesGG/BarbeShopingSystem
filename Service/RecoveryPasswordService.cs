@@ -9,7 +9,7 @@ using System.Security.Policy;
 
 namespace BarberShopSystem.Service;
 
-public class RecoveryPasswordService
+public class RecoveryPasswordService : IRecoveryPasswordService
 {
     private readonly IEmailService _emailService;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -92,7 +92,7 @@ public class RecoveryPasswordService
         }
     }
 
-    private static string CreateToken()
+    private string CreateToken()
     {
         return Guid.NewGuid().ToString();
     }
