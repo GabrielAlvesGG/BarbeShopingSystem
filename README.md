@@ -6,7 +6,7 @@
 - Disponibilizar link para **Cadastrar novo usuário** e **Esqueci minha senha**.
 
 ## 2. Pré-requisitos  
-- Conta pré-cadastrada (pelo Administrador) **ou** “Entrar com Google”.  
+- Conta pré-cadastrada (pelo Administrador), usuário se cadastrar manualmente **ou** “Entrar com Google”.  
 - No **primeiro acesso via Google**, após selecionar o e-mail, definir uma **senha local**.
 
 ## 3. Visão do usuário (UI)  
