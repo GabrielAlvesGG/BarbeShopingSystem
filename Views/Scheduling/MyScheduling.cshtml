@@ -2,22 +2,191 @@
 @{
     ViewData["Title"] = "Agendamentos";
 }
-<link href="~/css/MyScheduling.css" rel="stylesheet"/>
+@section Styles {
+    <link href="~/css/MyScheduling.css" rel="stylesheet" asp-append-version="true" />
+    <!-- Vue Toastification CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/vue-toastification@1.7.14/dist/index.css" />
+    <style>
+        :root {
+            --bs-primary-600: #0ea5e9;
+            --bs-primary-700: #0284c7;
+            --bs-surface: #ffffff;
+            --bs-muted: #6b7280;
+            --bs-border: #e5e7eb;
+            --bs-success-600: #22c55e;
+            --bs-danger-600: #ef4444;
+            --shadow-sm: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.1);
+            --shadow-md: 0 8px 20px rgba(2, 8, 23, .08);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            /* SweetAlert2 button variables */
+            --swal2-confirm-button-background: #16a34a;
+            --swal2-confirm-button-color: #ffffff;
+            --swal2-cancel-button-background: #64748b;
+            --swal2-cancel-button-color: #ffffff;
+            --swal2-deny-button-background: #ef4444;
+            --swal2-deny-button-color: #ffffff;
+        }
+        /* widen main wrapper */
+        .novo-padrao { max-width: 100%; width: 100%; }
 
-<div id="myScheduling" >
-    <div class="container">
+        .page-hero {
+            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+        .page-hero .hero-icon {
+            width: 48px; height: 48px;
+            display: grid; place-items: center;
+            background: rgba(255,255,255,.15);
+            border-radius: 12px;
+            font-size: 22px;
+        }
+
+        .content-bg {
+            background-color: #f8fafc;
+            border-radius: 24px;
+            background-image:
+                radial-gradient(800px 400px at -10% 0%, rgba(14,165,233,.12), rgba(14,165,233,0) 60%),
+                radial-gradient(800px 400px at 110% 20%, rgba(99,102,241,.10), rgba(99,102,241,0) 60%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e5e7eb' fill-opacity='.35'/%3E%3C/svg%3E");
+            background-size: auto, auto, 14px 14px;
+            background-attachment: fixed, fixed, scroll;
+            background-position: center, center, top left;
+            box-shadow: inset 0 1px 0 rgba(16,24,40,.04);
+        }
+        @@media (max-width: 768px) { .content-bg { border-radius: 16px; } }
+
+        .hover-elevate:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .panel-card { border: 1px solid var(--bs-border); border-radius: var(--radius-lg); }
+
+        .table-modern { background: #fff; border: 1px solid var(--bs-border); border-radius: 12px; overflow: hidden; }
+        .table-modern thead th { background: #f1f5f9; color: #0f172a; border-bottom: 1px solid var(--bs-border); text-align: center; }
+        .table-modern tbody tr:hover { background: #f8fafc; }
+        .table-modern td, .table-modern th { vertical-align: middle; }
+        .table-modern tbody td { text-align: center; } /* Center only table contents */
+        .table-modern td.cell-actions { justify-content: center; } /* Center action buttons row */
+
+        .status-badge {
+            display: inline-block; padding: .35rem .6rem; border-radius: 999px; font-weight: 700; font-size: .8rem;
+            border: 1px solid var(--bs-border); background: #fff; color: #111827;
+        }
+        .status-badge.success { color: var(--bs-success-600); background: #f0fdf4; border-color: #bbf7d0; }
+        .status-badge.danger { color: var(--bs-danger-600); background: #fef2f2; border-color: #fecaca; }
+
+        .modal-modern .modal-content { border: 1px solid var(--bs-border); border-radius: 16px; box-shadow: var(--shadow-md); }
+        .modal-modern .modal-header { border-bottom: 1px solid var(--bs-border); }
+        .modal-modern .modal-body { background: #fcfdff; }
+        /* helpers for modal icon/title alignment */
+        .modal-icon {
+            width: 40px; height: 40px; display: inline-grid; place-items: center;
+            border-radius: 10px; margin-right: .5rem; font-size: 18px;
+        }
+        .modal-icon.success { background: #dcfce7; color: #166534; }
+        .modal-icon.danger { background: #fee2e2; color: #b91c1c; }
+        .modal-icon.info { background: #e0f2fe; color: #075985; }
+        .modal-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+        /* Responsive table + cell behavior to avoid broken layout */
+        .table-modern-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            /* remove centering cap to use full lateral space */
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
+            padding-inline: 0;
+        }
+        .table-modern th, .table-modern td { white-space: nowrap; }
+        /* allow description to grow on wide screens */
+        .table-modern td.cell-desc { white-space: normal; max-width: none; }
+        .table-modern td.cell-actions { min-width: 220px; }
+        .table-modern td.cell-actions .btn-group,
+        .table-modern td.cell-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+        @@media (max-width: 1200px) {
+            .table-modern td.cell-desc { max-width: 420px; }
+        }
+        @@media (max-width: 768px) {
+            .table-modern td.cell-desc { max-width: 240px; }
+            .table-modern td.cell-actions { min-width: 200px; }
+        }
+
+        /* Modal buttons: target only filled intents (success/danger/info) */
+        .modal-modern .modal-footer .btn-success,
+        .modal-modern .modal-footer .btn-danger,
+        #UserNotLoggedModal .modal-footer .btn-info {
+            color: #fff !important;
+        }
+        /* Neutral: Voltar (legible neutral) */
+        .modal-modern .btn-outline-secondary {
+            background-color: #64748b;
+            border-color: #64748b;
+            color: #fff !important;
+        }
+        .modal-modern .btn-outline-secondary:hover,
+        .modal-modern .btn-outline-secondary:focus {
+            background-color: #4b5563;
+            border-color: #4b5563;
+            color: #fff !important;
+        }
+        /* Destructive secondary: Recusar (outlined -> hover filled) */
+        .modal-modern .btn-outline-danger {
+            color: #b91c1c;
+            border-color: #fca5a5;
+            background-color: #fff;
+        }
+        .modal-modern .btn-outline-danger:hover,
+        .modal-modern .btn-outline-danger:focus {
+            color: #fff !important;
+            background-color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        /* Login modal: ensure info button text is white */
+        #UserNotLoggedModal .modal-footer .btn-info {
+            color: #fff !important;
+        }
+
+        /* SweetAlert2 buttons: high-specificity fallbacks */
+        .swal2-container .swal2-popup .swal2-styled.swal2-confirm {
+            background: #16a34a !important; color: #fff !important; border: 0 !important;
+        }
+        .swal2-container .swal2-popup .swal2-styled.swal2-confirm:hover { background: #15803d !important; }
+        .swal2-container .swal2-popup .swal2-styled.swal2-deny {
+            background: #ef4444 !important; color: #fff !important; border: 0 !important;
+        }
+        .swal2-container .swal2-popup .swal2-styled.swal2-deny:hover { background: #dc2626 !important; }
+        .swal2-container .swal2-popup .swal2-styled.swal2-cancel {
+            background: #64748b !important; color: #fff !important; border: 0 !important;
+        }
+        .swal2-container .swal2-popup .swal2-styled.swal2-cancel:hover { background: #475569 !important; }
+    </style>
+}
+
+<div id="myScheduling">
+    <div class="container-xxl novo-padrao py-4 content-bg">
+        <div class="page-hero rounded-4 p-4 p-md-5 mb-4 text-white">
+            <div class="d-flex align-items-center">
+                <div class="hero-icon me-3">🗓️</div>
+                <div>
+                    <h1 class="h3 mb-1">Seus Agendamentos</h1>
+                    <p class="mb-0 opacity-75">Gerencie, confirme ou cancele seus horários</p>
+                </div>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-7 order-md-last" v-show="isAppointmentCancellationVisible">
-                <div class="card card-shadow-1 mb-3">
+            <div class="col-12" v-show="isAppointmentCancellationVisible">
+                <div class="card panel-card hover-elevate mb-3">
                     <div class="card-header calendar-header text-center">
                         <h3 class="card-title flex-grow-1 mb-0 w-100">
                             <i class="fas fa-calendar-times"></i> Seus Agendamento
                         </h3>
                     </div>
                     <div class="card-body">
-                        <div class="scheduling-container">
-                            <table class="table table-hover table-bordered scheduling-table">
-                                <thead class="table-dark">
+                        <div class="scheduling-container table-modern-wrapper w-100">
+                            <table class="table table-hover table-modern align-middle">
+                                <thead>
                                     <tr>
                                         <th>#</th>
                                         <th v-show="showNameBarber">Barbeiro</th>
@@ -34,19 +203,19 @@
                                     <tr v-for="(appoint, index) in appointmentsList" :key="appoint.idAppointments">
                                         <td>{{ appoint.idAppointments }}</td>
                                         <td>{{ appoint.nameShowBarberOrCliente }}</td>
-                                        <td>{{ appoint.customer.description }}</td>
+                                        <td class="cell-desc">{{ appoint.customer.description }}</td>
                                         <td>{{ convertMinutesToHours(appoint.customer.duration) }}</td>
                                         <td>{{ formatedDateTime(appoint.dateTime) }}</td>
                                         <td>R${{ appoint.customer.price }}</td>
                                         <td>
-                                            <span :class="{'text-success': appoint.statusAppointment === 'Confirmado', 'text-danger': appoint.statusAppointment !== 'Confirmado'}">
+                                            <span class="status-badge" :class="appoint.statusAppointment === 'Confirmado' ? 'success' : 'danger'">
                                                 {{ appoint.statusAppointment }}
                                             </span>
                                         </td>
-                                        <td class="d-flex gap-2">
+                                        <td class="cell-actions">
                                             <button v-show="!showNameBarber && appoint.statusAppointment != 'Confirmado'"
                                                     class="btn btn-sm btn-success text-white"
-                                                    v-on:click="ConfirmeAppointments(appoint.idAppointments)">
+                                                    v-on:click="OpenConfirmModal(appoint.idAppointments)">
                                                 <i class="fas fa-check"></i> Confirmar
                                             </button>
                                             <button class="btn btn-sm btn-danger text-white"
@@ -66,25 +235,66 @@
         </div>
     </div>
 
-    <!-- Modal Cancel Appointments -->
+    <!-- Modal Cancel Appointments (destructive pattern) -->
     <div class="modal fade" id="CancelAppointmentsModal" tabindex="-1" aria-labelledby="CancelAppointmentsModalLabel" aria-hidden="true" ref="modalCancel">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-modern">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="CancelAppointmentsModalLabel">Deseja realmente Cancelar o agendamento?</h1>
+                    <div class="d-flex align-items-center">
+                        <span class="modal-icon danger">!</span>
+                        <div>
+                            <h1 class="modal-title fs-5 mb-0" id="CancelAppointmentsModalLabel">Cancelar agendamento</h1>
+                            <small class="text-muted">Esta ação não pode ser desfeita</small>
+                        </div>
+                    </div>
                     <button type="button" class="btn-close" v-on:Click="ResetPossibleCancelAppointments()" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Deseja cancelar o Agendamento ? 
+                    Deseja realmente cancelar este agendamento? O cliente será notificado e o horário ficará disponível novamente.
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleCancelAppointments()">Voltar</button>
-                    <button type="button" class="btn btn-danger" v-on:Click="CancelAppoindment()">Cancelar</button>
+                <div class="modal-footer modal-actions">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" v-on:Click="ResetPossibleCancelAppointments()">Voltar</button>
+                    <button type="button" class="btn btn-danger" v-on:Click="CancelAppoindment()">
+                        <i class="fas fa-trash-alt"></i> Cancelar agendamento
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal Cancel Appointments -->
+
+    <!-- Modal Confirm Appointments (barber confirm/decline) -->
+    <div class="modal fade" id="ConfirmAppointmentsModal" tabindex="-1" aria-labelledby="ConfirmAppointmentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-modern">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center">
+                        <!-- swapped to success intent -->
+                        <span class="modal-icon success">✓</span>
+                        <div>
+                            <h1 class="modal-title fs-5 mb-0" id="ConfirmAppointmentsModalLabel">Confirmar agendamento</h1>
+                            <small class="text-muted">Confirme ou recuse o horário solicitado</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" v-on:click="CloseConfirmModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja confirmar este agendamento? Caso não possa atender, você pode recusar e o cliente será notificado.
+                </div>
+                <div class="modal-footer modal-actions">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" v-on:click="CloseConfirmModal()">Voltar</button>
+                    <!-- demote destructive to outlined -->
+                    <button type="button" class="btn btn-outline-danger" v-on:click="RejectAppointment()">
+                        <i class="fas fa-times-circle"></i> Recusar
+                    </button>
+                    <button type="button" class="btn btn-success" v-on:click="ConfirmAppointment()">
+                        <i class="fas fa-check-circle"></i> Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Confirm Appointments -->
 
     <!-- Modal the user not logged in -->
     <div class="modal fade" id="UserNotLoggedModal" tabindex="-1" aria-labelledby="UserNotLoggedModalLabel" aria-hidden="true" ref="modalLogin">
@@ -111,7 +321,50 @@
 
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Vue Toastification UMD -->
+<script src="https://unpkg.com/vue-toastification@1.7.14/dist/index.umd.min.js"></script>
 <script>
+    // Toastification adapter: route Swal.fire to modern Vue toasts
+    (function () {
+        if (!window.VueToastification || window.__toast) return;
+
+        const toast = window.VueToastification.createToastInterface({
+            position: 'top-right',
+            timeout: 3500,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            hideProgressBar: false
+        });
+        window.__toast = toast;
+
+        const toToast = (opts) => {
+            const type = (opts && opts.icon) || 'info';
+            const message = [opts?.title, opts?.text].filter(Boolean).join(' — ') || ' ';
+            switch (type) {
+                case 'success': return toast.success(message);
+                case 'error':   return toast.error(message);
+                case 'warning': return toast.warning(message);
+                case 'info':
+                case 'question':
+                default:        return toast.info(message);
+            }
+        };
+
+        if (window.Swal) {
+            const original = Swal.fire.bind(Swal);
+            Swal.fire = (opts, ...rest) => {
+                if (opts && typeof opts === 'object') {
+                    toToast(opts);
+                    return Promise.resolve(true);
+                }
+                return original(opts, ...rest);
+            };
+        } else {
+            window.Swal = { fire: (opts) => { toToast(opts); return Promise.resolve(true); } };
+        }
+    })();
+
     var myScheduling = new Vue({
         el: '#myScheduling',
         data() {
@@ -126,6 +379,7 @@
                 selectedService: 0,
                 showNameBarber: false,
                 showButtonConfirm: false,
+                pendingConfirmAppointment: 0,
             }
         },
         methods: {
@@ -192,7 +446,7 @@
                   else{
                       Swal.fire({
                         title: 'Falha ao cancelar o agendamento',
-                        text: 'Durante a execução do cancelamento ocorreu um erro !',
+                        text: 'Durante the execução do cancelamento ocorreu um erro !',
                         icon: 'error',
                         confirmButtonText: 'Ok',
                         footer: 'Tente novamente !'
@@ -206,6 +460,99 @@
           },
             RedirectLoginPage(){
                 window.location.href = "/Login/Login";
+            },
+            OpenModalUserNotLoogedModal(){
+               let modal = new bootstrap.Modal(document.getElementById("UserNotLoggedModal"));
+                modal.show();
+            },
+            hiddenModelAppointmentsCancel(){
+                const modalElement = document.getElementById('CancelAppointmentsModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+            },
+            formatedDateTime(date){
+                    const dateTime = new Date(date);
+                    return dateTime.toLocaleString('pt-BR');
+            },
+            ConfirmeAppointments(idAppointment){
+                   axios.post('/Scheduling/ConfirmeAppointment', idAppointment,
+                   { headers : { 'Content-Type': 'application/json' }})
+                .then(response => {
+                   
+                       Swal.fire({
+                        title: 'Agendamento Foi confirmado',
+                        text: 'O agendamento foi confirmado com sucesso!',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        footer: 'Confirmado com sucesso!'
+
+                        })
+                        this.hasScheduling();
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar horários:', error);
+                });
+            },
+            convertMinutesToHours(minutes) {
+                if (typeof minutes !== "number" || minutes < 0) {
+                    return "Entrada inválida. Insira um número positivo de minutos.";
+                }
+
+                const hours = Math.floor(minutes / 60);
+                const remainingMinutes = minutes % 60;
+
+                return `${hours} hora(s) e ${remainingMinutes} minuto(s)`;
+            },
+            OpenConfirmModal(idAppointment) {
+                this.pendingConfirmAppointment = idAppointment;
+                const el = document.getElementById("ConfirmAppointmentsModal");
+                const modal = new bootstrap.Modal(el);
+                modal.show();
+            },
+            CloseConfirmModal() {
+                const el = document.getElementById("ConfirmAppointmentsModal");
+                const modal = bootstrap.Modal.getInstance(el);
+                if (modal) modal.hide();
+                this.pendingConfirmAppointment = 0;
+            },
+            ConfirmAppointment() {
+                const id = this.pendingConfirmAppointment;
+                if (!id) return;
+                // reuse existing confirm flow
+                this.ConfirmeAppointments(id);
+                this.CloseConfirmModal();
+            },
+            RejectAppointment() {
+                const id = this.pendingConfirmAppointment;
+                if (!id) return;
+                axios.post('/Scheduling/CancelAppointment', id, { headers : { 'Content-Type': 'application/json' }})
+                    .then(response => {
+                        if (response.data) {
+                            this.hasScheduling();
+                            Swal.fire({
+                                title: 'Agendamento recusado',
+                                text: 'O agendamento foi recusado e o cliente será notificado.',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Falha ao recusar o agendamento',
+                                text: 'Ocorreu um erro ao recusar o agendamento.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            title: 'Erro',
+                            text: 'Não foi possível recusar o agendamento.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    })
+                    .finally(() => this.CloseConfirmModal());
             },
             OpenModalUserNotLoogedModal(){
                let modal = new bootstrap.Modal(document.getElementById("UserNotLoggedModal"));
