@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hQ67T0+n1Sw=",
+  "dgSpecHash": "LNK6refCA/0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem\\BarberShopSystem.csproj",
+  "projectFilePath": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\BarberShopSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alves\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",

@@ -9,89 +9,89 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BarberShopSystem
 build_property.RootNamespace = BarberShopSystem
-build_property.ProjectDir = C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem\
+build_property.ProjectDir = C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\alves\OneDrive\Documentos\Projetos\BarberShopSystem\BarberShopSystem\BarberShopSystem
+build_property.MSBuildProjectDirectory = C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Barber/ListBarber.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Barber/ListBarber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFyYmVyXExpc3RCYXJiZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Barber/RegisterBarber.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Barber/RegisterBarber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFyYmVyXFJlZ2lzdGVyQmFyYmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Client/ListClients.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Client/ListClients.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XExpc3RDbGllbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Client/RegisterClient.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Client/RegisterClient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XFJlZ2lzdGVyQ2xpZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Home/Index.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Home/Privacy.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Login/Login.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Login/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Login/RecoveryPassword.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Login/RecoveryPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVjb3ZlcnlQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Scheduling/MyScheduling.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Scheduling/MyScheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NoZWR1bGluZ1xNeVNjaGVkdWxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Scheduling/Scheduling.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Scheduling/Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2NoZWR1bGluZ1xTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/ServicesProvided/ListServices.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/ServicesProvided/ListServices.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNQcm92aWRlZFxMaXN0U2VydmljZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/ServicesProvided/RegisterServicesProvided.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/ServicesProvided/RegisterServicesProvided.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNQcm92aWRlZFxSZWdpc3RlclNlcnZpY2VzUHJvdmlkZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Shared/Error.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Shared/_TesteLayout.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Shared/_TesteLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UZXN0ZUxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/User/UserRegister.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/User/UserRegister.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/_ViewImports.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/_ViewStart.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/alves/OneDrive/Documentos/Projetos/BarberShopSystem/BarberShopSystem/BarberShopSystem/Views/Shared/_Layout.cshtml]
+[C:/Users/alves/OneDrive/Documentos/Projetos/barbershopSystem_1.0/BarbeShopingSystem/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-1q0t3eoltf

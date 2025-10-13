@@ -5,24 +5,253 @@
 
 @section Styles {
     <link href="~/css/Scheduling.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        :root {
+            --bs-primary-600: #0ea5e9;
+            --bs-primary-700: #0284c7;
+            --bs-surface: #ffffff;
+            --bs-muted: #6b7280;
+            --bs-border: #e5e7eb;
+            --bs-success-600: #22c55e;
+            --bs-danger-600: #ef4444;
+            --shadow-sm: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.1);
+            --shadow-md: 0 8px 20px rgba(2, 8, 23, .08);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 10px;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+        .page-hero .hero-icon {
+            width: 48px; height: 48px;
+            display: grid; place-items: center;
+            background: rgba(255,255,255,.15);
+            border-radius: 12px;
+            font-size: 22px;
+        }
+
+        .barber-card {
+            border: 1px solid var(--bs-border);
+            border-radius: var(--radius-lg);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .hover-elevate:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .employee-img {
+            width: 120px; height: 120px;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            background: #f8fafc;
+            border: 1px solid var(--bs-border);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: .85rem;
+            border: 1px solid var(--bs-border);
+            background: #f9fafb;
+            color: #111827;
+            margin-right: .5rem;
+            margin-bottom: .5rem;
+            white-space: nowrap;
+        }
+        .chip.success { color: var(--bs-success-600); border-color: #bbf7d0; background: #f0fdf4; }
+        .chip.muted  { color: var(--bs-muted); }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 14px 4px;
+            border-bottom: 1px dashed var(--bs-border);
+        }
+        .service-item:last-child { border-bottom: 0; }
+        .service-name { margin: 0 0 4px 0; }
+        .service-description { font-size: .9rem; color: var(--bs-muted); }
+
+        .service-price {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .service-duration {
+            font-size: .8rem;
+            color: var(--bs-muted);
+        }
+
+        .reserve-button.btn {
+            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
+            border: 0;
+            color: #fff;
+            padding: .5rem .9rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 14px rgba(2,132,199,.25);
+            transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+        }
+        .reserve-button.btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(2,132,199,.28);
+        }
+
+        /* Schedule grid */
+        .schedule-grid-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: .25rem;
+        }
+        .schedule-grid {
+            grid-auto-flow: row;
+            gap: 12px;
+            /* 1st col fixed 120px + N day cols (min 140px), no wrapping */
+            grid-template-columns: 120px repeat(var(--days-count, 1), minmax(140px, 1fr)) !important;
+        }
+        .schedule-grid .week-day-header {
+            position: sticky;
+            top: 0;
+            background: var(--bs-surface);
+            z-index: 1;
+            padding: 6px 0;
+            font-weight: 700;
+            color: #111827;
+            border-bottom: 1px solid var(--bs-border);
+        }
+        .time-slot {
+            color: var(--bs-muted);
+            font-weight: 600;
+            padding: 6px 0;
+        }
+        .schedule-cell .btn {
+            width: 100%;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .mobile-schedule .week-day-button {
+            width: 100%;
+            text-align: left;
+            padding: .7rem 1rem;
+            border: 1px solid var(--bs-border);
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: .5rem;
+            font-weight: 700;
+        }
+        .mobile-schedule .mobile-schedule-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .5rem;
+            padding: .25rem 0 1rem 0;
+        }
+
+        .barber-details {
+            background: #f9fafb;
+            border: 1px solid var(--bs-border);
+            border-radius: 12px;
+        }
+
+        /* Spacing fixes */
+        .novo-padrao { max-width: 1100px; }
+
+        /* new: modern layered background for main container */
+        .content-bg {
+            background-color: #f8fafc;
+            border-radius: 24px;
+            background-image:
+                radial-gradient(800px 400px at -10% 0%, rgba(14,165,233,.12), rgba(14,165,233,0) 60%),
+                radial-gradient(800px 400px at 110% 20%, rgba(99,102,241,.10), rgba(99,102,241,0) 60%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e5e7eb' fill-opacity='.35'/%3E%3C/svg%3E");
+            background-size: auto, auto, 14px 14px;
+            background-attachment: fixed, fixed, scroll;
+            background-position: center, center, top left;
+            box-shadow: inset 0 1px 0 rgba(16,24,40,.04);
+        }
+        @@media (max-width: 768px) {
+            .content-bg { border-radius: 16px; }
+        }
+
+        /* Modal enterprise look */
+        .modal-modern .modal-content { border: 1px solid var(--bs-border); border-radius: 16px; box-shadow: var(--shadow-md); }
+        .modal-modern .modal-header { border-bottom: 1px solid var(--bs-border); }
+        .modal-modern .modal-body { background: #fcfdff; }
+        .schedule-toolbar {
+            display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+            padding: .75rem 1rem; margin: .5rem 0 1rem 0;
+            background: #fff; border: 1px solid var(--bs-border); border-radius: 12px;
+        }
+        .badge-soft {
+            display: inline-block; font-weight: 600; padding: .25rem .5rem; border-radius: 999px;
+            border: 1px solid var(--bs-border); background: #f8fafc; color: #111827; font-size: .8rem;
+        }
+        .slot-btn.btn { width: 100%; border-radius: 10px; font-weight: 600; letter-spacing: .2px; }
+        .slot-btn.btn-success { background: linear-gradient(135deg, var(--bs-success-600), #16a34a); border: 0; }
+        .slot-btn.btn-outline-secondary { background: #fff; }
+        .slot-btn small { opacity: .85; }
+        .schedule-legend { display: flex; gap: .75rem; align-items: center; font-size: .85rem; color: var(--bs-muted); }
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .legend-free { background: #22c55e; }
+        .legend-busy { background: #cbd5e1; border: 1px solid #cbd5e1; }
+        .empty-state {
+            text-align: center; color: var(--bs-muted); border: 1px dashed var(--bs-border);
+            border-radius: 12px; padding: 24px; background: #fff;
+        }
+    </style>
 }
 
-
 <div id="scheduling" class="container">
-    <div class="novo-padrao container py-4">
-        <div v-for="(schedules, index) in schedules" :key="index" class="card p-4 shadow-sm mb-4">
+    <div class="novo-padrao container py-4 content-bg">
+        <!-- Hero -->
+        <div class="page-hero rounded-4 p-4 p-md-5 mb-4 text-white">
+            <div class="d-flex align-items-center">
+                <div class="hero-icon me-3">✂️</div>
+                <div>
+                    <h1 class="h3 mb-1">Agende com seu barbeiro favorito</h1>
+                    <p class="mb-0 opacity-75">Escolha o serviço, selecione um horário e confirme.</p>
+                </div>
+            </div>
+        </div>
+
+        <div v-for="(schedules, index) in schedules" :key="index" class="card barber-card hover-elevate p-4 shadow-sm mb-4">
             <div class="row">
                 <!-- Informações do Barbeiro -->
-
                 <div class="col-md-5">
                     <div class="card-body text-center">
                         <div>
-                        <h3 class="card-title mb-2 text-primary">{{ schedules.user.nome }}</h3>
+                            <h3 class="card-title mb-2 text-primary text-capitalize">{{ schedules.user.nome }}</h3>
                             <img :src="schedules.user.barber.imgUrl" alt="Foto do Funcionário" class="rounded-circle employee-img img-fluid" />
                         </div>
                         <br>
-                        <div class="alert alert-info">Implementar o feedback aqui</div>
-                        <p class="text-muted"><strong>Especialidade: {{ schedules.user.barber.especialidade }}</strong></p>
+                        <!-- Rating placeholder (substitui o alerta) -->
+                        <div class="rating my-1" aria-label="Avaliação média">
+                            ★ ★ ★ ★ ☆ <small class="text-white-50 ms-2">4.0</small>
+                        </div>
+
+                        <div class="mt-3">
+                            <span class="chip"><strong>Especialidade:</strong> {{ schedules.user.barber.especialidade }}</span>
+                            <span class="chip muted"><strong>Fumante:</strong> <span v-show="schedules.user.barber.smoker == 1">Sim</span><span v-show="schedules.user.barber.smoker == 0">Não</span></span>
+                            <span class="chip success"><strong>Experiência:</strong> {{schedules.user.barber.experience}} anos</span>
+                        </div>
+
                         <div class="barber-details mt-4 p-3 rounded">
                             <p><strong>Fumante:</strong> <label v-show="schedules.user.barber.smoker == 1">Sim</label> <label v-show="schedules.user.barber.smoker == 0">Não</label></p>
                             <p><strong>Estilo Musical:</strong> Rock</p>
@@ -33,31 +262,27 @@
 
                 <!-- Seleção de Serviços -->
                 <div class="col-md-7">
-                    <!-- Seleção de Serviço -->
                     <div class="mb-3">
                         <h5 class="text-secondary">Serviços</h5>
 
-                        
-
-                        <div >
-                            <div v-for="service in CustomersList" :key="service.id" class="service-item d-flex justify-content-between align-items-center" style="display: flex !important;
-                            justify-content: space-between !important;
-                            align-items: center !important;
-                            padding: 12px 0 !important;
-                            border-bottom: 3px solid #ddd !important;">
+                        <!-- Lista de serviços modernizada -->
+                        <div>
+                            <div v-for="service in CustomersList" :key="service.id" class="service-item">
                                 <div class="service-details">
-                                    <h5 class="service-name font-weight-bold">{{ service.name }}</h5>
-                                    <span class="service-description text-muted" v-if="service.description">{{ service.description }}</span>
+                                    <h5 class="service-name">{{ service.name }}</h5>
+                                    <span class="service-description" v-if="service.description">{{ service.description }}</span>
                                 </div>
 
                                 <div class="d-flex align-items-center">
-                                    <div class="text-right mr-3">
-                                        <span class="service-price font-weight-bold">R$ {{ service.price.toFixed(2) }}</span>
+                                    <div class="text-right mr-3 text-end me-3">
+                                        <span class="service-price">R$ {{ service.price.toFixed(2) }}</span>
                                         <br>
-                                        <span class="service-duration text-muted" style="font-size: 0.9rem;">{{ service.duration }} min</span>
+                                        <span class="service-duration">{{ service.duration }} min</span>
                                     </div>
-                                    <div style="padding:5px">
-                                        <button type="button" class="btn btn-info reserve-button" style="color:white;" v-on:Click="modalReserveSchedules(schedules.weekDays,service.id,  schedules.user.id)">Reservar</button>
+                                    <div>
+                                        <button type="button" class="btn reserve-button" @@click="modalReserveSchedules(schedules.weekDays,service.id,  schedules.user.id)">
+                                            Reservar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +310,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                    <button type="button" class="btn btn-info" v-on:Click="RedirectLoginPage()">Fazer login</button>
+                    <!-- normalize event -->
+                    <button type="button" class="btn btn-info" @@click="RedirectLoginPage()">Fazer login</button>
                 </div>
             </div>
         </div>
@@ -105,7 +331,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                    <button type="button" class="btn btn-info" v-on:Click="occupySchedule()">Oculpar horário</button>
+                    <!-- normalize event -->
+                    <button type="button" class="btn btn-info" @@click="occupySchedule()">Oculpar horário</button>
                 </div>
             </div>
         </div>
@@ -116,57 +343,83 @@
     <!-- Modal Agendar um horários -->
     <div class="modal fade bd-example-modal-lg" id="ScheduleModal" tabindex="-1" aria-labelledby="ScheduleModalLabel" aria-hidden="true" ref="modalLogin">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content modal-modern">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="ScheduleModalLabel">Agende um horário</h1>
+                    <div>
+                        <h1 class="modal-title fs-5 mb-0" id="ScheduleModalLabel">Agende um horário</h1>
+                        <small class="text-muted">Selecione um horário disponível e confirme o agendamento</small>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- Toolbar resumo -->
+                    <div class="schedule-toolbar">
+                        <span class="chip"><strong>Serviço:</strong> {{ selectedServiceObj?.name || '—' }}</span>
+                        <span class="chip"><strong>Duração:</strong> {{ selectedServiceObj?.duration ? (selectedServiceObj.duration + ' min') : '—' }}</span>
+                        <span class="chip"><strong>Profissional:</strong> {{ selectedBarberName || '—' }}</span>
+                        <span class="badge-soft ms-auto">Horários locais</span>
+                    </div>
+
                     <div class="schedule-container mb-3">
                         <h5 class="text-secondary">Horários Disponíveis</h5>
 
+                        <!-- Empty state -->
+                        <div v-if="!hasAnyFreeSlot" class="empty-state">
+                            Nenhum horário disponível no período selecionado. Tente outro dia ou serviço.
+                        </div>
+
                         <!-- Modo Desktop: Grade de horários -->
-                        <div v-if="!isMobileView" class="schedule-grid">
-                            <div class="week-day-header"></div>
-                            <div v-for="weekDay in daysWeekModal" class="week-day-header">
-                                <h5>{{ weekDay.dayString }}</h5>
+                        <div v-else-if="!isMobileView" class="schedule-grid-wrapper">
+                            <div class="schedule-grid" :style="{'--days-count': (daysWeekModal?.length || 0)}">
+                                <div class="week-day-header"></div>
+                                <div v-for="weekDay in daysWeekModal" class="week-day-header">
+                                    <h5 class="mb-0">{{ weekDay.dayString }}</h5>
+                                </div>
+
+                                <template v-for="(horario, index) in daysWeekModal[0]?.schedules">
+                                    <div class="time-slot">
+                                        {{ formatTime(horario.time) }}
+                                    </div>
+
+                                    <div v-for="weekDay in daysWeekModal" class="schedule-cell">
+                                        <button v-if="weekDay.schedules[index]"
+                                                class="btn slot-btn"
+                                                :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-outline-secondary'"
+                                                :disabled="!weekDay.schedules[index].free"
+                                                :aria-label="(weekDay.dayString + ' ' + formatTime(weekDay.schedules[index].time))"
+                                                @@click="selecionarHorario(weekDay.schedules[index].time, barberIdSelect, weekDay.dayDateTime)">
+                                            <span>{{ formatTime(weekDay.schedules[index].time) }}</span>
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
-
-                            <template v-for="(horario, index) in daysWeekModal[0]?.schedules">
-                                <div class="time-slot">
-                                    {{ formatTime(horario.time) }}
-                                </div>
-
-                                <div v-for="weekDay in daysWeekModal" class="schedule-cell">
-                                    <button v-if="weekDay.schedules[index]"
-                                            class="btn"
-                                            :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-secondary'"
-                                            :disabled="!weekDay.schedules[index].free"
-                                            @@click="selecionarHorario(weekDay.schedules[index].time, barberIdSelect, weekDay.dayDateTime)">
-                                        {{ formatTime(weekDay.schedules[index].time) }}
-                                    </button>
-                                </div>
-                            </template> 
                         </div>
 
                         <!-- Modo Mobile: Lista de dias com dropdown de horários -->
                         <div v-else class="mobile-schedule">
                             <div v-for="weekDay in daysWeekModal">
-                                <button class="week-day-button" @@click="toggleDay(weekDay.dayString)">
+                                <button class="week-day-button" @@click="toggleDay(weekDay.dayString)" :aria-expanded="selectedDay === weekDay.dayString">
                                     {{ weekDay.dayString }}
                                 </button>
                                 <div v-if="selectedDay === weekDay.dayString" class="mobile-schedule-list">
                                     <button v-for="horario in weekDay.schedules"
                                             :key="horario.time"
-                                            class="btn"
-                                            :class="horario.free ? 'btn-success' : 'btn-secondary'"
+                                            class="btn slot-btn"
+                                            :class="horario.free ? 'btn-success' : 'btn-outline-secondary'"
                                             :disabled="!horario.free"
+                                            :aria-label="(weekDay.dayString + ' ' + formatTime(horario.time))"
                                             @@click="selecionarHorario(horario.time, barberIdSelect, weekDay.dayDateTime)">
                                         {{ formatTime(horario.time) }}
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="schedule-legend mt-2">
+                        <span class="legend-dot legend-free"></span> Disponível
+                        <span class="legend-dot legend-busy"></span> Indisponível
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -182,6 +435,37 @@
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+    // Debug: Vue devtools and global handlers
+    if (window.Vue) {
+        Vue.config.devtools = true;
+        Vue.config.productionTip = false;
+        Vue.config.errorHandler = function (err, vm, info) {
+            console.error('[Vue][error]', err, info, vm);
+            if (window.Swal) Swal.fire({ title: 'Erro inesperado', text: err?.message || String(err), icon: 'error' });
+        };
+        Vue.config.warnHandler = function (msg, vm, trace) {
+            console.warn('[Vue][warn]', msg, trace);
+        };
+    }
+
+    // Debug: Axios interceptors
+    axios.interceptors.request.use(cfg => {
+        console.debug('[HTTP] ->', (cfg.method || 'get').toUpperCase(), cfg.url, { params: cfg.params, data: cfg.data });
+        return cfg;
+    }, err => {
+        console.error('[HTTP][request error]', err);
+        return Promise.reject(err);
+    });
+
+    axios.interceptors.response.use(res => {
+        console.debug('[HTTP] <-', (res.config.method || 'get').toUpperCase(), res.config.url, res.status, res.data);
+        return res;
+    }, err => {
+        const r = err.response;
+        console.error('[HTTP][response error]', r?.status, r?.config?.url, r?.data || err.message);
+        return Promise.reject(err);
+    });
+
     var scheduling = new Vue({
         el: '#scheduling',
         data() {
@@ -204,24 +488,41 @@
                 selectedDay: null,
                 daysWeekModal:[],
                 barberIdSelect: 0,
+                isTabletView: false
                 
             }
         },
         methods: {
             GetScheduling() { 
                 axios.get('/Scheduling/GetScheduling')
-                .then(response => {
+                    .then(({ data }) => {
+                        const result = (data && typeof data === 'object') ? data : JSON.parse(String(data));
+                        console.debug('[GetScheduling][mapped]', { hasSchedules: !!result?.schedulesBarbers, barberCount: result?.barber?.length });
 
-                    var result = JSON.parse(response.data);
-                    this.schedules = result.schedulesBarbers;
-                    this.BarberList = result.barber; 
-                    this.userLoggerIsBarber = result.isBarber;
-                    this.LoggedInClient();
-                    this.schedulingFree();
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
+                        this.schedules = result?.schedulesBarbers ?? [];
+                        this.BarberList = result?.barber ?? [];
+                        this.userLoggerIsBarber = !!result?.isBarber;
+
+                        this.LoggedInClient();
+                        if (Array.isArray(this.schedules) && this.schedules.length) {
+                            this.schedulingFree();
+                        }
+                    })
+                    .catch(error => {
+                        const status = error.response?.status;
+                        const detail = error.response?.data?.message
+                            || error.response?.data?.title
+                            || (typeof error.response?.data === 'string' ? error.response.data : JSON.stringify(error.response?.data))
+                            || error.message;
+
+                        console.error('Erro ao carregar horários:', status, detail, error);
+                        Swal.fire({
+                            title: 'Erro ao carregar horários',
+                            text: status ? `Status ${status}. ${detail}` : 'Falha de rede.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    });
             },
             selecionarHorario(horario, barberId, dayDateTime) 
             {
@@ -322,7 +623,7 @@
                     });
             },
             formatTime(horario) {
-                // Remove seconds from the time string
+                if (!horario || typeof horario !== 'string') return '';
                 return horario.slice(0, -3);
             },
             LoggedInClient(){ 
@@ -369,21 +670,20 @@
                 this.alertSelectBarbereInvalidade = false;
             },
             schedulingFree(){
-                    this.schedules.forEach(obj => {
-                        this.schedules.forEach(obj => {
-                            obj.weekDays.forEach(weekDay => {
-                            weekDay.schedules.forEach(item => {
-                                if (item.barbersIds.length > 0) {
-                                    const barberFound = item.barbersIds.some(barberId => barberId === obj.user.id);
-                                    item.free = !barberFound;
-                                }
-                                else {
-                                    item.free = !item.timeHasPassed;
-                                }
-                            });
-                            });
+                // fix duplicated nested loops and ensure flags are computed correctly
+                this.schedules.forEach(obj => {
+                    obj.weekDays.forEach(weekDay => {
+                        weekDay.schedules.forEach(item => {
+                            const hasBarbers = Array.isArray(item.barbersIds) && item.barbersIds.length > 0;
+                            if (hasBarbers) {
+                                const barberFound = item.barbersIds.includes(obj.user.id);
+                                item.free = !barberFound && !item.timeHasPassed;
+                            } else {
+                                item.free = !item.timeHasPassed;
+                            }
                         });
-                   });
+                    });
+                });
             },
             closeModalUserBarberLogged(){
                 let modalElement = document.getElementById("UserBarberLoggedModal");
@@ -461,14 +761,14 @@
         },
         checkScreenSize() {
             const width = window.innerWidth;
-
                 if (width <= 768) {
-                    this.isMobileView = true; // 📱 Modo mobile (lista de dias)
+                    this.isMobileView = true;
+                    this.isTabletView = false;
                 } else if (width <= 1024) {
-                    this.isTabletView = true; // 📱📟 Modo tablet (grade menor)
+                    this.isTabletView = true;
                     this.isMobileView = false;
                 } else {
-                    this.isMobileView = false; // 🖥️ Modo desktop normal
+                    this.isMobileView = false;
                     this.isTabletView = false;
                 }
         },
@@ -486,6 +786,20 @@
                     modalInstance.hide();
                 }
             },
+        },
+        computed: {
+            selectedServiceObj() {
+                const s = this.CustomersList?.find(x => x.id === this.selectedService);
+                return s || null;
+            },
+            selectedBarberName() {
+                const b = this.schedules?.find(x => x?.user?.id === this.barberIdSelect);
+                return b?.user?.nome || null;
+            },
+            hasAnyFreeSlot() {
+                return Array.isArray(this.daysWeekModal)
+                    && this.daysWeekModal.some(d => (d?.schedules || []).some(s => s?.free));
+            }
         },
         mounted() {
             this.checkScreenSize();

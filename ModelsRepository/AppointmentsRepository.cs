@@ -12,33 +12,34 @@ public class AppointmentsRepository : DataBaseRepository
     public AppointmentsRepository(IConfiguration configuration) : base(configuration)
     {
     }
+
     internal List<Appointments> AppointmentsMade()
     {
         try
         {
-            List<Appointments> appointMentss = new List<Appointments>();
-            var connection = GetConnection();
+            var appointments = new List<Appointments>();
+            using var connection = GetConnection();
             connection.Open();
-            var command = new MySqlCommand("SELECT DataHorario, BarbeiroId FROM Agendamentos WHERE DataHorario > @StartDay AND Status <> 'Cancelado';", connection);
-            command.Parameters.AddWithValue("@StartDay", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            command.Parameters.AddWithValue("@EndDay", DateTime.Now.ToString("yyyy-MM-dd 23:59:59"));
-            using (var reader = command.ExecuteReader())
+            using var command = new MySqlCommand(
+                "SELECT DataHorario, BarbeiroId FROM Agendamentos WHERE DataHorario > @StartDay AND Status <> 'Cancelado';",
+                connection
+            );
+            command.Parameters.Add("@StartDay", MySqlDbType.DateTime).Value = DateTime.Now;
+
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                while (reader.Read())
+                appointments.Add(new Appointments
                 {
-                    appointMentss.Add(new Appointments { 
-                     dateTime =  reader.GetDateTime("DataHorario"),
-                     barber = new Barber
-                     {
-                         id = reader.GetInt32("BarbeiroId")
-                     },
-                    });
-                }
+                    dateTime = reader.GetDateTime("DataHorario"),
+                    barber = new Barber
+                    {
+                        id = reader.GetInt32("BarbeiroId")
+                    },
+                });
             }
-            connection.Close();
-            return appointMentss;
 
-
+            return appointments;
         }
         catch (Exception ex)
         {
@@ -47,15 +48,15 @@ public class AppointmentsRepository : DataBaseRepository
         }
     }
 
-
     public List<Appointments> HasClientScheduling(int userId)
     {
         try
         {
             List<Appointments> appointments = new List<Appointments>();
 
-            var connection = GetConnection();
+            using var connection = GetConnection();
             connection.Open();
+
             string query = "SELECT " + Environment.NewLine;
             query += "a.Id as Id," + Environment.NewLine;
             query += "a.DataHorario as DataHorario," + Environment.NewLine;
@@ -69,47 +70,53 @@ public class AppointmentsRepository : DataBaseRepository
             query += "WHEN @UsuarioId = b.UsuarioId THEN uc.Nome" + Environment.NewLine; // Se o usuário logado for o barbeiro, exibe o nome do cliente
             query += "WHEN @UsuarioId = c.UsuarioId THEN ub.Nome" + Environment.NewLine; // Se o usuário logado for o cliente, exibe o nome do Barbeiro
             query += "ELSE NULL" + Environment.NewLine;
-            query += "END AS NomeExibido" + Environment.NewLine; 
-            query += "FROM " + Environment.NewLine; 
-            query += "Agendamentos a" + Environment.NewLine; 
-            query += "LEFT JOIN" + Environment.NewLine; 
-            query += "Clientes c" + Environment.NewLine; 
-            query += "ON" + Environment.NewLine; 
-            query += "a.ClienteId = c.Id" + Environment.NewLine; 
-            query += "INNER JOIN" + Environment.NewLine; 
-            query += "Servicos s" + Environment.NewLine; 
-            query += "ON" + Environment.NewLine; 
-            query += "s.Id = a.ServicoId" + Environment.NewLine; 
-            query += "INNER JOIN" + Environment.NewLine; 
-            query += "Barbeiros b" + Environment.NewLine; 
-            query += "ON" + Environment.NewLine; 
-            query += "a.BarbeiroId= b.Id" + Environment.NewLine; 
-            query += "LEFT JOIN" + Environment.NewLine; 
-            query += "Usuarios uc" + Environment.NewLine; 
-            query += "ON" + Environment.NewLine; 
-            query += "uc.Id = c.UsuarioId" + Environment.NewLine; 
-            query += "INNER JOIN " + Environment.NewLine; 
-            query += "Usuarios ub" + Environment.NewLine; 
-            query += "ON" + Environment.NewLine; 
-            query += "ub.Id = b.UsuarioId" + Environment.NewLine; 
-            query += "WHERE" + Environment.NewLine; 
-            query += "a.DataHorario > @ComparisonDeadline" + Environment.NewLine; 
-            query += "AND" + Environment.NewLine; 
-            query += "a.status<>'Cancelado'" + Environment.NewLine; 
-            query += "AND" + Environment.NewLine; 
-            query += " ((@UsuarioId = b.UsuarioId AND (uc.Nome IS NOT NULL OR uc.Nome IS NULL)) " + Environment.NewLine; 
-            query += " OR" + Environment.NewLine; 
-            query += "(@UsuarioId = c.UsuarioId AND ub.Nome IS NOT NULL)" + Environment.NewLine; 
-            query += ")" + Environment.NewLine; 
+            query += "END AS NomeExibido" + Environment.NewLine;
+            query += "FROM " + Environment.NewLine;
+            query += "Agendamentos a" + Environment.NewLine;
+            query += "LEFT JOIN" + Environment.NewLine;
+            query += "Clientes c" + Environment.NewLine;
+            query += "ON" + Environment.NewLine;
+            query += "a.ClienteId = c.Id" + Environment.NewLine;
+            query += "INNER JOIN" + Environment.NewLine;
+            query += "Servicos s" + Environment.NewLine;
+            query += "ON" + Environment.NewLine;
+            query += "s.Id = a.ServicoId" + Environment.NewLine;
+            query += "INNER JOIN" + Environment.NewLine;
+            query += "Barbeiros b" + Environment.NewLine;
+            query += "ON" + Environment.NewLine;
+            query += "a.BarbeiroId= b.Id" + Environment.NewLine;
+            query += "LEFT JOIN" + Environment.NewLine;
+            query += "Usuarios uc" + Environment.NewLine;
+            query += "ON" + Environment.NewLine;
+            query += "uc.Id = c.UsuarioId" + Environment.NewLine;
+            query += "INNER JOIN " + Environment.NewLine;
+            query += "Usuarios ub" + Environment.NewLine;
+            query += "ON" + Environment.NewLine;
+            query += "ub.Id = b.UsuarioId" + Environment.NewLine;
+            query += "WHERE" + Environment.NewLine;
+            query += "a.DataHorario > @ComparisonDeadline" + Environment.NewLine;
+            query += "AND" + Environment.NewLine;
+            query += "a.status<>'Cancelado'" + Environment.NewLine;
+            query += "AND" + Environment.NewLine;
+            query += " ((@UsuarioId = b.UsuarioId AND (uc.Nome IS NOT NULL OR uc.Nome IS NULL)) " + Environment.NewLine;
+            query += " OR" + Environment.NewLine;
+            query += "(@UsuarioId = c.UsuarioId AND ub.Nome IS NOT NULL)" + Environment.NewLine;
+            query += ")" + Environment.NewLine;
 
-            var command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ComparisonDeadline", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            command.Parameters.AddWithValue("@UsuarioId", userId);
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.Add("@ComparisonDeadline", MySqlDbType.DateTime).Value = DateTime.Now;
+            command.Parameters.Add("@UsuarioId", MySqlDbType.Int32).Value = userId;
+
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     Appointments appointment = new Appointments();
+
+                    // Ensure nested objects exist before setting properties
+                    appointment.customer ??= new();
+                    appointment.client ??= new();
+                    appointment.barber ??= new();
 
                     appointment.idAppointments = reader.GetInt32("Id");
                     appointment.dateTime = reader.GetDateTime("DataHorario");
@@ -117,14 +124,16 @@ public class AppointmentsRepository : DataBaseRepository
                     appointment.customer.price = reader.GetDouble("Preco");
                     appointment.customer.duration = reader.GetInt32("Duracao");
                     appointment.statusAppointment = reader.GetString("Status");
-                    appointment.nameShowBarberOrCliente = reader.IsDBNull("NomeExibido") ? "Ocupado" : reader.GetString("NomeExibido");
+
+                    int nomeExibidoOrdinal = reader.GetOrdinal("NomeExibido");
+                    appointment.nameShowBarberOrCliente = reader.IsDBNull(nomeExibidoOrdinal)
+                        ? "Ocupado"
+                        : reader.GetString(nomeExibidoOrdinal);
+
                     appointment.showNameBarber = appointment.nameShowBarberOrCliente == reader.GetString("NomeBarbeiro");
                     appointments.Add(appointment);
-
                 }
             }
-            
-            connection.Close();
 
             return appointments;
         }
@@ -133,26 +142,21 @@ public class AppointmentsRepository : DataBaseRepository
             Console.WriteLine(ex.Message);
             throw;
         }
-
-
     }
 
     internal bool CancelAppointment(int idAppointment)
     {
         try
         {
-
-            MySqlConnection connection = GetConnection();
+            using var connection = GetConnection();
             connection.Open();
-            string sqlCommand = string.Empty;
+            const string sqlCommand = "UPDATE Agendamentos SET Status = @Status WHERE Id = @Id;";
+            using var command = new MySqlCommand(sqlCommand, connection);
+            command.Parameters.Add("@Status", MySqlDbType.VarChar).Value = StatusAppointmentEnum.Cancelado.ToString();
+            command.Parameters.Add("@Id", MySqlDbType.Int32).Value = idAppointment;
 
-            sqlCommand = $"UPDATE Agendamentos SET Status='{StatusAppointmentEnum.Cancelado}' WHERE Id={idAppointment};";
-            var command = new MySqlCommand(sqlCommand, connection);
-
-            command.ExecuteReader();
-            connection.Close();
-
-            return true;
+            int affected = command.ExecuteNonQuery();
+            return affected > 0;
         }
         catch (Exception ex)
         {
@@ -165,16 +169,14 @@ public class AppointmentsRepository : DataBaseRepository
     {
         try
         {
-
-            MySqlConnection connection = GetConnection();
+            using var connection = GetConnection();
             connection.Open();
-            string sqlCommand = string.Empty;
+            const string sqlCommand = "UPDATE Agendamentos SET Status = @Status WHERE Id = @Id;";
+            using var command = new MySqlCommand(sqlCommand, connection);
+            command.Parameters.Add("@Status", MySqlDbType.VarChar).Value = StatusAppointmentEnum.Confirmado.ToString();
+            command.Parameters.Add("@Id", MySqlDbType.Int32).Value = idAppointment;
 
-            sqlCommand = $"UPDATE Agendamentos SET Status='{StatusAppointmentEnum.Confirmado}' WHERE Id={idAppointment};";
-            var command = new MySqlCommand(sqlCommand, connection);
-
-            command.ExecuteReader();
-            connection.Close();
+            command.ExecuteNonQuery();
         }
         catch (Exception ex)
         {
@@ -187,35 +189,33 @@ public class AppointmentsRepository : DataBaseRepository
     {
         try
         {
-         
             Appointments appointment = new Appointments();
 
-            var connection = GetConnection();
+            using var connection = GetConnection();
             connection.Open();
-            string query = "SELECT " + Environment.NewLine;
-            query += " * " + Environment.NewLine;
-            query += "FROM Agendamentos " + Environment.NewLine;
-            query += "WHERE id=@IdAppointment; " + Environment.NewLine;
+            string query = "SELECT " + Environment.NewLine
+                         + " * " + Environment.NewLine
+                         + "FROM Agendamentos " + Environment.NewLine
+                         + "WHERE id=@IdAppointment; " + Environment.NewLine;
 
-            var command = new MySqlCommand(query, connection);
-            command.Parameters.AddWithValue("@IdAppointment", idAppointment);
-            using (var reader = command.ExecuteReader())
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.Add("@IdAppointment", MySqlDbType.Int32).Value = idAppointment;
+
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    
-                    appointment.idAppointments = reader.GetInt32("Id");
-                    appointment.client.id = reader.GetInt32("ClienteId");
-                    appointment.barber.id= reader.GetInt32("BarbeiroId");
-                    appointment.dateTime = reader.GetDateTime("DataHorario");
-                    appointment.statusAppointment = reader.GetString("Status");
+                // Ensure nested objects exist before setting properties
+                appointment.client ??= new();
+                appointment.barber ??= new();
 
-                }
+                appointment.idAppointments = reader.GetInt32("Id");
+                appointment.client.id = reader.GetInt32("ClienteId");
+                appointment.barber.id = reader.GetInt32("BarbeiroId");
+                appointment.dateTime = reader.GetDateTime("DataHorario");
+                appointment.statusAppointment = reader.GetString("Status");
             }
-            connection.Close();
 
             return appointment;
-     
         }
         catch (Exception ex)
         {

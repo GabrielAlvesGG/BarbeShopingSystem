@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\modelsrepository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:modelsrepository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\controllers\\schedulingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:controllers\\schedulingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\ModelsRepository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "ModelsRepository\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\ModelsRepository\\UserRepository.cs",
+              "RelativeToolTip": "ModelsRepository\\UserRepository.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAAwA4BAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T22:11:27.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SchedulingController.cs",
+              "DocumentMoniker": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\Controllers\\SchedulingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SchedulingController.cs",
+              "ToolTip": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\Controllers\\SchedulingController.cs",
+              "RelativeToolTip": "Controllers\\SchedulingController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowCIAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-13T22:09:07.418Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

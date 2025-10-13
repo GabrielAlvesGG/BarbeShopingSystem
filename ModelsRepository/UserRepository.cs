@@ -248,22 +248,26 @@ public class UserRepository : DataBaseRepository
                 BarberObj.Add(new User
                 {
                     id = reader.GetInt32("Id"),
-                    nome = reader.GetString("Nome"),
-                    email = reader.GetString("Email"),
-                    telefone = reader.GetString("Telefone"),
-                    dataCriacao = reader.GetDateTime("DataCriacao"),
+                    nome = reader.IsDBNull("Nome") ? string.Empty : reader.GetString("Nome"),
+                    email = reader.IsDBNull("Email") ? string.Empty : reader.GetString("Email"),
+                    telefone = reader.IsDBNull("Telefone") ? string.Empty : reader.GetString("Telefone"),
+                    dataCriacao = reader.IsDBNull("DataCriacao") ? DateTime.MinValue : reader.GetDateTime("DataCriacao"),
                     barber = new Barber
                     {
-                        id = reader.GetInt32("Id"),
-                        usuarioId = reader.GetInt32("UsuarioId"),
-                        especialidade = reader.GetString("Especialidades"),
-                        disponibilidade = reader.GetString("Disponibilidade"),
+                        id = reader.IsDBNull("Id") ? 0 : reader.GetInt32("Id"),
+                        usuarioId = reader.IsDBNull("UsuarioId") ? 0 : reader.GetInt32("UsuarioId"),
+                        especialidade = reader.IsDBNull("Especialidades") ? string.Empty : reader.GetString("Especialidades"),
+                        disponibilidade = reader.IsDBNull("Disponibilidade") ? string.Empty : reader.GetString("Disponibilidade"),
                         smoker = reader.IsDBNull("Fumante") ? 0 : reader.GetInt32("Fumante"),
                         experience = reader.IsDBNull("Experiencia") ? 0 : reader.GetInt32("Experiencia"),
                         imgUrl = reader.IsDBNull("Imagem_Caminho") ? "/Images/barbeiro.jpeg" : reader.GetString("Imagem_Caminho"),
                     },
-                    tipoUsuario = reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro : TipoUsuarioEnum.Anonimo
-
+                    tipoUsuario = reader.IsDBNull("TipoUsuario")
+                 ? TipoUsuarioEnum.Anonimo
+                 : reader.GetString("TipoUsuario") == "Administrador" ? TipoUsuarioEnum.Administrador
+                 : reader.GetString("TipoUsuario") == "Cliente" ? TipoUsuarioEnum.Cliente
+                 : reader.GetString("TipoUsuario") == "Barbeiro" ? TipoUsuarioEnum.Barbeiro
+                 : TipoUsuarioEnum.Anonimo
                 });
             }
             connection.Close();
