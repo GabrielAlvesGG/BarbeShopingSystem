@@ -117,6 +117,10 @@
       "PackagePath": "staticwebassets\\css\\Scheduling.css"
     },
     {
+      "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\wwwroot\\css\\_tokens.css",
+      "PackagePath": "staticwebassets\\css\\_tokens.css"
+    },
+    {
       "Id": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

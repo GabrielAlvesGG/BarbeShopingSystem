@@ -4,262 +4,655 @@
 }
 
 @section Styles {
+	<link href="~/css/_tokens.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/Scheduling.css" rel="stylesheet" asp-append-version="true" />
-    <!-- Vue Toastification CSS -->
     <link rel="stylesheet" href="https://unpkg.com/vue-toastification@1.7.14/dist/index.css" />
     <style>
+        /* Theme polish: commercial, modern, professional */
+        /* Soft brand tints and neutrals derived from tokens */
         :root {
-            --bs-primary-600: #0ea5e9;
-            --bs-primary-700: #0284c7;
-            --bs-surface: #ffffff;
-            --bs-muted: #6b7280;
-            --bs-border: #e5e7eb;
-            --bs-success-600: #22c55e;
-            --bs-danger-600: #ef4444;
-            --shadow-sm: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.1);
-            --shadow-md: 0 8px 20px rgba(2, 8, 23, .08);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 10px;
-
-            /* SweetAlert2 button variables (wins across themes) */
-            --swal2-confirm-button-background: #16a34a;
-            --swal2-confirm-button-color: #ffffff;
-            --swal2-cancel-button-background: #64748b;
-            --swal2-cancel-button-color: #ffffff;
-            --swal2-deny-button-background: #ef4444;
-            --swal2-deny-button-color: #ffffff;
+            --brand-soft-08: color-mix(in oklab, var(--brand), #ffffff 92%);
+            --brand-soft-12: color-mix(in oklab, var(--brand), #ffffff 88%);
+            --brand-soft-16: color-mix(in oklab, var(--brand), #ffffff 84%);
+            --neutral-soft-08: color-mix(in oklab, var(--card-bg), #ffffff 8%);
+            --neutral-soft-12: color-mix(in oklab, var(--card-bg), #ffffff 12%);
+            --border-strong: color-mix(in oklab, var(--bs-border), #000000 8%);
+            --space-1: .25rem;
+            --space-2: .5rem;
+            --space-3: .75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
         }
 
+        /* Hero: cleaner gradient and icon surface */
         .page-hero {
-            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
+            background: linear-gradient(135deg, color-mix(in oklab, var(--bs-primary-600), #000 6%), var(--bs-primary-700));
             color: #fff;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 24px rgba(2, 8, 23, .12);
         }
         .page-hero .hero-icon {
-            width: 48px; height: 48px;
-            display: grid; place-items: center;
-            background: rgba(255,255,255,.15);
-            border-radius: 12px;
-            font-size: 22px;
+            background: color-mix(in oklab, var(--brand), #ffffff 88%);
+            color: color-mix(in oklab, var(--brand-2), #000 10%);
         }
 
-        .barber-card {
-            border: 1px solid var(--bs-border);
-            border-radius: var(--radius-lg);
-            transition: transform .2s ease, box-shadow .2s ease;
+        /* Surfaces: subtle elevation and refined borders */
+        .barber-card,
+        .modal-modern .modal-content,
+        .schedule-toolbar,
+        .empty-state {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 4%);
+            border: 1px solid var(--border-strong);
+            box-shadow: 0 8px 20px rgba(2, 8, 23, .08);
         }
-        .hover-elevate:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .employee-img {
-            width: 120px; height: 120px;
-            object-fit: cover;
-            border: 4px solid #fff;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .rating {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 10px;
-            background: #f8fafc;
-            border: 1px solid var(--bs-border);
-            border-radius: 999px;
-            font-weight: 600;
-            color: #f59e0b;
-        }
-
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: .35rem;
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: .85rem;
-            border: 1px solid var(--bs-border);
-            background: #f9fafb;
-            color: #111827;
-            margin-right: .5rem;
-            margin-bottom: .5rem;
-            white-space: nowrap;
-        }
-        .chip.success { color: var(--bs-success-600); border-color: #bbf7d0; background: #f0fdf4; }
-        .chip.muted  { color: var(--bs-muted); }
-
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            padding: 14px 4px;
-            border-bottom: 1px dashed var(--bs-border);
-        }
-        .service-item:last-child { border-bottom: 0; }
-        .service-name { margin: 0 0 4px 0; }
-        .service-description { font-size: .9rem; color: var(--bs-muted); }
-
-        .service-price {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .service-duration {
-            font-size: .8rem;
-            color: var(--bs-muted);
-        }
-
-        .reserve-button.btn {
-            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
-            border: 0;
-            color: #fff;
-            padding: .5rem .9rem;
-            border-radius: 10px;
-            box-shadow: 0 6px 14px rgba(2,132,199,.25);
-            transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
-        }
-        .reserve-button.btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 18px rgba(2,132,199,.28);
-        }
-
-        /* Schedule grid */
-        .schedule-grid-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: .25rem;
-        }
-        .schedule-grid {
-            grid-auto-flow: row;
-            gap: 12px;
-            /* 1st col fixed 120px + N day cols (min 140px), no wrapping */
-            grid-template-columns: 120px repeat(var(--days-count, 1), minmax(140px, 1fr)) !important;
-        }
-        .schedule-grid .week-day-header {
-            position: sticky;
-            top: 0;
-            background: var(--bs-surface);
-            z-index: 1;
-            padding: 6px 0;
-            font-weight: 700;
-            color: #111827;
-            border-bottom: 1px solid var(--bs-border);
-        }
-        .time-slot {
-            color: var(--bs-muted);
-            font-weight: 600;
-            padding: 6px 0;
-        }
-        .schedule-cell .btn {
-            width: 100%;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .mobile-schedule .week-day-button {
-            width: 100%;
-            text-align: left;
-            padding: .7rem 1rem;
-            border: 1px solid var(--bs-border);
-            background: #fff;
-            border-radius: 10px;
-            margin-bottom: .5rem;
-            font-weight: 700;
-        }
-        .mobile-schedule .mobile-schedule-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: .5rem;
-            padding: .25rem 0 1rem 0;
-        }
-
         .barber-details {
-            background: #f9fafb;
+            background: color-mix(in oklab, var(--card-bg), #ffffff 8%);
+            border: 1px solid color-mix(in oklab, var(--bs-border), #ffffff 18%);
+        }
+
+        /* Typography accents */
+        .text-secondary { color: var(--fg-strong) !important; }
+        .schedule-grid .week-day-header h5 { color: var(--fg-strong); }
+
+        /* Primary actions: bold, brand-forward */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            color: #ffffff;
+            border: 0;
+            box-shadow: 0 8px 18px color-mix(in oklab, var(--brand), #000 80% / 12%);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 10px 22px color-mix(in oklab, var(--brand), #000 80% / 16%);
+        }
+        .btn-primary:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand), #fff 70% / 35%);
+        }
+
+        /* Secondary button harmonized to neutral soft */
+        .btn-secondary {
+            background: var(--neutral-soft-12);
+            color: var(--fg-strong);
             border: 1px solid var(--bs-border);
-            border-radius: 12px;
         }
+        .btn-secondary:hover { filter: brightness(1.06); }
 
-        /* Spacing fixes */
-        .novo-padrao { max-width: 1100px; }
-
-        /* new: modern layered background for main container */
-        .content-bg {
-            background-color: #f8fafc;
-            border-radius: 24px;
-            background-image:
-                radial-gradient(800px 400px at -10% 0%, rgba(14,165,233,.12), rgba(14,165,233,0) 60%),
-                radial-gradient(800px 400px at 110% 20%, rgba(99,102,241,.10), rgba(99,102,241,0) 60%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e5e7eb' fill-opacity='.35'/%3E%3C/svg%3E");
-            background-size: auto, auto, 14px 14px;
-            background-attachment: fixed, fixed, scroll;
-            background-position: center, center, top left;
-            box-shadow: inset 0 1px 0 rgba(16,24,40,.04);
-        }
-        @@media (max-width: 768px) {
-            .content-bg { border-radius: 16px; }
-        }
-
-        /* Modal enterprise look */
-        .modal-modern .modal-content { border: 1px solid var(--bs-border); border-radius: 16px; box-shadow: var(--shadow-md); }
-        .modal-modern .modal-header { border-bottom: 1px solid var(--bs-border); }
-        .modal-modern .modal-body { background: #fcfdff; }
-        .schedule-toolbar {
-            display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
-            padding: .75rem 1rem; margin: .5rem 0 1rem 0;
-            background: #fff; border: 1px solid var(--bs-border); border-radius: 12px;
+        /* Chips and badges with soft brand */
+        .chip {
+            background: var(--brand-soft-12);
+            border-color: color-mix(in oklab, var(--brand), #ffffff 70%);
+            color: color-mix(in oklab, var(--brand-2), #000 20%);
         }
         .badge-soft {
-            display: inline-block; font-weight: 600; padding: .25rem .5rem; border-radius: 999px;
-            border: 1px solid var(--bs-border); background: #f8fafc; color: #111827; font-size: .8rem;
-        }
-        .slot-btn.btn { width: 100%; border-radius: 10px; font-weight: 600; letter-spacing: .2px; }
-        .slot-btn.btn-success { background: linear-gradient(135deg, var(--bs-success-600), #16a34a); border: 0; }
-        .slot-btn.btn-outline-secondary { background: #fff; }
-        .slot-btn small { opacity: .85; }
-        .schedule-legend { display: flex; gap: .75rem; align-items: center; font-size: .85rem; color: var(--bs-muted); }
-        .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-        .legend-free { background: #22c55e; }
-        .legend-busy { background: #cbd5e1; border: 1px solid #cbd5e1; }
-        .empty-state {
-            text-align: center; color: var(--bs-muted); border: 1px dashed var(--bs-border);
-            border-radius: 12px; padding: 24px; background: #fff;
+            background: var(--brand-soft-08);
+            border-color: color-mix(in oklab, var(--brand), #ffffff 76%);
+            color: color-mix(in oklab, var(--brand-2), #000 15%);
         }
 
-        /* SweetAlert2 buttons: high-specificity fallbacks */
-        .swal2-container .swal2-popup .swal2-styled.swal2-confirm {
-            background: #16a34a !important; color: #fff !important; border: 0 !important;
+        /* Schedule grid and slots */
+        .schedule-grid {
+            /* fit more columns without feeling cramped */
+            grid-template-columns: 120px repeat(var(--days-count, 1), minmax(120px, 1fr)) !important;
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-confirm:hover { background: #15803d !important; }
-        .swal2-container .swal2-popup .swal2-styled.swal2-deny {
-            background: #ef4444 !important; color: #fff !important; border: 0 !important;
+        .schedule-grid .week-day-header {
+            background: color-mix(in oklab, var(--bs-surface), #ffffff 3%);
+            border-bottom: 1px solid var(--bs-border);
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-deny:hover { background: #dc2626 !important; }
-        .swal2-container .swal2-popup .swal2-styled.swal2-cancel {
-            background: #64748b !important; color: #fff !important; border: 0 !important;
+        .time-slot { color: var(--fg-muted); }
+
+        .slot-btn.btn-success {
+            background: linear-gradient(135deg, var(--bs-success-600), color-mix(in oklab, #16a34a, #000 6%));
+            border: 0;
+            color: #fff;
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-cancel:hover { background: #475569 !important; }
-        .swal2-popup .swal2-actions { gap: .5rem; }
-        .swal2-popup .swal2-styled {
-            font-weight: 700; border-radius: 10px; padding: .5rem 1rem;
+        .slot-btn.btn-success:hover { filter: brightness(1.04); }
+        .slot-btn.btn-outline-secondary {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 2%);
+            border: 1px solid var(--bs-border);
+            color: var(--fg);
         }
-        .swal2-popup .swal2-confirm {
-            background: #16a34a !important;  /* success */
-            color: #fff !important; border: 0 !important;
+
+        /* Legend */
+        .legend-free { background: #16a34a; }
+        .legend-busy {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 18%);
+            border: 1px solid var(--bs-border);
         }
-        .swal2-popup .swal2-confirm:hover { background: #15803d !important; }
-        .swal2-popup .swal2-deny {
-            background: #ef4444 !important;  /* danger */
-            color: #fff !important; border: 0 !important;
+
+        /* Inputs/focus helpers for accessibility */
+        .week-day-button:focus-visible,
+        .btn:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
         }
-        .swal2-popup .swal2-deny:hover { background: #dc2626 !important; }
-        .swal2-popup .swal2-cancel {
-            background: #64748b !important;  /* neutral */
-            color: #fff !important; border: 0 !important;
+
+        /* Spacing polish: more breathing room and consistent rhythm */
+        .page-hero { margin-bottom: 1.5rem; }
+
+        .barber-card { padding: var(--space-5); } /* complements p-4 nicely on large screens */
+        .barber-details { margin-top: var(--space-4); }
+
+        .service-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: var(--space-4);
+            padding: 12px 0;
+            border-top: 1px solid var(--bs-border);
         }
-        .swal2-popup .swal2-cancel:hover { background: #475569 !important; }
-        .swal2-popup .swal2-styled:focus {
-            box-shadow: 0 0 0 .2rem rgba(2,132,199,.25) !important; outline: none !important;
+        .service-item:first-child { border-top: 0; }
+        .service-details .service-name { margin: 0 0 .25rem 0; font-weight: 600; }
+        .service-meta { text-align: right; min-width: 140px; }
+        .service-price { font-weight: 600; display: inline-block; }
+        .service-duration { color: var(--fg-muted); font-size: .9rem; }
+
+        .schedule-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+        }
+        .chip { margin: 0 .5rem .5rem 0; }
+
+        /* Desktop grid: balanced gaps and readable headers */
+        .schedule-grid {
+            row-gap: 10px;
+            column-gap: 12px;
+            grid-template-columns: 120px repeat(var(--days-count, 1), minmax(120px, 1fr)) !important;
+        }
+        .schedule-grid .week-day-header { padding: 8px 0; }
+        .time-slot { padding: 8px 0; }
+
+        .slot-btn.btn { padding: .5rem .75rem; }
+        .mobile-schedule .mobile-schedule-list { gap: var(--space-3); }
+
+        /* Modal: revert to default sizing behavior (previous standard) */
+        /* Remove previous fullscreen behavior and custom 98vw width */
+        #ScheduleModal .modal-dialog {
+            /* Let Bootstrap’s modal-xl control the width */
+            width: auto;
+            max-width: var(--bs-modal-width);
+        }
+        #ScheduleModal .modal-body {
+            /* Restore default overflow so long lists scroll nicely within modal */
+            max-height: initial;
+            overflow: auto;
+        }
+
+        /* Modal paddings for cleaner structure */
+        .modal-modern .modal-header { padding: 1rem 1.25rem; }
+        .modal-modern .modal-body   { padding: 1rem 1.25rem; }
+        .modal-modern .modal-footer { padding: .75rem 1.25rem; }
+
+        /* Remove blocos antigos de #ScheduleModal (duplicados/conflitantes), incluindo o override 98vw */
+        /* Apague os trechos antigos como:
+           - "Fullscreen scheduling modal (to avoid inner scroll)" (com !important)
+           - Blocos repetidos de "#ScheduleModal .schedule-toolbar", ".modal-modern", etc.
+        */
+
+        /* #ScheduleModal — SaaS dark theme */
+        #ScheduleModal .modal-content {
+            background: var(--card-bg);
+            color: var(--fg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.35);
+        }
+        #ScheduleModal .modal-header {
+            background: var(--bg-800);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 20px;
+        }
+        #ScheduleModal .modal-body {
+            background: var(--card-bg);
+            padding: 16px 20px;
+        }
+        #ScheduleModal .modal-footer {
+            background: var(--bg-800);
+            border-top: 1px solid var(--card-border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* Hierarquia tipográfica */
+        #ScheduleModal .modal-title {
+            color: var(--fg);
+            font-weight: 700;
+            font-size: clamp(1.1rem, .8rem + .6vw, 1.35rem);
+        }
+        #ScheduleModal .modal-header small,
+        #ScheduleModal .modal-header .text-muted {
+            color: var(--fg-muted); /* sem branco puro no fundo escuro */
+            font-weight: 500;
+            font-size: clamp(.9rem, .8rem + .2vw, 1rem);
+            letter-spacing: .15px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Barra de resumo */
+        #ScheduleModal .schedule-toolbar {
+            background: var(--bg-800);
+            border: 1px solid var(--card-border);
+            border-radius: 12px; /* padronizado */
+            padding: .75rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            align-items: center;
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+        }
+        #ScheduleModal .chip {
+            background: rgba(201,162,39,.08);
+            color: var(--fg-strong);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: .3rem .6rem;
+            font-weight: 600;
+            font-size: .85rem;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease;
+        }
+        #ScheduleModal .chip:hover { transform: translateY(-2px); }
+        #ScheduleModal .badge-soft {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 4%);
+            border: 1px solid var(--card-border);
+            color: var(--fg);
+            border-radius: 999px;
+            padding: .25rem .55rem;
+            font-weight: 600;
+            font-size: .8rem;
+        }
+
+        /* Grade de horários */
+        #ScheduleModal .schedule-grid { column-gap: 12px; row-gap: 12px; }
+        #ScheduleModal .schedule-grid .week-day-header {
+            background: var(--bg-800);
+            border-bottom: 1px solid var(--card-border);
+            padding: 8px 0;
+        }
+        #ScheduleModal .schedule-grid .week-day-header h5 { color: var(--fg-strong); margin: 0; }
+        #ScheduleModal .time-slot { color: var(--fg-muted); padding: 8px 0; }
+
+        /* Slots */
+        #ScheduleModal .slot-btn {
+            border-radius: 10px;
+            min-height: 38px;
+            padding: .5rem .75rem;
+            transition: all .2s ease;
+        }
+        #ScheduleModal .slot-btn.btn-success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff; /* botão em verde suporta texto branco */
+            border: 0;
+            font-weight: 600;
+        }
+        #ScheduleModal .slot-btn.btn-success:hover { filter: brightness(0.9); }
+        #ScheduleModal .slot-btn.btn-success:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+        #ScheduleModal .slot-btn.btn-outline-secondary {
+            background: transparent;
+            color: var(--fg-muted);
+            border: 1px dashed var(--card-border);
+        }
+        #ScheduleModal .slot-btn.btn-outline-secondary:hover {
+            background: rgba(255,255,255,.04);
+            color: var(--fg-strong);
+        }
+        #ScheduleModal .slot-btn:disabled { opacity: .6; }
+
+        /* Legenda */
+        #ScheduleModal .legend-free { background: #16a34a; }
+        #ScheduleModal .legend-busy {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 10%);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Botões do modal */
+        #ScheduleModal .btn { transition: all .2s ease; }
+        #ScheduleModal .btn.btn-primary {
+            background: var(--accent);
+            color: #1a1a1a;
+            border: 0;
+            font-weight: 700;
+        }
+        #ScheduleModal .btn.btn-secondary,
+        #ScheduleModal .btn.btn-dark {
+            background: var(--bg-800);
+            color: var(--fg-strong);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+        #ScheduleModal .btn:focus-visible,
+        #ScheduleModal .week-day-button:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
+        /* Dia (mobile) */
+        #ScheduleModal .mobile-schedule .week-day-button {
+            background: var(--bg-800);
+            border: 1px solid var(--card-border);
+            color: var(--fg-strong);
+            border-radius: 10px;
+            padding: .5rem .75rem;
+            text-align: left;
+            transition: all .2s ease;
+        }
+        #ScheduleModal .mobile-schedule .week-day-button:hover { transform: translateY(-2px); }
+
+        /* Wider ScheduleModal on desktop to show more slots (keeps mobile fullscreen) */
+        @@media (min-width: 768px) {
+            #ScheduleModal .modal-dialog.modal-fullscreen {
+                width: 96vw;              /* expand near full viewport */
+                max-width: 1400px;        /* sensible cap for md+ screens */
+                height: auto;             /* allow body to size naturally */
+                margin: 1.25rem auto;     /* center with breathing room */
+            }
+            #ScheduleModal .modal-content { height: auto; }
+        }
+        @@media (min-width: 1200px) {
+            #ScheduleModal .modal-dialog.modal-fullscreen {
+                max-width: 1600px;        /* larger cap on xl */
+            }
+        }
+        @@media (min-width: 1400px) {
+            #ScheduleModal .modal-dialog.modal-fullscreen {
+                max-width: 1760px;        /* ultra-wide monitors */
+            }
+        }
+
+        /* Optional: reduce chance of inner horizontal scroll */
+        #ScheduleModal .schedule-grid-wrapper { overflow-x: visible; }
+
+        /* Legend: clearer icons + spacing */
+        #ScheduleModal .schedule-legend {
+            display: block; /* keep inline flow but allow spacing tweaks */
+            margin-top: 8px;
+        }
+        #ScheduleModal .legend-dot {
+            display: inline-flex;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            margin-right: 6px; /* space before label text */
+            border: 1px solid var(--card-border);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+            font-size: 10px;
+            line-height: 1;
+            vertical-align: -2px; /* align dot with text baseline */
+        }
+        #ScheduleModal .legend-dot.legend-free { background: #16a34a; color: #fff; }
+        #ScheduleModal .legend-dot.legend-busy {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 10%);
+            color: var(--fg-muted);
+            margin-left: 16px; /* gap between first label and second dot */
+        }
+        #ScheduleModal .legend-dot.legend-free::before { content: '✓'; transform: translateY(-.5px); }
+        #ScheduleModal .legend-dot.legend-busy::before { content: '✕'; transform: translateY(-.5px); }
+
+        /* Slot buttons: add subtle glyphs without changing markup */
+        #ScheduleModal .slot-btn { position: relative; }
+        #ScheduleModal .slot-btn.btn-success,
+        #ScheduleModal .slot-btn.btn-outline-secondary {
+            padding-left: 2rem; /* make room for the glyph */
+        }
+        #ScheduleModal .slot-btn.btn-success::before,
+        #ScheduleModal .slot-btn.btn-outline-secondary::before {
+            position: absolute;
+            left: .6rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .95rem;
+            line-height: 1;
+            pointer-events: none;
+            aria-hidden: true;
+        }
+        #ScheduleModal .slot-btn.btn-success::before {
+            content: '✓';
+            color: #fff;
+            font-weight: 700;
+        }
+        #ScheduleModal .slot-btn.btn-outline-secondary::before {
+            content: '–';
+            color: var(--fg-muted);
+            font-weight: 600;
+        }
+
+        /* Enforce theme in ScheduleModal (specificity bump to override generic .modal-modern blocks) */
+        #ScheduleModal.modal .modal-dialog.modal-fullscreen .modal-content.modal-modern,
+        #ScheduleModal.modal .modal-dialog .modal-content.modal-modern {
+            background: var(--card-bg);
+            color: var(--fg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.35);
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-header {
+            background: var(--bg-800);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 20px; /* keep comfortable spacing */
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-body {
+            background: var(--card-bg);
+            padding: 16px 20px;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-footer {
+            background: var(--bg-800);
+            border-top: 1px solid var(--card-border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* Typography hierarchy inside the modal */
+        #ScheduleModal.modal .modal-content.modal-modern .modal-title {
+            color: var(--fg);
+            font-weight: 700;
+            font-size: clamp(1.1rem, .8rem + .6vw, 1.35rem);
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-header small,
+        #ScheduleModal.modal .modal-content.modal-modern .modal-header .text-muted {
+            color: var(--fg-muted);
+            font-weight: 500;
+            font-size: clamp(.9rem, .8rem + .2vw, 1rem);
+            letter-spacing: .15px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Toolbar (chips) re-asserted under modal body */
+        #ScheduleModal.modal .modal-content.modal-modern .modal-body .schedule-toolbar {
+            background: var(--bg-800);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: .75rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            align-items: center;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-body .chip {
+            background: rgba(201,162,39,.08);
+            color: var(--fg-strong);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: .3rem .6rem;
+            font-weight: 600;
+            font-size: .85rem;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .modal-body .badge-soft {
+            background: color-mix(in oklab, var(--card-bg), #ffffff 4%);
+            border: 1px solid var(--card-border);
+            color: var(--fg);
+            border-radius: 999px;
+            padding: .25rem .55rem;
+            font-weight: 600;
+            font-size: .8rem;
+        }
+
+        /* Grid headers and time axis */
+        #ScheduleModal.modal .modal-content.modal-modern .schedule-grid { column-gap: 12px; row-gap: 12px; }
+        #ScheduleModal.modal .modal-content.modal-modern .schedule-grid .week-day-header {
+            background: var(--bg-800);
+            border-bottom: 1px solid var(--card-border);
+            padding: 8px 0;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .schedule-grid .week-day-header h5 { color: var(--fg-strong); margin: 0; }
+        #ScheduleModal.modal .modal-content.modal-modern .time-slot { color: var(--fg-muted); padding: 8px 0; }
+
+        /* Slot buttons */
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn {
+            border-radius: 10px;
+            min-height: 38px;
+            padding: .5rem .75rem;
+            transition: all .2s ease;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn.btn-success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            border: 0;
+            font-weight: 600;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn.btn-success:hover { filter: brightness(0.9); }
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn.btn-success:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn.btn-outline-secondary {
+            background: transparent;
+            color: var(--fg-muted);
+            border: 1px dashed var(--card-border);
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .slot-btn.btn-outline-secondary:hover {
+            background: rgba(255,255,255,.04);
+            color: var(--fg-strong);
+        }
+
+        /* Footer buttons */
+        #ScheduleModal.modal .modal-content.modal-modern .btn { transition: all .2s ease; }
+        #ScheduleModal.modal .modal-content.modal-modern .btn.btn-primary {
+            background: var(--accent);
+            color: #1a1a1a;
+            border: 0;
+            font-weight: 700;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .btn.btn-secondary,
+        #ScheduleModal.modal .modal-content.modal-modern .btn.btn-dark {
+            background: var(--bg-800);
+            color: var(--fg-strong);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+        #ScheduleModal.modal .modal-content.modal-modern .btn:focus-visible,
+        #ScheduleModal.modal .modal-content.modal-modern .week-day-button:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
+        /* Dia (mobile) */
+        #ScheduleModal .mobile-schedule .week-day-button {
+            background: var(--bg-800);
+            border: 1px solid var(--card-border);
+            color: var(--fg-strong);
+            border-radius: 10px;
+            padding: .5rem .75rem;
+            text-align: left;
+            transition: all .2s ease;
+        }
+        #ScheduleModal .mobile-schedule .week-day-button:hover { transform: translateY(-2px); }
+
+        /* Wider ScheduleModal on desktop to show more slots (keeps mobile fullscreen) */
+        @@media (min-width: 768px) {
+            #ScheduleModal.modal .modal-dialog.modal-fullscreen {
+                width: 96vw;              /* expand near full viewport */
+                max-width: 1400px;        /* sensible cap for md+ screens */
+                height: auto;             /* allow body to size naturally */
+                margin: 1.25rem auto;     /* center with breathing room */
+            }
+        }
+        @@media (min-width: 1200px) {
+            #ScheduleModal.modal .modal-dialog.modal-fullscreen {
+                max-width: 1600px;        /* larger cap on xl */
+            }
+        }
+        @@media (min-width: 1400px) {
+            #ScheduleModal.modal .modal-dialog.modal-fullscreen {
+                max-width: 1760px;        /* ultra-wide monitors */
+            }
+        }
+
+        /* UserNotLoggedModal — SaaS dark theme (same pattern as ScheduleModal) */
+        #UserNotLoggedModal .modal-content.modal-modern {
+            background: var(--card-bg);
+            color: var(--fg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.35);
+        }
+        #UserNotLoggedModal .modal-header {
+            background: var(--bg-800);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 20px;
+        }
+        #UserNotLoggedModal .modal-body {
+            background: var(--card-bg);
+            color: var(--fg);
+            padding: 16px 20px;
+        }
+        #UserNotLoggedModal .modal-footer {
+            background: var(--bg-800);
+            border-top: 1px solid var(--card-border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* Typography */
+        #UserNotLoggedModal .modal-title {
+            color: var(--fg);
+            font-weight: 700;
+            font-size: clamp(1.05rem, .8rem + .5vw, 1.25rem);
+        }
+
+        /* Buttons */
+        #UserNotLoggedModal .btn { transition: all .2s ease; }
+        #UserNotLoggedModal .btn.btn-primary {
+            background: var(--accent);
+            color: #1a1a1a;
+            border: 0;
+            font-weight: 700;
+        }
+        #UserNotLoggedModal .btn.btn-secondary {
+            background: var(--bg-800);
+            color: var(--fg-strong);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+        #UserNotLoggedModal .btn:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
+        /* Close button: white on dark header */
+        #UserNotLoggedModal .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(180%);
+            opacity: .9;
+        }
+        #UserNotLoggedModal .modal-header .btn-close:hover { opacity: 1; }
+        #UserNotLoggedModal .modal-header .btn-close:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
         }
     </style>
 }
@@ -277,76 +670,72 @@
             </div>
         </div>
 
+        <!-- Barbers list -->
         <div v-for="(schedules, index) in schedules" :key="index" class="card barber-card hover-elevate p-4 shadow-sm mb-4">
-            <div class="row">
+            <div class="row g-4 g-lg-5 align-items-start">
                 <!-- Informações do Barbeiro -->
-                <div class="col-md-5">
-                    <div class="card-body text-center">
+                <div :class="['col-12', leftColClass]">
+                    <div class="card-body text-center stack" style="--stack-space: var(--space-4);">
                         <div>
-                            <h3 class="card-title mb-2 text-primary text-capitalize">{{ schedules.user.nome }}</h3>
+                            <!-- Revert to white via markup -->
+                            <h3 class="card-title mb-2 text-white text-capitalize">{{ schedules.user.nome }}</h3>
                             <img :src="schedules.user.barber.imgUrl" alt="Foto do Funcionário" class="rounded-circle employee-img img-fluid" />
                         </div>
-                        <br>
-                        <!-- Rating placeholder (substitui o alerta) -->
-                        <div class="rating my-1" aria-label="Avaliação média">
+
+                        <div class="rating my-1 badge badge--soft badge--micro" aria-label="Avaliação média">
                             ★ ★ ★ ★ ☆ <small class="text-white-50 ms-2">4.0</small>
                         </div>
 
-                        <div class="mt-3">
-                            <span class="chip"><strong>Especialidade:</strong> {{ schedules.user.barber.especialidade }}</span>
-                            <span class="chip muted"><strong>Fumante:</strong> <span v-show="schedules.user.barber.smoker == 1">Sim</span><span v-show="schedules.user.barber.smoker == 0">Não</span></span>
-                            <span class="chip success"><strong>Experiência:</strong> {{schedules.user.barber.experience}} anos</span>
+                        <div class="cluster" style="--cluster-gap: .5rem;">
+                            <span class="badge badge--soft"><strong>Especialidade:</strong> {{ schedules.user.barber.especialidade }}</span>
+                            <span class="badge badge--soft badge--muted"><strong>Fumante:</strong> <span v-show="schedules.user.barber.smoker == 1">Sim</span><span v-show="schedules.user.barber.smoker == 0">Não</span></span>
+                            <span class="badge badge--soft badge--success"><strong>Experiência:</strong> {{schedules.user.barber.experience}} anos</span>
                         </div>
 
-                        <div class="barber-details mt-4 p-3 rounded">
-                            <p><strong>Fumante:</strong> <label v-show="schedules.user.barber.smoker == 1">Sim</label> <label v-show="schedules.user.barber.smoker == 0">Não</label></p>
-                            <p><strong>Estilo Musical:</strong> Rock</p>
-                            <p><strong>Experiência:</strong> {{schedules.user.barber.experience}} anos</p>
+                        <div class="barber-details p-3 rounded text-start">
+                            <!-- Removido 'Fumante' duplicado para evitar redundância -->
+                            <p class="mb-2"><strong>Estilo Musical:</strong> Rock</p>
+                            <p class="mb-0"><strong>Experiência:</strong> {{schedules.user.barber.experience}} anos</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Seleção de Serviços -->
-                <div class="col-md-7">
+                <div :class="['col-12', rightColClass]">
                     <div class="mb-3">
-                        <h5 class="text-secondary">Serviços</h5>
+                        <h5 class="text-secondary mb-3">Serviços</h5>
 
-                        <!-- Lista de serviços modernizada -->
-                        <div>
+                        <div class="divider-y">
                             <div v-for="service in CustomersList" :key="service.id" class="service-item">
                                 <div class="service-details">
                                     <h5 class="service-name">{{ service.name }}</h5>
                                     <span class="service-description" v-if="service.description">{{ service.description }}</span>
                                 </div>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="text-right mr-3 text-end me-3">
-                                        <span class="service-price">R$ {{ service.price.toFixed(2) }}</span>
-                                        <br>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="service-meta">
+                                        <span class="service-price">R$ {{ service.price.toFixed(2) }}</span><br>
                                         <span class="service-duration">{{ service.duration }} min</span>
                                     </div>
-                                    <div>
-                                        <button type="button" class="btn reserve-button" @@click="modalReserveSchedules(schedules.weekDays,service.id,  schedules.user.id)">
-                                            Reservar
-                                        </button>
-                                    </div>
+                                    <button type="button" class="btn btn-primary" @@click="modalReserveSchedules(schedules.weekDays,service.id,  schedules.user.id)">
+                                        Reservar
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="alert alert-danger mt-2" v-show="alertSelectCustomerInvalidade" role="alert">
+                        <div class="alert alert-danger mt-3" v-show="alertSelectCustomerInvalidade" role="alert">
                             Selecione um serviço!
                         </div>
                     </div>
-                  
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal the user not logged in -->
+
+    <!-- Modal: usuário não logado -->
     <div class="modal fade" id="UserNotLoggedModal" tabindex="-1" aria-labelledby="UserNotLoggedModalLabel" aria-hidden="true" ref="modalLogin">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content modal-modern">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="UserNotLoggedModalLabel">Faça login para agendar um horário</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -356,18 +745,16 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                    <!-- normalize event -->
-                    <button type="button" class="btn btn-info" @@click="RedirectLoginPage()">Fazer login</button>
+                    <button type="button" class="btn btn-primary" @@click="RedirectLoginPage()">Fazer login</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal the user not logged in -->
 
-    <!-- Modal the user barber -->
+    <!-- Modal: barbeiro ocupando horário -->
     <div class="modal fade" id="UserBarberLoggedModal" tabindex="-1" aria-labelledby="UserBarberLoggedModalLabel" aria-hidden="true" ref="modalLogin">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content modal-modern">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="UserBarberLoggedModalLabel">Deseja oculpar esse horário</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -377,29 +764,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-                    <!-- normalize event -->
-                    <button type="button" class="btn btn-info" @@click="occupySchedule()">Oculpar horário</button>
+                    <button type="button" class="btn btn-primary" @@click="occupySchedule()">Oculpar horário</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal the user barber -->
 
-
-    <!-- Modal Agendar um horários -->
+    <!-- Modal: Agendar horários -->
     <div class="modal fade bd-example-modal-lg" id="ScheduleModal" tabindex="-1" aria-labelledby="ScheduleModalLabel" aria-hidden="true" ref="modalLogin">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content modal-modern">
                 <div class="modal-header">
                     <div>
                         <h1 class="modal-title fs-5 mb-0" id="ScheduleModalLabel">Agende um horário</h1>
-                        <small class="text-muted">Selecione um horário disponível e confirme o agendamento</small>
+                        <small class="text">Selecione um horário disponível e confirme o agendamento</small>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Toolbar resumo -->
-                    <div class="schedule-toolbar">
+                    <div class="schedule-toolbar cluster" style="--cluster-gap: .5rem;">
                         <span class="chip"><strong>Serviço:</strong> {{ selectedServiceObj?.name || '—' }}</span>
                         <span class="chip"><strong>Duração:</strong> {{ selectedServiceObj?.duration ? (selectedServiceObj.duration + ' min') : '—' }}</span>
                         <span class="chip"><strong>Profissional:</strong> {{ selectedBarberName || '—' }}</span>
@@ -409,7 +792,6 @@
                     <div class="schedule-container mb-3">
                         <h5 class="text-secondary">Horários Disponíveis</h5>
 
-                        <!-- Empty state -->
                         <div v-if="!hasAnyFreeSlot" class="empty-state">
                             Nenhum horário disponível no período selecionado. Tente outro dia ou serviço.
                         </div>
@@ -422,26 +804,32 @@
                                     <h5 class="mb-0">{{ weekDay.dayString }}</h5>
                                 </div>
 
-                                <template v-for="(horario, index) in daysWeekModal[0]?.schedules">
+                                <!-- changed: build rows from the union of all times across days -->
+                                <template v-for="t in modalTimeAxis">
                                     <div class="time-slot">
-                                        {{ formatTime(horario.time) }}
+                                        {{ formatTime(t) }}
                                     </div>
 
                                     <div v-for="weekDay in daysWeekModal" class="schedule-cell">
-                                        <button v-if="weekDay.schedules[index]"
+                                        <template v-if="findSlot(weekDay, t)">
+                                            <button
                                                 class="btn slot-btn"
-                                                :class="weekDay.schedules[index].free ? 'btn-success' : 'btn-outline-secondary'"
-                                                :disabled="!weekDay.schedules[index].free"
-                                                :aria-label="(weekDay.dayString + ' ' + formatTime(weekDay.schedules[index].time))"
-                                                @@click="selecionarHorario(weekDay.schedules[index].time, barberIdSelect, weekDay.dayDateTime)">
-                                            <span>{{ formatTime(weekDay.schedules[index].time) }}</span>
-                                        </button>
+                                                :class="findSlot(weekDay, t).free ? 'btn-success' : 'btn-outline-secondary'"
+                                                :disabled="!findSlot(weekDay, t).free"
+                                                :aria-label="(weekDay.dayString + ' ' + formatTime(findSlot(weekDay, t).time))"
+                                                @@click="selecionarHorario(findSlot(weekDay, t).time, barberIdSelect, weekDay.dayDateTime)">
+                                                <span>{{ formatTime(findSlot(weekDay, t).time) }}</span>
+                                            </button>
+                                        </template>
+                                        <template v-else>
+                                            <!-- placeholder to keep grid alignment -->
+                                            <div style="height: 38px;"></div>
+                                        </template>
                                     </div>
                                 </template>
                             </div>
                         </div>
 
-                        <!-- Modo Mobile: Lista de dias com dropdown de horários -->
                         <div v-else class="mobile-schedule">
                             <div v-for="weekDay in daysWeekModal">
                                 <button class="week-day-button" @@click="toggleDay(weekDay.dayString)" :aria-expanded="selectedDay === weekDay.dayString">
@@ -462,7 +850,6 @@
                         </div>
                     </div>
 
-                    <!-- Legend -->
                     <div class="schedule-legend mt-2">
                         <span class="legend-dot legend-free"></span> Disponível
                         <span class="legend-dot legend-busy"></span> Indisponível
@@ -474,16 +861,14 @@
             </div>
         </div>
     </div>
-    <!-- Modal Agendar um horários -->
-
+    <!-- Modal: Agendar horários -->
 </div>
 
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- Vue Toastification UMD -->
 <script src="https://unpkg.com/vue-toastification@1.7.14/dist/index.umd.min.js"></script>
 <script>
-    // Debug: Vue devtools and global handlers
+    // Enable Vue devtools and basic error logging
     if (window.Vue) {
         Vue.config.devtools = true;
         Vue.config.productionTip = false;
@@ -496,7 +881,7 @@
         };
     }
 
-    // Debug: Axios interceptors
+    // Axios interceptors
     axios.interceptors.request.use(cfg => {
         console.debug('[HTTP] ->', (cfg.method || 'get').toUpperCase(), cfg.url, { params: cfg.params, data: cfg.data });
         return cfg;
@@ -514,22 +899,15 @@
         return Promise.reject(err);
     });
 
-    // Toastification adapter: route Swal.fire to modern Vue toasts
+    // Toastification adapter for Swal.fire
     (function () {
         if (!window.VueToastification || window.__toast) return;
-
-        // Global toast interface (no component instance required)
         const toast = window.VueToastification.createToastInterface({
-            position: 'top-right',
-            timeout: 3500,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            hideProgressBar: false
+            position: 'top-right', timeout: 3500, closeOnClick: true, pauseOnHover: true,
+            draggable: true, hideProgressBar: false
         });
         window.__toast = toast;
 
-        // Map Swal.fire(options) => toast
         const toToast = (opts) => {
             const type = (opts && opts.icon) || 'info';
             const message = [opts?.title, opts?.text].filter(Boolean).join(' — ') || ' ';
@@ -537,8 +915,6 @@
                 case 'success': return toast.success(message);
                 case 'error':   return toast.error(message);
                 case 'warning': return toast.warning(message);
-                case 'info':
-                case 'question':
                 default:        return toast.info(message);
             }
         };
@@ -562,29 +938,28 @@
         data() {
             return {
                 schedules: [],
-                maxButtons: 10 ,
+                maxButtons: 10,
                 possibleCancelAppointment: 0,
                 userLogged: false,
-                CustomersList:[],
+                CustomersList: [],
                 BarberList: [],
                 selectedService: 0,
                 selectedBarber: 0,
-                alertSelectCustomerInvalidade:false,
-                alertSelectBarbereInvalidade:false,
+                alertSelectCustomerInvalidade: false,
+                alertSelectBarbereInvalidade: false,
                 showScheduling: false,
                 userLoggerIsBarber: false,
                 modalBarberId: 0,
-                timeOccupySchedule:0,
+                timeOccupySchedule: 0,
                 isMobileView: false,
                 selectedDay: null,
-                daysWeekModal:[],
+                daysWeekModal: [],
                 barberIdSelect: 0,
                 isTabletView: false
-                
             }
         },
         methods: {
-            GetScheduling() { 
+            GetScheduling() {
                 axios.get('/Scheduling/GetScheduling')
                     .then(({ data }) => {
                         const result = (data && typeof data === 'object') ? data : JSON.parse(String(data));
@@ -615,8 +990,7 @@
                         });
                     });
             },
-            selecionarHorario(horario, barberId, dayDateTime) 
-            {
+            selecionarHorario(horario, barberId, dayDateTime) {
                 this.resetAlertMeessage();
                 if (this.userLogged) {
                     let time = horario;
@@ -651,106 +1025,72 @@
                     this.OpenModalUserNotLoogedModal();
                 }
             },
-            BookingATime(time, barberId, dayDateTime){
-                 const appointmentsDTO  = { // Implementar aqui também o dia que deve ser agendado 
-                    dateTime :time,
+            BookingATime(time, barberId, dayDateTime) {
+                const appointmentsDTO = {
+                    dateTime: time,
                     customerId: this.selectedService,
                     barberId: barberId,
-                    dayDateTime : dayDateTime
+                    dayDateTime: dayDateTime
                 };
 
+                axios.post('/Scheduling/BookingATime', appointmentsDTO, { headers: { 'Content-Type': 'application/json' } })
+                    .then(response => {
+                        if (!response.data) {
+                            Swal.fire({
+                                title: 'Horário já está agendado !',
+                                text: 'Você tem um horário agendado nesse mesmo período.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok',
+                                footer: 'Verifique os horários que você já agendou'
+                            });
+                        } else {
+                            if (this.userLoggerIsBarber) this.closeModalUserBarberLogged();
+                            this.closeModalreserveSchedules();
 
-                axios.post('/Scheduling/BookingATime',
-                appointmentsDTO, {
-                headers: {
-                    'Content-Type': 'application/json'}
-                })
-                .then(response => {
-                    if(!response.data){
-                        
-                          Swal.fire({
-                            title: 'Horário já está agendado !',
-                            text: 'Você tem um horário agendado nesse mesmo período.',
-                            icon: 'error',
-                            confirmButtonText: 'Ok',
-                            footer: 'Verifique os horários que você já agendou'
-                        });
-                        
-                        
-                    }
-                    else
-                    {
-                         if(this.userLoggerIsBarber)
-                         this.closeModalUserBarberLogged();
-
-                         this.closeModalreserveSchedules();
-
-                    Swal.fire({
-                        title: 'Horário Agendado!',
-                        text: 'Seu horário foi agendado com sucesso.',
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                        footer: 'Aguarde a confirmação do barbeiro'
+                            Swal.fire({
+                                title: 'Horário Agendado!',
+                                text: 'Seu horário foi agendado com sucesso.',
+                                icon: 'success',
+                                confirmButtonText: 'Ok',
+                                footer: 'Aguarde a confirmação do barbeiro'
+                            });
+                            this.alertSelectCustomerInvalidade = false;
+                            this.alertSelectBarbereInvalidade = false;
+                            this.GetScheduling();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao agendar:', error);
                     });
-                    this.alertSelectCustomerInvalidade = false;
-                    this.alertSelectBarbereInvalidade = false;
-                    this.GetScheduling();
-                    }
-                    
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
             },
             formatTime(horario) {
                 if (!horario || typeof horario !== 'string') return '';
                 return horario.slice(0, -3);
             },
-            LoggedInClient(){ 
-                   axios.post('/Session/IsUserLoggedIn')
-                .then(response => {
-                  this.userLogged = response.data;  
-                  
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
+            LoggedInClient() {
+                axios.post('/Session/IsUserLoggedIn')
+                    .then(response => { this.userLogged = response.data; })
+                    .catch(error => { console.error('Erro ao verificar login:', error); });
             },
-            RedirectLoginPage(){
-                window.location.href = "/Login/Login?sheduling=true";
-            },  
-            occupySchedule(){
-                 this.BookingATime(this.timeOccupySchedule, this.modalBarberId)
-        },
-            OpenModalUserNotLoogedModal(){
-               let modal = new bootstrap.Modal(document.getElementById("UserNotLoggedModal"));
-                modal.show();
-            },
-            OpenModalUserBarberLogged(time, barberId){
+            RedirectLoginPage() { window.location.href = "/Login/Login?sheduling=true"; },
+            occupySchedule() { this.BookingATime(this.timeOccupySchedule, this.modalBarberId) },
+            OpenModalUserNotLoogedModal() { new bootstrap.Modal(document.getElementById("UserNotLoggedModal")).show(); },
+            OpenModalUserBarberLogged(time, barberId) {
                 this.timeOccupySchedule = time;
                 this.modalBarberId = barberId;
-               let modal = new bootstrap.Modal(document.getElementById("UserBarberLoggedModal"));
-                modal.show();
+                new bootstrap.Modal(document.getElementById("UserBarberLoggedModal")).show();
             },
-            GetServices(){
-                    axios.get('/Scheduling/GetCustomers')
-                .then(response => {
-                    this.CustomersList = response.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar horários:', error);
-                });
+            GetServices() {
+                axios.get('/Scheduling/GetCustomers')
+                    .then(response => { this.CustomersList = response.data; })
+                    .catch(error => { console.error('Erro ao carregar serviços:', error); });
             },
-            formatedDateTime(date){
-                const dateTime = new Date(date);
-                return dateTime.toLocaleString('pt-BR');
-            },
-            resetAlertMeessage(){
-                this.alertSelectCustomerInvalidade =false;
+            formatedDateTime(date) { const d = new Date(date); return d.toLocaleString('pt-BR'); },
+            resetAlertMeessage() {
+                this.alertSelectCustomerInvalidade = false;
                 this.alertSelectBarbereInvalidade = false;
             },
-            schedulingFree(){
-                // fix duplicated nested loops and ensure flags are computed correctly
+            schedulingFree() {
                 this.schedules.forEach(obj => {
                     obj.weekDays.forEach(weekDay => {
                         weekDay.schedules.forEach(item => {
@@ -767,7 +1107,7 @@
             },
             parseTimeToMinutes(t) {
                 if (!t) return 0;
-                const [h, m, s] = t.split(':').map(Number);
+                const [h, m] = t.split(':').map(Number);
                 return (h || 0) * 60 + (m || 0);
             },
             getSlotMinutes(schedules, idx) {
@@ -781,14 +1121,11 @@
             },
             validateDurationService(time, barberId, dayDateTime) {
                 let durationService = 0;
-                this.CustomersList.forEach(item => {
-                    if (item.id == this.selectedService) durationService = item.duration;
-                });
+                this.CustomersList.forEach(item => { if (item.id == this.selectedService) durationService = item.duration; });
                 return this.testeDuration(durationService, time, barberId, dayDateTime);
             },
             testeDuration(durationService, time, barberId, dayDateTime) {
                 if (!durationService || durationService <= 0) return [time];
-
                 let resultTimes = [];
 
                 this.schedules.forEach(scheduleObj => {
@@ -823,69 +1160,95 @@
             modalReserveSchedules(weekDays, serviceId, barberId) {
                 this.resetAlertMeessage();
                 this.selectedService = serviceId;
-                this.barberIdSelect = barberId; // fix: use the property bound in the template
+                this.barberIdSelect = barberId;
                 this.daysWeekModal = weekDays;
-                this.isMobileView = false;
+                // Responsivo: define o modo conforme viewport
+                this.onResize();
                 this.selectedDay = null;
 
-                // Verificar se o usuário está logado e se é um barbeiro
                 this.LoggedInClient();
-                if(this.userLogged)
-                {
+                if (this.userLogged) {
                     this.userLoggerIsBarber = this.BarberList.find(b => b.id === barberId)?.user?.id === barberId;
-                }
-                else
-                {
+                } else {
                     this.userLoggerIsBarber = false;
                 }
 
-                // Abrir modal
-                let modal = new bootstrap.Modal(document.getElementById("ScheduleModal"));
-                modal.show();
+                new bootstrap.Modal(document.getElementById("ScheduleModal")).show();
+            },
+            // Responsivo simples
+            onResize() {
+                this.isMobileView = window.innerWidth < 768;
             },
             closeModalreserveSchedules() {
-                let modalElement = document.getElementById("ScheduleModal");
-                let modalInstance = bootstrap.Modal.getInstance(modalElement);
-                if (modalInstance) {
-                    modalInstance.hide();
-                }
+                let el = document.getElementById("ScheduleModal");
+                let instance = bootstrap.Modal.getInstance(el);
+                if (instance) instance.hide();
             },
-            toggleDay(dayString) {
-                this.selectedDay = (this.selectedDay === dayString) ? null : dayString;
+            closeModalUserBarberLogged() {
+                let el = document.getElementById("UserBarberLoggedModal");
+                let instance = bootstrap.Modal.getInstance(el);
+                if (instance) instance.hide();
+            },
+            toggleDay(dayString) { this.selectedDay = (this.selectedDay === dayString) ? null : dayString; },
+            findSlot(weekDay, time) {
+                const list = (weekDay && Array.isArray(weekDay.schedules)) ? weekDay.schedules : [];
+                return list.find(s => s.time === time) || null;
             }
         },
         computed: {
             hasAnyFreeSlot() {
-                return this.schedules.some(schedule => {
-                    return schedule.weekDays.some(weekDay => {
-                        return weekDay.schedules.some(slot => slot.free);
-                    });
+                // Considera apenas os dias exibidos no modal
+                return (this.daysWeekModal || []).some(weekDay =>
+                    (weekDay.schedules || []).some(slot => slot.free)
+                );
+            },
+            leftColClass() {
+                const n = (this.CustomersList && this.CustomersList.length) || 0;
+                if (n <= 3) return 'col-lg-6';
+                if (n >= 8) return 'col-lg-4';
+                return 'col-lg-5';
+            },
+            rightColClass() {
+                const n = (this.CustomersList && this.CustomersList.length) || 0;
+                if (n <= 3) return 'col-lg-6';
+                if (n >= 8) return 'col-lg-8';
+                return 'col-lg-7';
+            },
+            selectedServiceObj() {
+                return this.CustomersList.find(s => s.id === this.selectedService);
+            },
+            selectedBarberName() {
+                const barber = this.schedules.find(s => s.user?.id === this.barberIdSelect)?.user;
+                return barber?.nome || '';
+            },
+            modalTimeAxis() {
+                const setTimes = new Set();
+                (this.daysWeekModal || []).forEach(wd => {
+                    (wd.schedules || []).forEach(s => { if (s && s.time) setTimes.add(s.time); });
                 });
+                return Array.from(setTimes).sort((a, b) => this.parseTimeToMinutes(a) - this.parseTimeToMinutes(b));
             }
         },
         mounted() {
             this.GetScheduling();
             this.GetServices();
+            // Habilita responsividade
+            this.onResize();
+            window.addEventListener('resize', this.onResize);
         },
         beforeDestroy() {
-            // Clean up Bootstrap modals
-            const modalIds = ['UserNotLoggedModal', 'UserBarberLoggedModal', 'ScheduleModal'];
-            modalIds.forEach(id => {
-                const modalElement = document.getElementById(id);
-                if (modalElement) {
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    if (modalInstance) {
-                        modalInstance.dispose();
-                    }
+            ['UserNotLoggedModal', 'UserBarberLoggedModal', 'ScheduleModal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const instance = bootstrap.Modal.getInstance(el);
+                    if (instance) instance.dispose();
                 }
             });
+            window.removeEventListener('resize', this.onResize);
         },
         watch: {
             isMobileView(newValue) {
-                // Resetar seleção ao mudar para o modo móvel
-                if (newValue) {
-                    this.selectedDay = null;
-                }
+                if (newValue) this.selectedDay = null;
             }
         }
     });

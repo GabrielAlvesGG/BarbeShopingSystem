@@ -2,7 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+@section Styles {
+	<link href="~/css/_tokens.css" rel="stylesheet" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+}
 
 <style>
 	:root{

@@ -1,149 +1,317 @@
 .schedule-container {
-    overflow-x: auto;
-    max-width: 100%;
-    padding-bottom: 10px; 
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 10px;
 }
 
 .scheduling-button-wrapper {
-    flex: 1 1 20%; /* Ajusta a porcentagem para controlar o número de botões por linha */
-    display: flex;
-    justify-content: center;
+  flex: 1 1 20%; /* Ajusta a porcentagem para controlar o nï¿½mero de botï¿½es por linha */
+  display: flex;
+  justify-content: center;
 }
 
 .scheduling-container button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .scheduling-container button:hover {
-        background-color: #0056b3;
-    }
+  background-color: #0056b3;
+}
 
 .indisponivel {
-    background-color: #dc3545; /* Cor de fundo para "Indisponível" */
-    text-decoration: line-through; /* Riscar o texto */
+  background-color: #dc3545; /* Cor de fundo para "Indisponï¿½vel" */
+  text-decoration: line-through; /* Riscar o texto */
 }
 
 .indisponivel:hover {
-        background-color: #c82333; /* Cor ao passar o mouse em "Indisponível" */
-    }
+  background-color: #c82333; /* Cor ao passar o mouse em "Indisponï¿½vel" */
+}
 
 .card-shadow-1 {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
 }
-
 
 .schedule-grid {
-    display: grid;
-    grid-template-columns: auto repeat(7, minmax(100px, 1fr)); /* Primeira coluna fixa, outras 7 ajustáveis */
-    gap: 8px;
-    align-items: center;
-    text-align: center;
-    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
-    max-width: 100%; /* Evita estouro para fora da div */
+  display: grid;
+  grid-template-columns: auto repeat(7, minmax(100px, 1fr)); /* Primeira coluna fixa, outras 7 ajustï¿½veis */
+  gap: 8px;
+  align-items: center;
+  text-align: center;
+  overflow-x: auto; /* Adiciona rolagem horizontal se necessï¿½rio */
+  max-width: 100%; /* Evita estouro para fora da div */
 }
 
-
 .week-day-header {
-    font-weight: bold;
-    padding: 5px;
+  font-weight: bold;
+  padding: 5px;
+  background: var(--card-bg);
+  color: var(--fg);
+  border-bottom: 1px solid var(--card-border);
 }
 
 .time-slot {
-    font-weight: bold;
-    padding: 5px;
+  font-weight: bold;
+  padding: 5px;
+  color: var(--fg-muted);
 }
 
 .schedule-cell {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.btn-success, .btn-secondary {
-    min-width: 80px;
-    border-radius: 5px;
+.btn-success,
+.btn-secondary {
+  min-width: 80px;
+  border-radius: 5px;
 }
 
-/* Estilização para o modo mobile */
+/* Estilizaï¿½ï¿½o para o modo mobile */
 .mobile-schedule {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .week-day-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: 1px solid var(--card-border);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .week-day-button:hover {
-        background-color: #0056b3;
-    }
+  background-color: #0056b3;
+}
 
 .mobile-schedule-list {
-    max-height: 200px;
-    overflow-y: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .employee-img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
-@media (min-width: 576px) { /* Telas pequenas (sm) */
-    .employee-img {
-        width: 120px;
-        height: 120px;
-    }
+@media (min-width: 576px) {
+  /* Telas pequenas (sm) */
+  .employee-img {
+    width: 120px;
+    height: 120px;
+  }
 }
 
-@media (min-width: 768px) { /* Telas médias (md) */
-    .employee-img {
-        width: 140px;
-        height: 140px;
-    }
+@media (min-width: 768px) {
+  /* Telas mï¿½dias (md) */
+  .employee-img {
+    width: 140px;
+    height: 140px;
+  }
 }
 
-@media (min-width: 992px) { /* Telas grandes (lg) */
-    .employee-img {
-        width: 160px;
-        height: 160px;
-    }
+@media (min-width: 992px) {
+  /* Telas grandes (lg) */
+  .employee-img {
+    width: 160px;
+    height: 160px;
+  }
 }
 
-@media (min-width: 1200px) { /* Telas extra grandes (xl) */
-    .employee-img {
-        width: 380px;
-        height: 380px;
-    }
+@media (min-width: 1200px) {
+  /* Telas extra grandes (xl) */
+  .employee-img {
+    width: 380px;
+    height: 380px;
+  }
 }
 
+/* Tokens bridge: alias legacy --bs-* used in this page to Home tokens (non-breaking) */
+:root {
+  --bs-primary-600: var(--brand);
+  --bs-primary-700: var(--brand-2);
+  --bs-surface: var(--card-bg);
+  --bs-muted: var(--fg-muted);
+  --bs-border: var(--card-border);
+  --bs-success-600: var(--success);
+  --bs-danger-600: var(--danger);
+}
+
+/* Hero + icon stays, gradient now comes from tokens (also in _tokens.css) */
+.page-hero .hero-icon {
+  /* ...existing code... */
+  background: color-mix(in oklab, var(--brand), #ffffff 10%);
+  /* ...existing code... */
+}
+
+/* Cards/containers aligned to tokens */
+.barber-card {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  /* ...existing code... */
+}
+.barber-details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  /* ...existing code... */
+}
+.modal-modern .modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  /* ...existing code... */
+}
+.modal-modern .modal-header {
+  border-bottom: 1px solid var(--card-border);
+}
+.modal-modern .modal-body {
+  background: var(--card-bg);
+  color: var(--fg);
+}
+.schedule-toolbar {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  /* ...existing code... */
+}
+.empty-state {
+  background: var(--card-bg);
+  border: 1px dashed var(--card-border);
+  color: var(--fg-muted);
+  /* ...existing code... */
+}
+
+/* Buttons: use primitives (reserve now uses .btn-primary in markup) */
+.slot-btn.btn-success {
+  background: linear-gradient(
+    135deg,
+    var(--success),
+    color-mix(in oklab, var(--success), #0a0a0a 15%)
+  );
+  border: 0;
+}
+.slot-btn.btn-outline-secondary {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--fg-strong);
+}
+.slot-btn small {
+  opacity: 0.85;
+}
+
+/* Schedule grid and headers */
+.schedule-grid .week-day-header {
+  background: var(--card-bg);
+  color: var(--fg);
+  border-bottom: 1px solid var(--card-border);
+  /* ...existing code... */
+}
+.time-slot {
+  color: var(--fg-muted); /* ...existing code... */
+}
+
+/* Mobile day button */
+.mobile-schedule .week-day-button {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg-strong);
+  /* ...existing code... */
+}
+
+/* Badges/chips/rating aligned to tokens */
+.rating {
+  background: color-mix(in oklab, var(--card-bg), #ffffff 6%);
+  border: 1px solid var(--card-border);
+  color: var(--warning);
+  /* ...existing code... */
+}
+
+/* Legend */
+.schedule-legend {
+  color: var(--fg-muted); /* ...existing code... */
+}
+.legend-dot.legend-free {
+  background: var(--success);
+}
+.legend-dot.legend-busy {
+  background: var(--card-border);
+  border: 1px solid var(--card-border);
+}
+
+/* SweetAlert2 fallbacks through tokens (keep high specificity) */
+.swal2-container .swal2-popup .swal2-styled.swal2-confirm {
+  background: var(--success) !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+.swal2-container .swal2-popup .swal2-styled.swal2-deny {
+  background: var(--danger) !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+.swal2-container .swal2-popup .swal2-styled.swal2-cancel {
+  background: var(--muted) !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+
+/* Content background harmonized with tokens (keeps decorative layers) */
+.content-bg {
+  background-color: var(--bg-800);
+  color: var(--fg-strong);
+  border: 1px solid var(--card-border);
+  /* ...existing code (radials + svg noise)... */
+}
+
+/* Modal width + body scroll fallback for the scheduling modal */
+#ScheduleModal .modal-dialog {
+  width: 100%;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 1200px) {
+  #ScheduleModal .modal-dialog {
+    max-width: 1280px;
+  }
+}
+#ScheduleModal .modal-body {
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+  padding-bottom: 1.25rem;
+}
+
+/* Ensure last schedule row isnâ€™t clipped */
+.schedule-grid-wrapper {
+  padding-bottom: 1rem;
+}
+
+/* Optional: tiny padding inside grid to avoid tight bottom edge */
+.schedule-grid {
+  padding-bottom: 0.25rem;
+}
