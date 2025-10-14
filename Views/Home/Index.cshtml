@@ -31,14 +31,16 @@
 		gap:clamp(12px,2vw,20px);
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	}
-	.grid--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+	.grid--2{
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
 	/* Removido forçar .grid--3 = 1 coluna em telas menores */
 	@@media (max-width: 992px){ .grid--2{grid-template-columns:1fr} }
 
 	/* Hero / Carousel */
 	.hero{position:relative}
 	.hero .carousel-item { position: relative; }
-	.hero .carousel-item img{object-fit:cover; height:72vh}
+	.hero .carousel-item img{ height: clamp(320px, 72vh, 780px); object-fit:cover;}
 	.hero .overlay{
 		position:absolute; inset:0;
 		background:linear-gradient(180deg,rgba(15,17,21,.35),rgba(15,17,21,.75));
@@ -122,8 +124,12 @@
 	}
 
 	/* Galeria */
-	.gallery{display:grid; gap:.75rem; grid-template-columns:repeat(4,1fr)}
-	.gallery img{width:100%; height:160px; object-fit:cover; border-radius:.5rem; border:1px solid var(--border)}
+	.gallery{
+		display:grid;
+		gap:clamp(12px,2vw,20px);
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	}
+	.gallery img{ height: clamp(140px, 20vw, 220px); width:100%; object-fit:cover; border-radius:.5rem; border:1px solid var(--border)}
 	@@media (max-width: 992px){ .gallery{grid-template-columns:repeat(2,1fr)} }
 	@@media (max-width: 520px){ .gallery{grid-template-columns:1fr} .gallery img{height:200px} }
 
@@ -135,7 +141,11 @@
 	.pricing td:last-child{text-align:right; color:var(--text-300)}
 
 	/* Horários */
-	.hours{display:grid; grid-template-columns:repeat(7,1fr); gap:.75rem}
+	.hours{ 
+		display:grid; 
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+		gap:.75rem;
+	}
 	.hours .item{background:var(--card); border:1px solid var(--border); border-radius:.5rem; padding:.85rem; text-align:center}
 	.hours .muted{color:var(--muted)}
 	@@media (max-width: 992px){ .hours{grid-template-columns:repeat(3,1fr)} }
@@ -190,6 +200,54 @@
 	/* Remover overrides antigos que conflitam com a nova grade:
 	   - Apague o bloco ".benefits.grid{...} @@media(min-width)..."
 	*/
+
+	/* Responsividade global e correções de layout */
+	/* 1) Grade 3 colunas com largura mínima (cards de benefícios) */
+	.grid--3{ 
+		display:grid;
+		gap:clamp(12px,2vw,20px);
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	}
+
+	/* 2) Ajuste do grid de 2 colunas para auto-fit (1–2 colunas conforme espaço) */
+	.grid--2{
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+
+	/* 3) Tipografia fluida e sem quebras feias */
+	h1{ font-size:clamp(1.75rem, 2.5vw + 1rem, 3rem); line-height:1.2 }
+	h2{ font-size:clamp(1.25rem, 1.2rem + 1vw, 2rem); line-height:1.25; color:var(--fg-strong) }
+	.card h3, .card p{
+		word-break: normal;
+		overflow-wrap: break-word;
+		hyphens: none;
+		text-wrap: pretty;
+		line-height: 1.5;
+		letter-spacing: .1px;
+	}
+
+	/* 4) Hero com altura adaptativa (evita ficar gigante no mobile/pequeno no desktop) */
+	.hero .carousel-item img{ height: clamp(320px, 72vh, 780px); }
+
+	/* 5) Galeria responsiva em todas as larguras */
+	.gallery{
+		display:grid;
+		gap:clamp(12px,2vw,20px);
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	}
+	.gallery img{ height: clamp(140px, 20vw, 220px); width:100%; object-fit:cover; border-radius:.5rem; border:1px solid var(--border)}
+
+	/* 6) Horários com auto-fit (quebra em 2–3 colunas quando precisar) */
+	.hours{ 
+		display:grid; 
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+		gap:.75rem;
+	}
+
+	/* 7) Padding de seção mais confortável em telas muito pequenas */
+	@@media (max-width:480px){
+		.section{ padding:2.25rem 0 }
+	}
 </style>
 
 <main>
