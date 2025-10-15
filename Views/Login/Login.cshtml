@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData[index: "Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // usar layout com navbar
 }
 
 <style>
@@ -7,7 +8,8 @@
     .auth-bg{
         position: fixed; inset: 0;
         background: url('@Url.Content("~/Images/PhotoLogin.png")') center/cover no-repeat;
-        z-index: 0; pointer-events: none;
+        z-index: -1; /* background atrás do navbar/layout */
+        pointer-events: none;
     }
     .auth-bg::before{
         content:"";
@@ -27,7 +29,7 @@
         place-items: center;
         padding: clamp(16px, 3vw, 32px);
         color: var(--text-100);
-        position: relative; z-index: 1;
+        position: relative; z-index: auto; /* não sobrepor o navbar */
 
         /* Force all text tokens to white nesta página */
         --text-100: #fff;
