@@ -210,6 +210,19 @@
         box-shadow: 0 0 0 1000px var(--bg-800) inset !important;
         transition: background-color 9999s ease-out, color 9999s ease-out;
     }
+
+    /* SweetAlert2: confirm button green */
+    .swal2-confirm.swal2-confirm-green{
+        background-color: #16a34a !important; /* green-600 */
+        border-color: #16a34a !important;
+        color: #fff !important;
+    }
+    .swal2-confirm.swal2-confirm-green:hover{
+        filter: brightness(1.05);
+    }
+    .swal2-confirm.swal2-confirm-green:focus{
+        box-shadow: 0 0 0 3px rgba(22,163,74,.35) !important;
+    }
 </style>
 
 <!-- Fundo -->
@@ -320,7 +333,7 @@
             <!-- Foto (apenas Barbeiro) -->
             <div class="col-md-6" v-show="form.userType == 2">
                 <label for="file" class="form-label">Foto do barbeiro</label>
-                <input type="file" id="file" v-on:Change="handleFileUpload" class="file-control form-control" />
+                <input type="file" id="file" v-on:change="handleFileUpload" class="file-control form-control" />
                 <div class="field-error" v-show="messages.alertYearsExperienceInvalidade" role="alert">
                     É necessário preencher o tempo de experiência!
                 </div>
@@ -348,7 +361,7 @@
 
             <!-- CTA -->
             <div class="col-12 text-center mt-2">
-                <button type="button" class="btn-brand btn-lg" v-on:Click="registerUser">Cadastrar</button>
+                <button type="button" class="btn-brand btn-lg" v-on:click="registerUser">Cadastrar</button>
             </div>
         </div>
     </div>
@@ -432,14 +445,17 @@
                     })
                     .then(response => {
                         this.hideLoader();
-                        Swal && Swal.fire({
-                            title: 'Sucesso!',
-                            text: this.form.id == 0 ? 'Usuário cadastrado com sucesso!' : 'Usuário editado com sucesso!',
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                            customClass: { confirmButton: 'swal2-confirm-green' },
-
-                        });
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Sucesso!',
+                                text: this.form.id == 0 ? 'Usuário cadastrado com sucesso!' : 'Usuário editado com sucesso!',
+                                icon: 'success',
+                                confirmButtonText: 'Ok',
+                                buttonsStyling: true,
+                                confirmButtonColor: '#16a34a',
+                                customClass: { confirmButton: 'swal2-confirm-green' }
+                            });
+                        }
 
                         if (this.form.id == 0) {
                             setTimeout(() => {
@@ -564,3 +580,6 @@
         }
     });
 </script>
+<!-- Optionally, ensure SweetAlert2 is loaded somewhere globally if you want the dialog to appear:
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+-->
