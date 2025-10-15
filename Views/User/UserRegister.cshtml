@@ -3,301 +3,564 @@
 @{
     ViewData["Title"] = "Cadastro de Usuarios";
 }
+<style>
+    /* ====== Plano de fundo (mesmo padrão das telas de auth) ====== */
+    .auth-bg{
+        position: fixed; inset: 0;
+        background: url('@Url.Content("~/Images/PhotoLogin.png")') center/cover no-repeat;
+        z-index: 0; pointer-events: none;
+    }
+    .auth-bg::before{
+        content:"";
+        position: absolute; inset: 0;
+        background:
+            radial-gradient(90% 65% at 50% 30%, rgba(0,0,0,.25) 0%, rgba(0,0,0,.65) 70%),
+            linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.68) 100%);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+    /* ====== Root ====== */
+    #registerUser[v-cloak]{ display:none; }
+    #registerUser{
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: clamp(16px, 3vw, 32px);
+        color: var(--text-100);
+        position: relative; z-index: 1;
+
+        /* tokens usados nas outras telas */
+        --text-100: #fff;
+        --text-300: #fff;
+        --text-500: #fff;
+
+        --card: #0f1628;
+        --bg-800: #121a2a;               /* fundo fixo de todos os inputs */
+        --border: rgba(255,255,255,.12);
+        --accent: #c9a227;               /* cor de destaque/marca */
+    }
+
+    /* ====== Card premium ====== */
+    .auth-card{
+        width: 100%; max-width: 980px;
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--card, #0f1628), #000 3%), var(--card, #0f1628)) padding-box,
+            linear-gradient(135deg, color-mix(in srgb, var(--accent, #c9a227), transparent 40%), color-mix(in srgb, #ffffff, transparent 92%)) border-box;
+        border: 1px solid transparent;
+        border-radius: 18px;
+        box-shadow:
+            0 30px 70px rgba(0,0,0,.45),
+            inset 0 1px 0 rgba(255,255,255,.06);
+        padding: clamp(20px, 3.2vw, 34px);
+    }
+
+    .brand-mark{
+        width: 64px; height: 64px; border-radius: 14px;
+        display: grid; place-items: center;
+        background: linear-gradient(180deg, color-mix(in srgb, var(--accent, #c9a227), transparent 80%), transparent);
+        border: 1px solid color-mix(in srgb, var(--accent, #c9a227), transparent 65%);
+        color: #fff;
+        margin: 0 auto 10px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+        font-size: 26px;
+    }
+    .auth-title{
+        margin: 0;
+        font-weight: 900;
+        letter-spacing: .2px;
+        color: var(--text-100);
+        font-size: clamp(1.4rem, 1rem + 2.2vw, 2.1rem);
+        text-align: center;
+    }
+    .auth-subtle{
+        color: var(--text-500);
+        text-align:center;
+        margin-top: .35rem; margin-bottom: .75rem;
+        font-size: .98rem;
+    }
+
+    /* ====== Grid/row ====== */
+    .row-gap{ row-gap: 14px; }
+
+    /* ====== Labels/erros ====== */
+    .form-label{ color: var(--text-300); font-weight: 700; letter-spacing:.2px; }
+    .field-error{
+        margin-top: 8px;
+        color: #fff;
+        background: color-mix(in srgb, #ef4444 16%, transparent);
+        border: 1px solid color-mix(in srgb, #ef4444, transparent 40%);
+        border-radius: 10px;
+        padding: 8px 10px; font-size: .92rem;
+    }
+
+    /* ====== Inputs com fundo fixo + texto sempre branco ====== */
+    .input-wrap{ position: relative; }
+    .input-icon{
+        position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+        width: 18px; height: 18px; color: var(--text-500); pointer-events: none; opacity: .9;
+    }
+    .input-control,
+    .select-control,
+    .textarea-control{
+        width: 100%;
+        background: var(--bg-800);      /* NÃO MUDA no foco/autofill */
+        border: 1px solid var(--border);
+        color: #fff;                    /* texto do usuário SEMPRE branco */
+        caret-color: #fff;              /* cursor branco */
+        border-radius: 12px;
+        padding: 12px 14px 12px 42px;   /* ícone à esquerda */
+        outline: none;
+        transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .textarea-control{ min-height: 120px; padding-left: 14px; }
+
+    /* inputs SEM ícone (sobrescreve o padding) */
+    .no-icon{ padding-left: 14px; }
+
+    .input-control::placeholder,
+    .select-control::placeholder,
+    .textarea-control::placeholder{ color:#fff; opacity:.8; }
+
+    .input-control:focus,
+    .input-control:focus-visible,
+    .select-control:focus,
+    .select-control:focus-visible,
+    .textarea-control:focus,
+    .textarea-control:focus-visible{
+        background: var(--bg-800);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+        color:#fff;
+    }
+
+    /* Select/option */
+    .select-control{ appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+    .select-wrap{ position: relative; }
+    .select-wrap::after{
+        content:"▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+        color:#fff; pointer-events: none; font-size: 14px;
+    }
+    select.select-control option{ background:#0b1220; color:#fff; }
+
+    /* Radios */
+    .form-check-label{ color:#fff; }
+    .form-check-input{
+        background-color: var(--bg-800);
+        border: 1px solid var(--border);
+    }
+    .form-check-input:checked{
+        background-color: var(--accent); border-color: var(--accent);
+    }
+
+    /* File input */
+    .file-control{
+        background: var(--bg-800); color:#fff; border:1px solid var(--border);
+        border-radius: 12px; padding: 10px 14px;
+    }
+    .file-control::file-selector-button{
+        background: color-mix(in srgb, var(--accent) 20%, transparent);
+        color:#fff; border:1px solid var(--border); border-radius: 10px; padding: 8px 12px; margin-right: 12px;
+    }
+    .file-control:hover::file-selector-button{ filter: brightness(1.05); }
+
+    /* ====== Botões ====== */
+    .btn-brand{
+        width: 100%;
+        background:
+            linear-gradient(180deg,
+                color-mix(in srgb, var(--accent, #c9a227) 100%, transparent),
+                color-mix(in srgb, var(--accent, #c9a227) 90%, transparent)
+            );
+        color: #fff;
+        border: 1px solid var(--accent, #c9a227);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 900; letter-spacing:.2px;
+        box-shadow: 0 10px 24px color-mix(in srgb, var(--accent, #c9a227) 28%, transparent);
+        transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+    }
+    .btn-brand:hover{
+        filter: brightness(.98);
+        box-shadow: 0 12px 28px color-mix(in srgb, var(--accent, #c9a227) 34%, transparent);
+    }
+    .btn-brand:active{ transform: translateY(1px); }
+
+    /* ====== Overlay/loader (mantido, só estilizado) ====== */
+    .overlay{
+        position: fixed; inset:0; display:flex; align-items:center; justify-content:center;
+        background: rgba(0,0,0,.48); z-index: 9999;
+    }
+    .loader{
+        width:46px; height:46px; border-radius:50%;
+        border: 3px solid rgba(255,255,255,.28);
+        border-top-color: #fff; animation: spin .8s linear infinite;
+    }
+    @@keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ====== Autofill sempre branco + fundo fixo ====== */
+    .input-control:-webkit-autofill,
+    .input-control:-webkit-autofill:hover,
+    .input-control:-webkit-autofill:focus,
+    .select-control:-webkit-autofill,
+    .textarea-control:-webkit-autofill{
+        -webkit-text-fill-color: #fff !important;
+        caret-color: #fff;
+        -webkit-box-shadow: 0 0 0 1000px var(--bg-800) inset !important;
+        box-shadow: 0 0 0 1000px var(--bg-800) inset !important;
+        transition: background-color 9999s ease-out, color 9999s ease-out;
+    }
+</style>
+
+<!-- Fundo -->
+<div class="auth-bg" aria-hidden="true"></div>
+
 <div id="registerUser" v-cloak>
+    <!-- Loader -->
     <div class="overlay" id="loadingOverlay" style="display: none;">
         <div class="loader"></div>
     </div>
-    <div class="container mt-5" v-show="showPropts.formsShow">
-        <div class="row justify-content-center">
-            <div class="col-md-8 p-4 shadow-sm rounded bg-white">
-                <div class="col-12 text-center mb-4">
-                    <h1>Cadastro de Usuários</h1>
+
+    <div class="auth-card" v-show="showPropts.formsShow">
+        <header class="text-center mb-3">
+            <div class="brand-mark">✂️</div>
+            <h1 class="auth-title">Cadastro de Usuários</h1>
+            <p class="auth-subtle">Preencha os dados para criar o acesso</p>
+        </header>
+
+        <div class="row row-gap">
+            <!-- Nome -->
+            <div class="col-md-6">
+                <label for="name" class="form-label">Nome</label>
+                <div class="input-wrap">
+                    <input type="text" v-model="form.name" class="input-control form-control no-icon" id="name" placeholder="Nome completo" />
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="name" class="form-label">Nome:</label>
-                        <input type="text" v-model="form.name" class="form-control" id="name" placeholder="Nome" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertNameInvalidade" role="alert">
-                            É necessário preencher o nome do usuário!
-                        </div>
+                <div class="field-error" v-show="messages.alertNameInvalidade" role="alert">
+                    É necessário preencher o nome do usuário!
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6">
+                <label for="email" class="form-label">E-mail</label>
+                <div class="input-wrap">
+                    <input type="email" v-model="form.email" id="email" class="input-control form-control no-icon" placeholder="email@dominio.com" />
+                </div>
+                <div class="field-error" v-show="messages.alertEmailInvalidade" role="alert">
+                    O e-mail está incorreto!
+                </div>
+            </div>
+
+            <!-- Senha -->
+            <div class="col-md-6">
+                <label for="password" class="form-label">Senha</label>
+                <div class="input-wrap">
+                    <input type="password" v-model="form.password" id="password" class="input-control form-control no-icon" placeholder="Crie uma senha" />
+                </div>
+                <div class="field-error" v-show="messages.alertPasswordInvalidade" role="alert">
+                    Está faltando preencher o campo senha!
+                </div>
+            </div>
+
+            <!-- Telefone -->
+            <div class="col-md-6">
+                <label for="phone" class="form-label">Telefone</label>
+                <div class="input-wrap">
+                    <input type="text" v-model="form.phone" id="phone" class="input-control form-control no-icon" placeholder="(00) 00000-0000" />
+                </div>
+                <div class="field-error" v-show="messages.alertPhoneInvalidade" role="alert">
+                    Está faltando preencher o campo telefone!
+                </div>
+            </div>
+
+            @if (SessionHelper.UserType == "Administrador")
+            {
+                <!-- Tipo de usuário -->
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de usuário</label>
+                    <div class="select-wrap">
+                        <select class="select-control form-select" v-model="form.userType">
+                            <option value="1">Administrador</option>
+                            <option value="2">Barbeiro</option>
+                            <option value="3">Cliente</option>
+                        </select>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">E-mail:</label>
-                        <input type="email" v-model="form.email" id="email" class="form-control" placeholder="E-mail" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertEmailInvalidade" role="alert">
-                            O e-mail está incorreto!
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="password" class="form-label">Senha:</label>
-                        <input type="password" v-model="form.password" id="password" class="form-control" placeholder="Senha" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertPasswordInvalidade" role="alert">
-                            Está faltando preencher o campo senha!
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="phone" class="form-label">Telefone:</label>
-                        <input type="text" v-model="form.phone" id="phone" class="form-control" placeholder="Telefone" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertPhoneInvalidade" role="alert">
-                            Está faltando preencher o campo telefone!
-                        </div>
-                    </div>
-                    
-                    @if (SessionHelper.UserType == "Administrador")
-                    {
-                        <div class="col-md-6 mb-3">
-                            <label for="phone" class="form-label">Tipo de usuário:</label>
-                            <select class="form-select" aria-label="Default select example" v-model="form.userType">
-                                <option value="1">Administrador</option>
-                                <option value="2">Barbeiro</option>
-                                <option value="3">Cliente</option>
-                                
-                            </select>
-                            <div class="alert alert-danger mt-2" v-show="messages.alertUserTypeInvalidade" role="alert">
-                                Está faltando preencher o campo Tipo de usuário!
-                            </div>
-                        </div>
-                    }
-                    
-                        <div class="col-md-6 mb-3" v-show="form.userType == 2">
-                        <label class="form-label d-block">Fumante:</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="smoker" value="true" v-model="form.smoker" id="smokerYes">
-                            <label class="form-check-label" for="smokerYes">Sim</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="smoker" value="false" v-model="form.smoker" id="smokerNo">
-                            <label class="form-check-label" for="smokerNo">Não</label>
-                        </div>
-                        </div>
-                        <div class="col-md-6 mb-3" v-show="form.userType == 2">
-                            <label for="name" class="form-label">Tempo de experiência:</label>
-                            <input type="number" v-model="form.yearsExperience" class="form-control" id="yearsExperience" placeholder="Tempo de experiência" />
-                            <div class="alert alert-danger mt-2" v-show="messages.alertYearsExperienceInvalidade" role="alert">
-                                É necessário preencher o tempo de experiência!
-                            </div>
-                        </div>
-                    <div class="col-md-6 mb-3" v-show="form.userType == 2">
-                        <label for="file" class="form-label">Escolha uma foto para o barbeiro:</label>
-                        <input type="file" id="file" v-on:Change="handleFileUpload" class="form-control" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertYearsExperienceInvalidade" role="alert">
-                            É necessário preencher o tempo de experiência!
-                        </div>
-                    </div>
-                        <div class="col-md-12 mb-3" v-show="form.userType == 2">
-                            <label for="name" class="form-label">Especialidade:</label>
-                            <textarea class="form-control" v-model="form.specialty" placeholder="Escreva as habilidades do barbeiro" id="floatingTextarea"></textarea>
-                        <div class="alert alert-danger mt-2" v-show="messages.alertSpecialtyInvalidade" role="alert">
-                                É necessário preencher as habilidades do barbeiro!
-                            </div>
-                        </div>
-                
-                    <div class="col-md-6 mb-3" v-show="form.userType == 3">
-                        <label for="name" class="form-label">Endereço:</label>
-                        <input type="text" v-model="form.address" class="form-control" id="name" placeholder="Endereço" />
-                        <div class="alert alert-danger mt-2" v-show="messages.alertAddressInvalidade" role="alert">
-                            É necessário preencher o endereço!
-                        </div>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="button" class="btn btn-success btn-lg text-white" v-on:Click="registerUser">Cadastrar</button>
+                    <div class="field-error" v-show="messages.alertUserTypeInvalidade" role="alert">
+                        Está faltando preencher o campo Tipo de usuário!
                     </div>
                 </div>
+            }
+
+            <!-- Fumante (apenas Barbeiro) -->
+            <div class="col-md-6" v-show="form.userType == 2">
+                <label class="form-label d-block">Fumante</label>
+                <div class="d-flex align-items-center" style="gap:16px;">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="smoker" value="true" v-model="form.smoker" id="smokerYes">
+                        <label class="form-check-label" for="smokerYes">Sim</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="smoker" value="false" v-model="form.smoker" id="smokerNo">
+                        <label class="form-check-label" for="smokerNo">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tempo de experiência (apenas Barbeiro) -->
+            <div class="col-md-6" v-show="form.userType == 2">
+                <label for="yearsExperience" class="form-label">Tempo de experiência (anos)</label>
+                <div class="input-wrap">
+                    <input type="number" v-model="form.yearsExperience" class="input-control form-control no-icon" id="yearsExperience" placeholder="Ex.: 5" />
+                </div>
+                <div class="field-error" v-show="messages.alertYearsExperienceInvalidade" role="alert">
+                    É necessário preencher o tempo de experiência!
+                </div>
+            </div>
+
+            <!-- Foto (apenas Barbeiro) -->
+            <div class="col-md-6" v-show="form.userType == 2">
+                <label for="file" class="form-label">Foto do barbeiro</label>
+                <input type="file" id="file" v-on:Change="handleFileUpload" class="file-control form-control" />
+                <div class="field-error" v-show="messages.alertYearsExperienceInvalidade" role="alert">
+                    É necessário preencher o tempo de experiência!
+                </div>
+            </div>
+
+            <!-- Especialidade (apenas Barbeiro) -->
+            <div class="col-md-12" v-show="form.userType == 2">
+                <label for="floatingTextarea" class="form-label">Especialidade</label>
+                <textarea class="textarea-control form-control" v-model="form.specialty" placeholder="Escreva as habilidades do barbeiro" id="floatingTextarea"></textarea>
+                <div class="field-error" v-show="messages.alertSpecialtyInvalidade" role="alert">
+                    É necessário preencher as habilidades do barbeiro!
+                </div>
+            </div>
+
+            <!-- Endereço (apenas Cliente) -->
+            <div class="col-md-6" v-show="form.userType == 3">
+                <label for="address" class="form-label">Endereço</label>
+                <div class="input-wrap">
+                    <input type="text" v-model="form.address" class="input-control form-control no-icon" id="address" placeholder="Rua, número, bairro..." />
+                </div>
+                <div class="field-error" v-show="messages.alertAddressInvalidade" role="alert">
+                    É necessário preencher o endereço!
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="col-12 text-center mt-2">
+                <button type="button" class="btn-brand btn-lg" v-on:Click="registerUser">Cadastrar</button>
             </div>
         </div>
     </div>
 </div>
+
 <script src="~/lib/vue/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/Helper.js?v=1.0.0"></script>
 <script>
     registerUser = new Vue({
-       el: '#registerUser',
-       data() {
-         return {
-             form:{
-               id:0,
-               name: '',
-               email: '',
-               password: '',
-               phone:'',
-               userType: '3',
-               address: '',
-               specialty:'',
-               barberId: 0,
-               smoker:false,
-               yearsExperience: 0,
-               imageUrl: '' ,
-             },
-             selectedFile: null,
-             messages: {
-                   alertNameInvalidade: false,
+        el: '#registerUser',
+        data() {
+            return {
+                form: {
+                    id: 0,
+                    name: '',
+                    email: '',
+                    password: '',
+                    phone: '',
+                    userType: '3',
+                    address: '',
+                    specialty: '',
+                    barberId: 0,
+                    smoker: false,
+                    yearsExperience: 0,
+                    imageUrl: '',
+                },
+                selectedFile: null,
+                messages: {
+                    alertNameInvalidade: false,
                     alertEmailInvalidade: false,
-                   alertPasswordInvalidade: false,
-                   alertPhoneInvalidade :false,
-                   alertUserTypeInvalidade: false,
-                   alertAddressInvalidade: false,
-                   alertYearsExperienceInvalidade: false,
-                   alertSpecialtyInvalidade: false,
-             },
-             showPropts:{
-                 formsShow: false,
-             }
-         };
-       },
-       methods:
-       {
-    registerUser() {
-        this.showLoader();
-        this.resetValidateForm();
-
-        if (this.validateForm()) {
-            
-            const user = {
-                id: this.form.id,
-                nome: this.form.name,
-                email: this.form.email,
-                senha: this.form.password,
-                tipoUsuario: Number(this.form.userType),
-                telefone: this.form.phone,
-                barber: this.form.userType === "2" ? { 
-                    id: this.form.barberId,
-                    usuarioId: this.form.id,
-                    especialidade: this.form.specialty,
-                    disponibilidade: '',
-                    smoker: this.form.smoker == "true" ? 1 : 0,
-                    experience: Number(this.form.yearsExperience)
-                } : null,
-                client: this.form.userType === "3" ? { 
-                    id: this.form.clientId,
-                    usuarioId: this.form.id,
-                    endereco: this.form.address
-                } : null
+                    alertPasswordInvalidade: false,
+                    alertPhoneInvalidade: false,
+                    alertUserTypeInvalidade: false,
+                    alertAddressInvalidade: false,
+                    alertYearsExperienceInvalidade: false,
+                    alertSpecialtyInvalidade: false,
+                },
+                showPropts: {
+                    formsShow: false,
+                }
             };
-
-            
-            let formData = new FormData();
-            formData.append("user", JSON.stringify(user)); 
-            if (this.selectedFile) {
-                formData.append("file", this.selectedFile);
-            }
-
-            
-            axios.post('/User/InsertUserAndUpdate', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(response => {
-                this.hideLoader();
-                Swal.fire({
-                    title: 'Sucesso!',
-                    text: this.form.id == 0 ? 'Usuário cadastrado com sucesso!' : 'Usuário editado com sucesso!',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                });
-
-                if (this.form.id == 0) {
-                    setTimeout(() => {
-                        window.location.href = "/Login/Login";
-                    }, 3000);
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao cadastrar:', error);
-            });
-        } else {
-            this.hideLoader();
-        }
-    },
-         editMode(idUser){ /*Ajustar essa função para receber o usuário e não mais o barbeiero que era o modelo antigo dele.*/ 
-                let idOldUser = idUser;
-                 axios.post('/User/EditUser', idOldUser, {
-                headers: {
-                'Content-Type': 'application/json'
-              }})
-              .then(response => {
-                  this.form.id = response.data.id;
-                  this.form.name= response.data.name;
-                  this.form.email= response.data.email;
-                  this.form.password= response.data.passWord;
-                  this.form.phone= response.data.phone;
-              })
-              .catch(error => {
-                console.error('Erro ao cadastrar:', error);
-              }).finally(function (){
-                  registerUser.hideLoader();
-              });
-          },
-         getQueryString(){
-             let urlParams = new URLSearchParams(window.location.search);
-
-             if(urlParams.has('id')){
-                  let idUser= Number(urlParams.get('id'));
-                   this.editMode(idUser);
-             }
-             else
-                 this.hideLoader();
-          },
-         formatToPTBR(date) {
-             return date.split("T")[0];
-         },
-         validateForm() {
-             const fields = {
-                 name: "alertNameInvalidade",
-                 email: "alertEmailInvalidade",
-                 password: "alertPasswordInvalidade",
-                 phone: "alertPhoneInvalidade",
-                 userType: "alertUserTypeInvalidade",
-                 address: "alertAddressInvalidade",
-                 yearsExperience: "alertYearsExperienceInvalidade",
-                 specialty: "alertSpecialtyInvalidade",
-             };
-
-             let fullForm = true;
-
-             for (const [field, alert] of Object.entries(fields)) {
-                  if (field === "address" && this.form[field] !== "2") {
-                       this.messages[alert] = false;
-                        continue;
-                  }
-                 if (this.form[field] === "") {
-                     this.messages[alert] = true;
-                     fullForm = false;
-                 } else {
-                     this.messages[alert] = false;
-                 }
-             }
-
-             return fullForm;
-         },
-
-         resetValidateForm(){
-              this.messages.alertNameInvalidade = false;
-              this.messages.alertEmailInvalidade = false;
-              this.messages.alertPasswordInvalidade = false;
-              this.messages.alertPhoneInvalidade = false;
-              this.messages.alertUserTypeInvalidade = false;
-              this.messages.alertAddressInvalidade = false;
-              this.messages.alertYearsExperienceInvalidade = false;
-              this.messages.alertSpecialtyInvalidade = false;
-         },
-         showLoader() {
-             this.showPropts.formsShow = false;
-             document.getElementById('loadingOverlay').style.display = 'flex';
-         },
-         hideLoader() {
-             this.showPropts.formsShow = true;
-             document.getElementById('loadingOverlay').style.display = 'none';
-         },
-         handleFileUpload(event) {
-            this.selectedFile = event.target.files[0]; 
         },
-       },
-       mounted(){
+        methods: {
+            registerUser() {
+                this.showLoader();
+                this.resetValidateForm();
+
+                if (this.validateForm()) {
+                    const user = {
+                        id: this.form.id,
+                        nome: this.form.name,
+                        email: this.form.email,
+                        senha: this.form.password,
+                        tipoUsuario: Number(this.form.userType),
+                        telefone: this.form.phone,
+                        barber: this.form.userType === "2" ? {
+                            id: this.form.barberId,
+                            usuarioId: this.form.id,
+                            especialidade: this.form.specialty,
+                            disponibilidade: '',
+                            smoker: this.form.smoker == "true" ? 1 : 0,
+                            experience: Number(this.form.yearsExperience)
+                        } : null,
+                        client: this.form.userType === "3" ? {
+                            id: this.form.clientId,
+                            usuarioId: this.form.id,
+                            endereco: this.form.address
+                        } : null
+                    };
+
+                    let formData = new FormData();
+                    formData.append("user", JSON.stringify(user));
+                    if (this.selectedFile) {
+                        formData.append("file", this.selectedFile);
+                    }
+
+                    axios.post('/User/InsertUserAndUpdate', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                    .then(response => {
+                        this.hideLoader();
+                        Swal && Swal.fire({
+                            title: 'Sucesso!',
+                            text: this.form.id == 0 ? 'Usuário cadastrado com sucesso!' : 'Usuário editado com sucesso!',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                            customClass: { confirmButton: 'swal2-confirm-green' },
+
+                        });
+
+                        if (this.form.id == 0) {
+                            setTimeout(() => {
+                                window.location.href = "/Login/Login";
+                            }, 3000);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao cadastrar:', error);
+                    });
+                } else {
+                    this.hideLoader();
+                }
+            },
+            editMode(idUser) {
+                let idOldUser = idUser;
+                axios.post('/User/EditUser', idOldUser, {
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => {
+                    this.form.id = response.data.id;
+                    this.form.name = response.data.name;
+                    this.form.email = response.data.email;
+                    this.form.password = response.data.passWord;
+                    this.form.phone = response.data.phone;
+                })
+                .catch(error => {
+                    console.error('Erro ao cadastrar:', error);
+                })
+                .finally(() => {
+                    registerUser.hideLoader();
+                });
+            },
+            getQueryString() {
+                let urlParams = new URLSearchParams(window.location.search);
+
+                if (urlParams.has('id')) {
+                    let idUser = Number(urlParams.get('id'));
+                    this.editMode(idUser);
+                } else {
+                    this.hideLoader();
+                }
+            },
+            formatToPTBR(date) {
+                return date.split("T")[0];
+            },
+
+  
+            validateForm() {
+  
+  let fullForm = true;
+
+
+  const f = this.form;
+  const m = this.messages;
+
+  // zera mensagens
+  m.alertNameInvalidade = false;
+  m.alertEmailInvalidade = false;
+  m.alertPasswordInvalidade = false;
+  m.alertPhoneInvalidade = false;
+  m.alertUserTypeInvalidade = false;
+  m.alertAddressInvalidade = false;
+  m.alertYearsExperienceInvalidade = false;
+  m.alertSpecialtyInvalidade = false;
+
+  // sempre obrigatórios
+  if (!f.name)        { m.alertNameInvalidade = true;        fullForm = false; }
+  if (!f.email)       { m.alertEmailInvalidade = true;       fullForm = false; }
+  if (!f.password)    { m.alertPasswordInvalidade = true;    fullForm = false; }
+  if (!f.phone)       { m.alertPhoneInvalidade = true;       fullForm = false; }
+  if (!f.userType)    { m.alertUserTypeInvalidade = true;    fullForm = false; }
+
+  // condicionais por tipo
+  const userType = String(f.userType);
+
+  // Cliente -> exige endereço
+  if (userType === "3") {
+    if (!f.address) { m.alertAddressInvalidade = true; fullForm = false; }
+  } else {
+    m.alertAddressInvalidade = false;
+  }
+
+  // Barbeiro -> exige experiência e especialidade
+  if (userType === "2") {
+    const yearsEmpty = f.yearsExperience === "" || f.yearsExperience === null || Number(f.yearsExperience) <= 0;
+    if (yearsEmpty) { m.alertYearsExperienceInvalidade = true; fullForm = false; }
+    if (!f.specialty) { m.alertSpecialtyInvalidade = true; fullForm = false; }
+  } else {
+    m.alertYearsExperienceInvalidade = false;
+    m.alertSpecialtyInvalidade = false;
+  }
+
+  return fullForm;
+},
+
+            resetValidateForm() {
+                this.messages.alertNameInvalidade = false;
+                this.messages.alertEmailInvalidade = false;
+                this.messages.alertPasswordInvalidade = false;
+                this.messages.alertPhoneInvalidade = false;
+                this.messages.alertUserTypeInvalidade = false;
+                this.messages.alertAddressInvalidade = false;
+                this.messages.alertYearsExperienceInvalidade = false;
+                this.messages.alertSpecialtyInvalidade = false;
+            },
+            showLoader() {
+                this.showPropts.formsShow = false;
+                document.getElementById('loadingOverlay').style.display = 'flex';
+            },
+            hideLoader() {
+                this.showPropts.formsShow = true;
+                document.getElementById('loadingOverlay').style.display = 'none';
+            },
+            handleFileUpload(event) {
+                this.selectedFile = event.target.files[0];
+            },
+        },
+        mounted() {
             this.showLoader();
             this.getQueryString();
-       }
-     });
+        }
+    });
 </script>

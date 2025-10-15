@@ -23,7 +23,7 @@ namespace BarberShopSystem.ModelsRepository
                 MySqlConnection connection = GetConnection();
                 connection.Open();
                 string sqlCommand = string.Empty;
-                if (client.id == 0)
+                if (client.id == 0 || client.id == null)
                     sqlCommand = $"Insert into Clientes ( UsuarioId, Endereco) VALUES ( '{client.usuarioId}', '{client.endereco}')";
                 else
                     sqlCommand = $"UPDATE Clientes SET UsuarioId='{client.usuarioId}', Endereco='{client.endereco}' WHERE Id={client.id};";

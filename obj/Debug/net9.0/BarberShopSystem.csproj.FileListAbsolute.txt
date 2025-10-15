@@ -257,3 +257,4 @@ C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSys
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\03jivj69cd-hot8r9nypr.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\cmnp87leue-099x3qa5on.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\j9ng86zgop-jj5jh9308t.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

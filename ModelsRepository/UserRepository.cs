@@ -81,11 +81,21 @@ public class UserRepository : DataBaseRepository
 
     private void InsertUser(User user, MySqlConnection connection)
     {
+        try
+        {
+
+        
         string sqlCommand = $"INSERT INTO Usuarios (Nome, Email, Senha, TipoUsuario, DataCriacao, Telefone) " +
                             $"VALUES ('{user.nome}', '{user.email}', '{user.senha}', '{user.tipoUsuario}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{user.telefone}')";
 
         var command = new MySqlCommand(sqlCommand, connection);
         command.ExecuteNonQuery(); // Usando ExecuteNonQuery para manipulação de comandos sem retorno de dados.
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 
     private void UpdateUser(User user, MySqlConnection connection)
