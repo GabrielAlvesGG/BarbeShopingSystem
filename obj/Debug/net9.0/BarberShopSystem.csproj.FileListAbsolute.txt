@@ -173,7 +173,6 @@ C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSys
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\scopedcss\bundle\BarberShopSystem.styles.css
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\scopedcss\projectbundle\BarberShopSystem.bundle.scp.css
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\9fhw9c4lc0-kcdal2zc6c.gz
-C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\j9ng86zgop-g26f6cpnam.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\uym6fboowe-c9ogwb7kuo.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\pz9h6z65rf-61n19gt1b8.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\bo370fvk4h-wt1176vk2r.gz
@@ -257,3 +256,4 @@ C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSys
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\ref\BarberShopSystem.dll
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\03jivj69cd-hot8r9nypr.gz
 C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\cmnp87leue-099x3qa5on.gz
+C:\Users\alves\OneDrive\Documentos\Projetos\barbershopSystem_1.0\BarbeShopingSystem\obj\Debug\net9.0\compressed\j9ng86zgop-jj5jh9308t.gz

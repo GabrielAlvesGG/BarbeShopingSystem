@@ -27,14 +27,14 @@
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/MyScheduling.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\MyScheduling.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-iG0pT9atZbbttVSDi\u002BE23SfUMr\u002B7tYYwEkAwBcEaFtQ="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1739"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022iG0pT9atZbbttVSDi\u002BE23SfUMr\u002B7tYYwEkAwBcEaFtQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 13 Oct 2025 21:32:42 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-z0e6Q1EUoS9DvxPLwhBcSpTfNZDCMwgBx/IYEZaYllY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1742"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022z0e6Q1EUoS9DvxPLwhBcSpTfNZDCMwgBx/IYEZaYllY=\u0022"},{"Name":"Last-Modified","Value":"Tue, 14 Oct 2025 23:08:04 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/MyScheduling.g26f6cpnam.css">
+    <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/MyScheduling.jj5jh9308t.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\MyScheduling.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"g26f6cpnam"},{"Name":"integrity","Value":"sha256-iG0pT9atZbbttVSDi\u002BE23SfUMr\u002B7tYYwEkAwBcEaFtQ="},{"Name":"label","Value":"_content/BarberShopSystem/css/MyScheduling.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1739"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022iG0pT9atZbbttVSDi\u002BE23SfUMr\u002B7tYYwEkAwBcEaFtQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 13 Oct 2025 21:32:42 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"jj5jh9308t"},{"Name":"integrity","Value":"sha256-z0e6Q1EUoS9DvxPLwhBcSpTfNZDCMwgBx/IYEZaYllY="},{"Name":"label","Value":"_content/BarberShopSystem/css/MyScheduling.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1742"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022z0e6Q1EUoS9DvxPLwhBcSpTfNZDCMwgBx/IYEZaYllY=\u0022"},{"Name":"Last-Modified","Value":"Tue, 14 Oct 2025 23:08:04 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BarberShopSystem/css/Scheduling.099x3qa5on.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\Scheduling.css'))</AssetFile>

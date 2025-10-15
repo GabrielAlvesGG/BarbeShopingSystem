@@ -48,8 +48,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>g26f6cpnam</Fingerprint>
-      <Integrity>iG0pT9atZbbttVSDi+E23SfUMr+7tYYwEkAwBcEaFtQ=</Integrity>
+      <Fingerprint>jj5jh9308t</Fingerprint>
+      <Integrity>z0e6Q1EUoS9DvxPLwhBcSpTfNZDCMwgBx/IYEZaYllY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\MyScheduling.css'))</OriginalItemSpec>

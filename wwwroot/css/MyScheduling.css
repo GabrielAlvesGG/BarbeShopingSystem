@@ -1,80 +1,86 @@
 .scheduling-container {
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente, caso necessário */
-    width: 100%;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente, caso necessï¿½rio */
+  width: 100%;
 }
 
 .scheduling-table {
-    width: 90%; /* Ajusta a largura para evitar que fique espremida */
-    max-width: 800px; /* Define um limite para não ficar muito larga */
+  width: 90%; /* Ajusta a largura para evitar que fique espremida */
+  max-width: 800px; /* Define um limite para nï¿½o ficar muito larga */
 }
 
-    .scheduling-table thead {
-        position: sticky;
-        top: 0;
-    }
+.page-hero .hero-icon {
+  /* ...existing code... */
+  background: color-mix(in oklab, var(--brand), #ffffff 10%);
+  /* ...existing code... */
+}
 
-    .scheduling-table th {
-        background-color: #343a40;
-        color: white;
-        text-align: center;
-    }
+.scheduling-table thead {
+  position: sticky;
+  top: 0;
+}
 
-    .scheduling-table td {
-        text-align: center;
-        vertical-align: middle;
-    }
+.scheduling-table th {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+}
 
-    .scheduling-table tbody tr:hover {
-        background-color: #f1f1f1;
-    }
+.scheduling-table td {
+  text-align: center;
+  vertical-align: middle;
+}
 
-/* Estilização dos botões */
+.scheduling-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilizaï¿½ï¿½o dos botï¿½es */
 .scheduling-container button {
-    padding: 8px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
-    .scheduling-container button:hover {
-        transform: scale(1.05);
-    }
+.scheduling-container button:hover {
+  transform: scale(1.05);
+}
 
-/* Botão de confirmar */
+/* Botï¿½o de confirmar */
 .btn-success {
-    background-color: #28a745;
-    border: none;
+  background-color: #28a745;
+  border: none;
 }
 
-    .btn-success:hover {
-        background-color: #218838;
-    }
+.btn-success:hover {
+  background-color: #218838;
+}
 
-/* Botão de cancelar */
+/* Botï¿½o de cancelar */
 .btn-danger {
-    background-color: #dc3545;
-    border: none;
+  background-color: #dc3545;
+  border: none;
 }
 
-    .btn-danger:hover {
-        background-color: #c82333;
-    }
+.btn-danger:hover {
+  background-color: #c82333;
+}
 
 /* Sombra no card */
 .card-shadow-1 {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* Estilização do cabeçalho */
+/* Estilizaï¿½ï¿½o do cabeï¿½alho */
 .calendar-header {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
-    padding: 15px;
-    font-weight: bold;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  padding: 15px;
+  font-weight: bold;
 }

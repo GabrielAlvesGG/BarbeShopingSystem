@@ -8,158 +8,453 @@
     <link rel="stylesheet" href="https://unpkg.com/vue-toastification@1.7.14/dist/index.css" />
     <style>
         :root {
-            --bs-primary-600: #0ea5e9;
-            --bs-primary-700: #0284c7;
-            --bs-surface: #ffffff;
-            --bs-muted: #6b7280;
-            --bs-border: #e5e7eb;
-            --bs-success-600: #22c55e;
-            --bs-danger-600: #ef4444;
-            --shadow-sm: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.1);
-            --shadow-md: 0 8px 20px rgba(2, 8, 23, .08);
+            /* Map SweetAlert2 to DS tokens (fallback to Bootstrap if needed) */
+            --swal2-confirm-button-background: var(--success, var(--bs-success));
+            --swal2-confirm-button-color: #fff;
+            --swal2-cancel-button-background: var(--accent, var(--bs-secondary));
+            --swal2-cancel-button-color: #fff;
+            --swal2-deny-button-background: var(--danger, var(--bs-danger));
+            --swal2-deny-button-color: #fff;
+
+            /* Elevation and radius as used in modal */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.24);
+            --shadow-md: 0 10px 30px rgba(0,0,0,.35);
             --radius-lg: 16px;
             --radius-md: 12px;
-            /* SweetAlert2 button variables */
-            --swal2-confirm-button-background: #16a34a;
-            --swal2-confirm-button-color: #ffffff;
-            --swal2-cancel-button-background: #64748b;
-            --swal2-cancel-button-color: #ffffff;
-            --swal2-deny-button-background: #ef4444;
-            --swal2-deny-button-color: #ffffff;
+
+            /* Primary scale tokens to match Scheduling */
+            --bs-primary-600: color-mix(in srgb, var(--bs-primary, #0d6efd), black 15%);
+            --bs-primary-700: color-mix(in srgb, var(--bs-primary, #0d6efd), black 30%);
         }
-        /* widen main wrapper */
+
+        /* Wrapper and page surface (dark theme) */
+        #myScheduling,
+        #myScheduling .content-bg {
+            background-color: var(--bg-900, #0b1220);
+            color: var(--fg, #e5e7eb);
+        }
         .novo-padrao { max-width: 100%; width: 100%; }
-
-        .page-hero {
-            background: linear-gradient(135deg, var(--bs-primary-600), var(--bs-primary-700));
-            color: #fff;
-            box-shadow: var(--shadow-md);
-        }
-        .page-hero .hero-icon {
-            width: 48px; height: 48px;
-            display: grid; place-items: center;
-            background: rgba(255,255,255,.15);
-            border-radius: 12px;
-            font-size: 22px;
-        }
-
         .content-bg {
-            background-color: #f8fafc;
             border-radius: 24px;
-            background-image:
-                radial-gradient(800px 400px at -10% 0%, rgba(14,165,233,.12), rgba(14,165,233,0) 60%),
-                radial-gradient(800px 400px at 110% 20%, rgba(99,102,241,.10), rgba(99,102,241,0) 60%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e5e7eb' fill-opacity='.35'/%3E%3C/svg%3E");
-            background-size: auto, auto, 14px 14px;
-            background-attachment: fixed, fixed, scroll;
-            background-position: center, center, top left;
-            box-shadow: inset 0 1px 0 rgba(16,24,40,.04);
+            border: 1px solid var(--card-border, rgba(255,255,255,.06));
+            background-image: none;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
         }
         @@media (max-width: 768px) { .content-bg { border-radius: 16px; } }
 
+         .page-hero {
+            /* srgb fallback */
+            background: linear-gradient(135deg, var(--brand, #fcb902), var(--brand-2, #d4a100));
+            /* okLab requested style */
+            background: linear-gradient(135deg, color-mix(in oklab, var(--brand, #fcb902), #000 6%), color-mix(in oklab, var(--brand-2, #d4a100), #000 12%));
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(2, 8, 23, .12);
+        }
+        .page-hero .hero-icon {
+            background: color-mix(in oklab, var(--brand, #fcb902), #ffffff 88%);
+            color: color-mix(in oklab, var(--brand-2, #d4a100), #000 10%);
+        }
+
+        
+
         .hover-elevate:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .panel-card { border: 1px solid var(--bs-border); border-radius: var(--radius-lg); }
 
-        .table-modern { background: #fff; border: 1px solid var(--bs-border); border-radius: 12px; overflow: hidden; }
-        .table-modern thead th { background: #f1f5f9; color: #0f172a; border-bottom: 1px solid var(--bs-border); text-align: center; }
-        .table-modern tbody tr:hover { background: #f8fafc; }
-        .table-modern td, .table-modern th { vertical-align: middle; }
-        .table-modern tbody td { text-align: center; } /* Center only table contents */
-        .table-modern td.cell-actions { justify-content: center; } /* Center action buttons row */
-
-        .status-badge {
-            display: inline-block; padding: .35rem .6rem; border-radius: 999px; font-weight: 700; font-size: .8rem;
-            border: 1px solid var(--bs-border); background: #fff; color: #111827;
+        /* Cards aligned to DS */
+        .panel-card {
+            background: var(--card-bg, #0f1628);
+            border: 1px solid var(--card-border, rgba(255,255,255,.06));
+            border-radius: var(--radius-lg);
         }
-        .status-badge.success { color: var(--bs-success-600); background: #f0fdf4; border-color: #bbf7d0; }
-        .status-badge.danger { color: var(--bs-danger-600); background: #fef2f2; border-color: #fecaca; }
-
-        .modal-modern .modal-content { border: 1px solid var(--bs-border); border-radius: 16px; box-shadow: var(--shadow-md); }
-        .modal-modern .modal-header { border-bottom: 1px solid var(--bs-border); }
-        .modal-modern .modal-body { background: #fcfdff; }
-        /* helpers for modal icon/title alignment */
-        .modal-icon {
-            width: 40px; height: 40px; display: inline-grid; place-items: center;
-            border-radius: 10px; margin-right: .5rem; font-size: 18px;
+        .panel-card .card-header {
+            background: var(--bg-800, #121a2a);
+            color: var(--fg, #e5e7eb);
+            border-bottom: 1px solid var(--card-border, rgba(255,255,255,.06));
         }
-        .modal-icon.success { background: #dcfce7; color: #166534; }
-        .modal-icon.danger { background: #fee2e2; color: #b91c1c; }
-        .modal-icon.info { background: #e0f2fe; color: #075985; }
-        .modal-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
-        /* Responsive table + cell behavior to avoid broken layout */
-        .table-modern-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .panel-card .card-title { font-weight: 600; }
+
+ /* === FIX 1: contraste de texto e hover do Bootstrap na tabela ================== */
+#myScheduling .table.table-modern :where(thead th, tbody td){
+  color: #000000 !important; /* texto preto */
+}
+/* Garante que o hover não clareie o texto */
+
+
+
+/* === FIX 2: zebra ============================================================= */
+#myScheduling .table.table-modern tbody tr:nth-child(odd){
+  background: color-mix(in srgb, var(--card-bg, #6b789918), #fff 2%);
+}
+#myScheduling .table.table-modern tbody tr:nth-child(even){
+  background: color-mix(in srgb, var(--card-bg, #606a8346), #c2baba21 3%);
+}
+#myScheduling .table.table-modern tbody tr:hover{
+  background: color-mix(in srgb, var(--card-bg, #8672720a), #fff 6%);
+}
+
+/* === FIX 3: cabeçalho ========================================================= */
+#myScheduling .table.table-modern thead th{
+  background: linear-gradient(0deg,
+              color-mix(in srgb, var(--bg-800, #121a2a), #000 6%),
+              var(--bg-800, #121a2a));
+  border-bottom: 1px solid var(--card-border, rgba(255,255,255,.16));
+  font-weight: 700;
+}
+
+/* === FIX 4: alinhamentos e cortes ============================================ */
+#myScheduling .table.table-modern{
+  table-layout: fixed;
+  width: 100%;
+  min-width: 980px;
+}
+@@media (max-width: 992px){ #myScheduling .table.table-modern{ min-width: 900px; } }
+@@media (max-width: 576px){ #myScheduling .table.table-modern{ min-width: 780px; } }
+
+#myScheduling .table.table-modern td{
+  padding: .95rem 1rem;
+  line-height: 1.4;
+  vertical-align: middle;
+  border-top: 1px solid color-mix(in srgb, var(--card-border, rgba(255,255,255,.06)), transparent 40%);
+  color: #000 !important;
+}
+
+#myScheduling .table.table-modern td.cell-desc{
+  white-space: normal;
+  overflow-wrap: anywhere;
+  color: #000; /* texto preto apenas aqui também */
+}
+#myScheduling .table.table-modern td.cell-id,
+#myScheduling .table.table-modern td.cell-time,
+#myScheduling .table.table-modern td.cell-datetime,
+#myScheduling .table.table-modern td.cell-price,
+#myScheduling .table.table-modern td.cell-status,
+#myScheduling .table.table-modern td.cell-actions{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#myScheduling .table.table-modern td.cell-price{
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === FIX 5: chips de status (mantém suas cores) ============================== */
+#myScheduling .table.table-modern .status-badge{
+  display: inline-block;
+  padding: .4rem .65rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: .8rem;
+  border: 1px solid var(--card-border, rgba(255,255,255,.12));
+  background: color-mix(in srgb, var(--card-bg, #0f1628), var(--fg, #e5e7eb) 4%);
+  color: var(--fg, #e5e7eb);
+}
+#myScheduling .table.table-modern .status-badge.success{
+  color: #22c55e;
+  background: color-mix(in srgb, #22c55e, transparent 85%);
+  border-color: color-mix(in srgb, #22c55e, transparent 65%);
+}
+#myScheduling .table.table-modern .status-badge.danger{
+  color: #ef4444;
+  background: color-mix(in srgb, #ef4444, transparent 85%);
+  border-color: color-mix(in srgb, #ef4444, transparent 65%);
+}
+
+/* === FIX 6: ações ============================================================ */
+#myScheduling .table.table-modern td.cell-actions{
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+}
+@@media (max-width: 576px){
+  #myScheduling .btn .btn-label{ display:none; } /* mantém ícone apenas no mobile */
+}
+        @@media (max-width: 992px) {
+            #myScheduling .table.table-modern { min-width: 900px; }
+        }
+        
+        .table-modern {
+            border: 1px solid var(--card-border, rgba(255,255,255,.06));
+            border-radius: 12px;
+            background: var(--card-bg, #0f1628);
+            border-collapse: separate;
+            border-spacing: 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
+            table-layout: fixed;
             width: 100%;
-            /* remove centering cap to use full lateral space */
-            max-width: none;
-            margin-left: 0;
-            margin-right: 0;
-            padding-inline: 0;
         }
-        .table-modern th, .table-modern td { white-space: nowrap; }
-        /* allow description to grow on wide screens */
-        .table-modern td.cell-desc { white-space: normal; max-width: none; }
-        .table-modern td.cell-actions { min-width: 220px; }
-        .table-modern td.cell-actions .btn-group,
-        .table-modern td.cell-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
-        @@media (max-width: 1200px) {
-            .table-modern td.cell-desc { max-width: 420px; }
+        .table-modern caption.table-caption {
+            caption-side: top;
+            text-align: left;
+            padding: .5rem 1rem .25rem;
+            color: var(--fg-muted, #94a3b8);
+            font-size: .85rem;
+            letter-spacing: .01em;
+            opacity: .9;
         }
-        @@media (max-width: 768px) {
-            .table-modern td.cell-desc { max-width: 240px; }
-            .table-modern td.cell-actions { min-width: 200px; }
+        #myScheduling .table.table-modern thead th {
+            position: sticky;
+            top: 0;
+            z-index: 5; /* above body cells */
+            color: var(--fg, #e5e7eb);
+            background: var(--bg-800, #121a2a27);
         }
 
-        /* Modal buttons: target only filled intents (success/danger/info) */
-        .modal-modern .modal-footer .btn-success,
-        .modal-modern .modal-footer .btn-danger,
-        #UserNotLoggedModal .modal-footer .btn-info {
-            color: #fff !important;
-        }
-        /* Neutral: Voltar (legible neutral) */
-        .modal-modern .btn-outline-secondary {
-            background-color: #64748b;
-            border-color: #64748b;
-            color: #fff !important;
-        }
-        .modal-modern .btn-outline-secondary:hover,
-        .modal-modern .btn-outline-secondary:focus {
-            background-color: #4b5563;
-            border-color: #4b5563;
-            color: #fff !important;
-        }
-        /* Destructive secondary: Recusar (outlined -> hover filled) */
-        .modal-modern .btn-outline-danger {
-            color: #b91c1c;
-            border-color: #fca5a5;
-            background-color: #fff;
-        }
-        .modal-modern .btn-outline-danger:hover,
-        .modal-modern .btn-outline-danger:focus {
-            color: #fff !important;
-            background-color: #ef4444;
-            border-color: #ef4444;
+        #myScheduling .table.table-modern tbody td {
+            color: var(--fg-strong, #cbd5e1);
+            padding: .9rem 1rem;
+            line-height: 1.35;
         }
 
-        /* Login modal: ensure info button text is white */
-        #UserNotLoggedModal .modal-footer .btn-info {
-            color: #fff !important;
+        /* Column behaviors and truncation */
+        #myScheduling .table.table-modern td.cell-desc {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            color: var(--fg, #e5e7eb);
+        }
+        #myScheduling .table.table-modern td.cell-id,
+        #myScheduling .table.table-modern td.cell-time,
+        #myScheduling .table.table-modern td.cell-datetime,
+        #myScheduling .table.table-modern td.cell-price,
+        #myScheduling .table.table-modern td.cell-status,
+        #myScheduling .table.table-modern td.cell-actions {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        #myScheduling .table.table-modern td.cell-price {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        #myScheduling .table.table-modern td.cell-actions {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
         }
 
-        /* SweetAlert2 buttons: high-specificity fallbacks */
+        /* Zebra/hover using DS tokens (no opacity on rows) */
+        #myScheduling .table.table-modern tbody tr:nth-child(odd){ background: color-mix(in srgb, var(--card-bg, #0f1628), #fff 2%); }
+        #myScheduling .table.table-modern tbody tr:nth-child(even){ background: color-mix(in srgb, var(--card-bg, #0f1628), #000 3%); }
+        #myScheduling .table.table-modern tbody tr:hover{ background: color-mix(in srgb, var(--card-bg, #0f1628), #fff 6%); }
+
+        /* Status chips (scoped) */
+        #myScheduling .table.table-modern .status-badge {
+            border:1px solid var(--card-border, rgba(255,255,255,.12));
+            background: color-mix(in srgb, var(--card-bg,#0f1628), var(--fg,#e5e7eb) 4%);
+            color: var(--fg, #e5e7eb);
+        }
+        #myScheduling .table.table-modern .status-badge.success{
+            color:#22c55e;
+            background: color-mix(in srgb, #22c55e, transparent 85%);
+            border-color: color-mix(in srgb, #22c55e, transparent 65%);
+        }
+        #myScheduling .table.table-modern .status-badge.danger{
+            color:#ef4444;
+            background: color-mix(in srgb, #ef4444, transparent 85%);
+            border-color: color-mix(in srgb, #ef4444, transparent 65%);
+        }
+
+        /* Buttons within this view aligned to DS tokens */
+        #myScheduling .btn-success {
+            background-color: var(--success, var(--accent, #22c55e));
+            border-color: var(--success, var(--accent, #22c55e));
+            color: #fff !important;
+        }
+        #myScheduling .btn-success:hover, #myScheduling .btn-success:focus {
+            background-color: color-mix(in srgb, var(--success, #22c55e), black 10%);
+            border-color: color-mix(in srgb, var(--success, #22c55e), black 10%);
+        }
+        #myScheduling .btn-danger {
+            background-color: var(--danger, #ef4444);
+            border-color: var(--danger, #ef4444);
+            color: #fff !important;
+        }
+        #myScheduling .btn-danger:hover, #myScheduling .btn-danger:focus {
+            background-color: color-mix(in srgb, var(--danger, #ef4444), black 10%);
+            border-color: color-mix(in srgb, var(--danger, #ef4444), black 10%);
+        }
+        #myScheduling .btn-outline-danger {
+            color: var(--danger, #ef4444);
+            border-color: color-mix(in srgb, var(--danger, #ef4444), transparent 65%);
+            background: transparent;
+        }
+        #myScheduling .btn-outline-danger:hover, #myScheduling .btn-outline-danger:focus {
+            background-color: var(--danger, #ef4444);
+            border-color: var(--danger, #ef4444);
+            color: #fff !important;
+        }
+        #myScheduling .btn-outline-secondary {
+            background-color: var(--bg-800, #121a2a);
+            border-color: var(--card-border, rgba(255,255,255,.12));
+            color: var(--fg, #e5e7eb) !important;
+        }
+        #myScheduling .btn-outline-secondary:hover, #myScheduling .btn-outline-secondary:focus {
+            background-color: color-mix(in srgb, var(--bg-800, #121a2a), black 10%);
+            border-color: var(--card-border, rgba(255,255,255,.24));
+            color: var(--fg, #e5e7eb) !important;
+        }
+
+        /* Modal polish using same DS tokens as reference modal */
+        .modal-modern .modal-content {
+            background: var(--card-bg, #0f1628);
+            border: 1px solid var(--card-border, rgba(255,255,255,.06));
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            color: var(--fg, #e5e7eb);
+        }
+        .modal-modern .modal-header, .modal-modern .modal-footer {
+            background: var(--bg-800, #121a2a);
+            border-color: var(--card-border, rgba(255,255,255,.06));
+        }
+        .modal-modern .modal-body { background: var(--card-bg, #0f1628); color: var(--fg, #e5e7eb); }
+        .modal-icon {
+            width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 10px; margin-right: .5rem; font-size: 18px;
+        }
+        .modal-icon.success { background: color-mix(in srgb, var(--success, #22c55e), transparent 80%); color: var(--success, #22c55e); }
+        .modal-icon.danger  { background: color-mix(in srgb, var(--danger, #ef4444), transparent 80%); color: var(--danger, #ef4444); }
+        .modal-icon.info    { background: color-mix(in srgb, var(--accent, #3b82f6), transparent 80%); color: var(--accent, #3b82f6); }
+        .modal-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+        /* SweetAlert2 buttons (use DS tokens) */
         .swal2-container .swal2-popup .swal2-styled.swal2-confirm {
-            background: #16a34a !important; color: #fff !important; border: 0 !important;
+            background: var(--swal2-confirm-button-background) !important; color: var(--swal2-confirm-button-color) !important; border: 0 !important;
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-confirm:hover { background: #15803d !important; }
+        .swal2-container .swal2-popup .swal2-styled.swal2-confirm:hover {
+            background: color-mix(in srgb, var(--swal2-confirm-button-background), black 10%) !important;
+        }
         .swal2-container .swal2-popup .swal2-styled.swal2-deny {
-            background: #ef4444 !important; color: #fff !important; border: 0 !important;
+            background: var(--swal2-deny-button-background) !important; color: var(--swal2-deny-button-color) !important; border: 0 !important;
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-deny:hover { background: #dc2626 !important; }
+        .swal2-container .swal2-popup .swal2-styled.swal2-deny:hover {
+            background: color-mix(in srgb, var(--swal2-deny-button-background), black 10%) !important;
+        }
         .swal2-container .swal2-popup .swal2-styled.swal2-cancel {
-            background: #64748b !important; color: #fff !important; border: 0 !important;
+            background: var(--swal2-cancel-button-background) !important; color: var(--swal2-cancel-button-color) !important; border: 0 !important;
         }
-        .swal2-container .swal2-popup .swal2-styled.swal2-cancel:hover { background: #475569 !important; }
+        .swal2-container .swal2-popup .swal2-styled.swal2-cancel:hover {
+            background: color-mix(in srgb, var(--swal2-cancel-button-background), black 10%) !important;
+        }
+
+        /* Toasts visually consistent with DS */
+        .Vue-Toastification__toast {
+            background: var(--card-bg, #0f1628) !important;
+            color: var(--fg, #e5e7eb) !important;
+            border: 1px solid var(--card-border, rgba(255,255,255,.06)) !important;
+            box-shadow: var(--shadow-sm) !important;
+        }
+
+        /* Fill viewport and occupy remaining space below the table */
+        #myScheduling .content-bg {
+            min-height: 100vh;
+            min-height: 100dvh; /* mobile-friendly viewport */
+            display: flex;
+            flex-direction: column;
+        }
+        #myScheduling .content-bg > .row {
+            flex: 1 1 auto;
+            display: flex;
+        }
+        #myScheduling .content-bg > .row > [class*="col-"] {
+            display: flex;
+            flex-direction: column;
+        }
+        #myScheduling .panel-card {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        #myScheduling .panel-card .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        #myScheduling .table-modern-wrapper {
+            flex: 1 1 auto;
+            min-height: 0; /* allow proper flex overflow */
+        }
+        #myScheduling .table-modern-wrapper > .table {
+            margin-bottom: 0; /* remove extra gap at the bottom */
+        }
+
+        /* Make action buttons more compact on mobile (icons only) */
+        #myScheduling .btn .btn-label { margin-left: .35rem; }
+        @@media (max-width: 576px) {
+            #myScheduling .btn .btn-label { display: none; }
+        }
+
+        /* Empty state styling (professional, on-brand) */
+        .empty-state {
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--card-bg, #0f162854);
+            border: 1px solid var(--card-border, rgba(255,255,255,.06));
+            border-radius: var(--radius-lg, 16px);
+        }
+        .empty-state-icon {
+            width: 56px; height: 56px; border-radius: 12px;
+            display: grid; place-items: center;
+            margin-bottom: .75rem;
+            background: color-mix(in oklab, var(--brand, #fcb902), #000 12%);
+            color: #000;
+            font-size: 26px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+        }
+        .empty-state p { color: var(--fg-muted, #94a3b8); margin: 0; }
+
+        /* Header text must be white (overrides the black text fix) */
+        #myScheduling .table.table-modern thead th { color: #fff !important; }
+
+        /* Less aggressive row hover: lighter bg so black text stays readable */
+        #myScheduling .table.table-modern tbody tr:hover {
+            background: color-mix(in srgb, var(--card-bg, #f4f6fa15), #fff 22%) !important;
+        }
+
+        /* Cancel modal: ensure all text is white for readability */
+        #CancelAppointmentsModal .modal-content,
+        #CancelAppointmentsModal .modal-header,
+        #CancelAppointmentsModal .modal-body,
+        #CancelAppointmentsModal .modal-footer,
+        #CancelAppointmentsModal .modal-title,
+        #CancelAppointmentsModal .modal-body p,
+        #CancelAppointmentsModal small,
+        #CancelAppointmentsModal label {
+            color: #fff !important;
+        }
+
+        /* Cancel modal: make the close "X" white */
+        #CancelAppointmentsModal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 1;
+        }
+        #CancelAppointmentsModal .btn-close:hover,
+        #CancelAppointmentsModal .btn-close:focus {
+            opacity: 1;
+        }
+
+        /* Confirm modal: ensure all text is white for readability */
+        #ConfirmAppointmentsModal .modal-content,
+        #ConfirmAppointmentsModal .modal-header,
+        #ConfirmAppointmentsModal .modal-body,
+        #ConfirmAppointmentsModal .modal-footer,
+        #ConfirmAppointmentsModal .modal-title,
+        #ConfirmAppointmentsModal .modal-body p,
+        #ConfirmAppointmentsModal small,
+        #ConfirmAppointmentsModal label {
+            color: #fff !important;
+        }
+        #ConfirmAppointmentsModal .text-muted {
+            color: #fff !important; /* "Confirme ou recuse o horário solicitado" */
+            opacity: .9;            /* leve suavização */
+        }
+        #ConfirmAppointmentsModal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 1;
+        }
+        #ConfirmAppointmentsModal .btn-close:hover,
+        #ConfirmAppointmentsModal .btn-close:focus {
+            opacity: 1;
+        }
     </style>
 }
 
@@ -186,28 +481,40 @@
                     <div class="card-body">
                         <div class="scheduling-container table-modern-wrapper w-100">
                             <table class="table table-hover table-modern align-middle">
+                                <!-- Define 8 visible columns: # | Nome | Descrição | Tempo | Horário | Valor | Status | Ações -->
+                                <colgroup>
+                                    <col style="width:72px" />
+                                    <col style="width:clamp(140px,18vw,220px)" />
+                                    <col class="col-desc" />
+                                    <col style="width:120px" />
+                                    <col style="width:180px" />
+                                    <col style="width:120px" />
+                                    <col style="width:130px" />
+                                    <col style="width:220px" />
+                                </colgroup>
+                                <caption class="table-caption">Total de agendamentos: {{ appointmentsList.length }}</caption>
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th v-show="showNameBarber">Barbeiro</th>
-                                        <th v-show="!showNameBarber">Cliente</th>
-                                        <th>Descrição</th>
-                                        <th>Tempo</th>
-                                        <th>Horário</th>
-                                        <th>Valor</th>
-                                        <th>Status</th>
-                                        <th>Ações</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col" v-show="showNameBarber">Barbeiro</th>
+                                        <th scope="col" v-show="!showNameBarber">Cliente</th>
+                                        <th scope="col">Descrição</th>
+                                        <th scope="col">Tempo</th>
+                                        <th scope="col">Horário</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(appoint, index) in appointmentsList" :key="appoint.idAppointments">
-                                        <td>{{ appoint.idAppointments }}</td>
+                                        <td class="cell-id" :title="appoint.idAppointments">{{ appoint.idAppointments }}</td>
                                         <td>{{ appoint.nameShowBarberOrCliente }}</td>
-                                        <td class="cell-desc">{{ appoint.customer.description }}</td>
-                                        <td>{{ convertMinutesToHours(appoint.customer.duration) }}</td>
-                                        <td>{{ formatedDateTime(appoint.dateTime) }}</td>
-                                        <td>R${{ appoint.customer.price }}</td>
-                                        <td>
+                                        <td class="cell-desc" :title="appoint.customer.description">{{ appoint.customer.description }}</td>
+                                        <td class="cell-time">{{ convertMinutesToHours(appoint.customer.duration) }}</td>
+                                        <td class="cell-datetime" :title="formatedDateTime(appoint.dateTime)">{{ formatedDateTime(appoint.dateTime) }}</td>
+                                        <td class="cell-price" :title="'R$ ' + appoint.customer.price">R${{ appoint.customer.price }}</td>
+                                        <td class="cell-status">
                                             <span class="status-badge" :class="appoint.statusAppointment === 'Confirmado' ? 'success' : 'danger'">
                                                 {{ appoint.statusAppointment }}
                                             </span>
@@ -215,14 +522,16 @@
                                         <td class="cell-actions">
                                             <button v-show="!showNameBarber && appoint.statusAppointment != 'Confirmado'"
                                                     class="btn btn-sm btn-success text-white"
+                                                    :aria-label="'Confirmar agendamento ' + appoint.idAppointments"
                                                     v-on:click="OpenConfirmModal(appoint.idAppointments)">
-                                                <i class="fas fa-check"></i> Confirmar
+                                                <i class="fas fa-check"></i> <span class="btn-label">Confirmar</span>
                                             </button>
                                             <button class="btn btn-sm btn-danger text-white"
+                                                    :aria-label="'Cancelar agendamento ' + appoint.idAppointments"
                                                     v-on:click="GetIdAppointment(appoint.idAppointments)"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#CancelAppointmentsModal">
-                                                <i class="fas fa-times"></i> Cancelar
+                                                <i class="fas fa-times"></i> <span class="btn-label">Cancelar</span>
                                             </button>
                                         </td>
                                     </tr>
@@ -232,7 +541,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Empty state when there is no data -->
+            <div class="col-12" v-show="!isAppointmentCancellationVisible">
+                <div class="card panel-card hover-elevate mb-3">
+                    <div class="card-body">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🗓️</div>
+                            <h3 class="h5 mb-1">Nenhum agendamento encontrado</h3>
+                            <p>Você ainda não possui agendamentos. Quando houver, eles aparecerão aqui.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <!-- Modal Cancel Appointments (destructive pattern) -->
