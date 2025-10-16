@@ -644,6 +644,31 @@
             outline-offset: 2px;
         }
 
+        /* Close button: force white "X" across all modals with modern skin */
+        .modal-modern .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(180%);
+            opacity: .9;
+        }
+        .modal-modern .modal-header .btn-close:hover { opacity: 1; }
+        .modal-modern .modal-header .btn-close:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
+        /* Explicit targets (in case of legacy overrides) */
+        #ScheduleModal .modal-header .btn-close,
+        #UserBarberLoggedModal .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(180%);
+            opacity: .9;
+        }
+        #ScheduleModal .modal-header .btn-close:hover,
+        #UserBarberLoggedModal .modal-header .btn-close:hover { opacity: 1; }
+        #ScheduleModal .modal-header .btn-close:focus-visible,
+        #UserBarberLoggedModal .modal-header .btn-close:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
         /* Close button: white on dark header */
         #UserNotLoggedModal .modal-header .btn-close {
             filter: invert(1) grayscale(100%) brightness(180%);
