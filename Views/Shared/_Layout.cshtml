@@ -1,170 +1,459 @@
 ﻿@using BarberShopSystem.Helpers
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BarberShopSystem</title>
-    <script type="importmap"></script>
+
+    <!-- Libs base -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
+    <!-- (Se usa PrimeVue/Vuetify no restante do projeto, mantenha:) -->
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
+    <!-- Seus CSS existentes (se houver) -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BarberShopSystem.styles.css" asp-append-version="true" />
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 
-    <!-- PrimeVue e PrimeIcons -->
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/lara-light-blue/theme.css">
-    <link rel="stylesheet" href="https://unpkg.com/primevue/resources/primevue.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
     @RenderSection("Styles", required: false)
 
-</head>
-<body>
+    <!-- ===== Tema moderno (EMBUTIDO) + Layout Flex para footer colado ===== -->
+    <style>
+        /* ===== Tokens base (tema escuro + dourado) ===== */
+        :root{
+          --bg-900:#0b1220; --bg-800:#121a2a; --card:#0f1628;
+          --border: rgba(255,255,255,.12);
+          --text-100:#e5e7eb; --text-300:#cbd5e1; --text-500:#94a3b8;
+          --accent:#c9a227; --shadow-lg: 0 20px 50px rgba(0,0,0,.45);
+        }
 
-    <header>
-        <div id="layout">
+        /* ===== Shell do app com FLEX (footer fica no fim) ===== */
+        html, body { height: 100%; }
+        body.app-shell{
+          margin:0;
+          color:var(--text-100);
+          font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+          background: radial-gradient(1200px 600px at 10% -20%, #0c1426 0%, #071022 35%, #050c1a 100%);
+          min-height:100vh;
+          display:flex;
+          flex-direction:column;
+        }
+
+        /* slot das views (cresce com conteúdo) */
+        .app-main{
+          flex: 1 0 auto;
+          min-height: 0;
+          padding: 0; /* o conteúdo das views controla seu próprio padding */
+        }
+
+        /* neutraliza min-heights do template MVC */
+        .body-content{ min-height:auto !important; padding-bottom:0 !important; }
+        main[role="main"], main{ min-height:0 !important; }
+
+        /* ===== Header “glass” moderno ===== */
+        .app-header{
+          position: sticky; top: 0; z-index: 1030;
+          backdrop-filter: saturate(160%) blur(8px);
+          -webkit-backdrop-filter: saturate(160%) blur(8px);
+          background:
+            linear-gradient(180deg, rgba(10,14,26,.75), rgba(10,14,26,.55)) padding-box,
+            linear-gradient(120deg, color-mix(in srgb, var(--accent) 28%, transparent), transparent 40%) border-box;
+          border-bottom: 1px solid var(--border);
+          box-shadow: 0 8px 28px rgba(0,0,0,.35);
+        }
+        .navbar.navbar-dark .navbar-brand{
+          font-weight: 900; letter-spacing:.3px;
+          display:inline-flex; align-items:center; gap:.6rem;
+          color:#fff !important;
+        }
+        .brand-badge{
+          width:32px; height:32px; border-radius:10px; display:grid; place-items:center;
+          background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, transparent), var(--accent));
+          color:#111; font-weight:900; box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+        }
+
+        /* ===== Navegação ===== */
+        .navbar-dark .navbar-nav .nav-link{
+          color: var(--text-300);
+          font-weight: 600;
+          padding: .75rem .9rem;
+          border-radius: 10px;
+          transition: color .15s ease, background-color .15s ease, transform .06s ease;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link:focus{
+          color:#fff;
+          background: color-mix(in srgb, var(--accent) 10%, transparent);
+        }
+        .navbar-dark .navbar-nav .nav-link.active{
+          color:#fff;
+          background: color-mix(in srgb, var(--accent) 14%, transparent);
+          box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+        }
+
+        /* ===== Dropdown dark premium ===== */
+        .dropdown-menu{
+          --bs-dropdown-bg: var(--bg-800);
+          --bs-dropdown-color: var(--text-100);
+          --bs-dropdown-link-color: var(--text-100);
+          --bs-dropdown-link-hover-color: #fff;
+          --bs-dropdown-link-hover-bg: color-mix(in srgb, var(--accent) 12%, transparent);
+          --bs-dropdown-border-color: var(--border);
+          border-radius: 14px; padding: .35rem; min-width: 240px;
+          box-shadow: var(--shadow-lg);
+        }
+        .dropdown-item{ border-radius: 10px; font-weight: 600; padding: .55rem .75rem; }
+        .dropdown-divider{ border-color: color-mix(in srgb, var(--border), transparent 30%); }
+
+        /* ===== Botões de sessão ===== */
+        .btn-accent-outline{
+          color:#fff;
+          border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+          background: color-mix(in srgb, var(--accent) 6%, transparent);
+          font-weight: 700; border-radius: 12px;
+        }
+        .btn-accent-outline:hover, .btn-accent-outline:focus{
+          color:#111;
+          background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 96%, transparent), var(--accent));
+          border-color: var(--accent);
+          box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 28%, transparent);
+        }
+
+        /* ===== Toggler ===== */
+        .navbar-toggler{ border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+        .navbar-toggler:focus{ box-shadow: 0 0 0 .15rem color-mix(in srgb, var(--accent) 40%, transparent); }
+
+        /* ===== Footer Premium ===== */
+        .app-footer{
+          margin-top: auto; /* garante ficar no fim */
+          color:#fff;
+          background:
+            linear-gradient(180deg, rgba(10,14,26,.85), rgba(10,14,26,.70)) padding-box,
+            linear-gradient(120deg, color-mix(in srgb, var(--accent) 22%, transparent), transparent 50%) border-box;
+          border-top: 1px solid var(--border);
+        }
+        .footer-cta{
+          border-bottom: 1px solid var(--border);
+          background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
+        }
+        .footer-cta h5{ margin:0; font-weight:900; letter-spacing:.3px; }
+        .footer-cta .btn{
+          border-radius: 12px;
+          font-weight:800;
+        }
+        .footer-cta .btn-primary{
+          background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 100%, transparent), color-mix(in srgb, var(--accent) 90%, transparent));
+          border:1px solid var(--accent);
+          color:#111;
+        }
+        .footer-cta .btn-outline{
+          background: transparent;
+          border:1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+          color:#fff;
+        }
+        .footer-cta .btn-outline:hover{
+          background: color-mix(in srgb, var(--accent) 12%, transparent);
+        }
+
+        .footer-main{
+          padding: 28px 0;
+        }
+        .footer-brand{
+          display:flex; align-items:center; gap:.6rem; font-weight:900;
+        }
+        .footer-brand .badge{
+          width:40px; height:40px; border-radius:12px; display:grid; place-items:center;
+          background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, transparent), var(--accent));
+          color:#111; box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+          font-size:18px;
+        }
+        .footer-text{ color: var(--text-500); font-size:.95rem; }
+
+        .footer-links h6{
+          font-weight:800; color:#fff; margin-bottom:.6rem; letter-spacing:.2px;
+        }
+        .footer-links ul{ list-style:none; padding:0; margin:0; display:grid; gap:.35rem; }
+        .footer-links a{
+          color: var(--text-300); text-decoration:none; border-bottom:1px dashed transparent;
+        }
+        .footer-links a:hover{ color:#fff; border-color: color-mix(in srgb, #fff 40%, transparent); }
+
+        .footer-social a{
+          display:inline-flex; align-items:center; justify-content:center;
+          width:38px; height:38px; border-radius:10px;
+          background: color-mix(in srgb, var(--accent) 8%, transparent);
+          border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+          color:#fff; margin-right:.4rem;
+        }
+        .footer-social a:hover{
+          background: color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+
+        .footer-newsletter input{
+          background: #0e1526; border:1px solid var(--border);
+          color:#fff; border-radius:12px; padding:.6rem .8rem;
+        }
+        .footer-newsletter input::placeholder{ color: var(--text-500); }
+        .footer-newsletter button{
+          border-radius:12px; font-weight:800;
+          background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 100%, transparent), color-mix(in srgb, var(--accent) 90%, transparent));
+          border:1px solid var(--accent); color:#111;
+        }
+
+        .footer-bottom{
+          border-top:1px solid var(--border);
+          padding: .8rem 0;
+          font-size:.95rem; color: var(--text-500);
+        }
+        .app-footer a{ color:#fff; text-decoration:none; border-bottom:1px dashed transparent; }
+        .app-footer a:hover{ color:#fff; border-color: color-mix(in srgb, #fff 40%, transparent); }
+
+        /* ===== Utilidades ===== */
+        [v-cloak]{ display:none; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        .navbar-nav-scroll{ --bs-scroll-height: 60vh; }
+        @@media (max-width: 575.98px){
+            .footer-cta .stack-sm{ gap:.75rem }
+        }
+    </style>
+</head>
+
+<body class="app-shell">
+    <!-- Header / Navbar -->
+    <header class="app-header">
+        <div id="layout" v-cloak>
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BarberShopSystem</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span class="brand-badge me-2">✂️</span>
+                        <span>BarberShopSystem</span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                            aria-controls="navbarMain" aria-expanded="false" aria-label="Alternar navegação">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarScroll">
-                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+                    <div class="collapse navbar-collapse" id="navbarMain">
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="fa-solid fa-house-chimney me-1"></i> Início
+                                </a>
                             </li>
+
                             @if (SessionHelper.UserType == "Administrador")
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="UserRegister">Cadastrar</a>
+                                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="UserRegister">
+                                        <i class="fa-solid fa-user-plus me-1"></i> Cadastrar
+                                    </a>
                                 </li>
                             }
+
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownListScheduling" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Agendamentos
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownListScheduling" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-regular fa-calendar-check me-1"></i> Agendamentos
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownListScheduling">
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Scheduling" asp-action="Scheduling">Agendamentos</a>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Scheduling" asp-action="Scheduling">
+                                            <i class="fa-regular fa-calendar-plus me-2"></i> Agendamentos
+                                        </a>
                                     </li>
                                     @if (SessionHelper.UserType != null)
                                     {
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                            <li class="dropdown-item">
-                                                <a class="nav-link text-dark" asp-area="" asp-controller="Scheduling" asp-action="MyScheduling">Meus agendamentos</a>
-                                            </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Scheduling" asp-action="MyScheduling">
+                                                <i class="fa-solid fa-list-check me-2"></i> Meus agendamentos
+                                            </a>
+                                        </li>
                                     }
                                 </ul>
                             </li>
+
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Listas
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownLists" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-regular fa-rectangle-list me-1"></i> Listas
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownList">
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="ListClients">Lista de Clientes</a>
-                                    </li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownLists">
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="ListClients">
+                                            <i class="fa-solid fa-user-group me-2"></i> Lista de Clientes
+                                        </a>
                                     </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Barber" asp-action="ListBarber">Lista de Barbeiros</a>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Barber" asp-action="ListBarber">
+                                            <i class="fa-solid fa-scissors me-2"></i> Lista de Barbeiros
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
+
                             @if (SessionHelper.UserType == "Administrador")
                             {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Serviços
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownServices" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-toolbox me-1"></i> Serviços
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownList">
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvided" asp-action="RegisterServicesProvided">Cadastrar Serviços</a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownServices">
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="ServicesProvided" asp-action="RegisterServicesProvided">
+                                                <i class="fa-solid fa-square-plus me-2"></i> Cadastrar Serviços
+                                            </a>
                                         </li>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="ServicesProvided" asp-action="ListServices">Lista de Serviços</a>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="ServicesProvided" asp-action="ListServices">
+                                                <i class="fa-solid fa-list-ul me-2"></i> Lista de Serviços
+                                            </a>
                                         </li>
                                     </ul>
                                 </li>
                             }
                         </ul>
-                            <form class="d-flex">
-                            <button class="btn btn-outline-success" type="button" v-on:click="Logout()" v-show="isLoggedIn">Sair </button>
-                            <button class="btn btn-outline-success" type="button" v-on:click="Login()" v-show="!isLoggedIn">Logar </button>
-                            </form>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-accent-outline" type="button" v-on:click="Login()" v-show="!isLoggedIn">
+                                <i class="fa-solid fa-right-to-bracket me-1"></i> Entrar
+                            </button>
+                            <button class="btn btn-accent-outline" type="button" v-on:click="Logout()" v-show="isLoggedIn">
+                                <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Sair
+                            </button>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
         </div>
-                @* </div> *@
-            @* </div> *@
-        @* </nav> *@
     </header>
-    <div class="wrapper">
-        <main class="content">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="text-white text-center py-3 mt-auto">
-        <div class="container">
-            &copy; 2025 - BarberShopSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white">Privacy</a>
+    <!-- Slot das Views -->
+    <main class="app-main">
+        @RenderBody()
+    </main>
+
+    <!-- ===== Footer Premium ===== -->
+    <footer class="app-footer">
+        <!-- CTA Ribbon -->
+        <div class="footer-cta py-3">
+            <div class="container">
+                <div class="row align-items-center gy-2 stack-sm">
+                    <div class="col-12 col-md">
+                        <h5 class="mb-0">Pronto para encher a agenda?</h5>
+                        <div class="text-white-50 small">Teste grátis e suporte humano quando precisar.</div>
+                    </div>
+                    <div class="col-12 col-md-auto d-flex gap-2">
+                        <a href="/Scheduling/Scheduling" class="btn btn-primary">Agendar agora</a>
+                        <a href="/Home/Privacy" class="btn btn-outline">Saiba mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="footer-main">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-12 col-lg-4">
+                        <div class="footer-brand mb-2">
+                            <span class="badge">✂️</span>
+                            <span>BarberShopSystem</span>
+                        </div>
+                        <p class="footer-text">Sistema completo para barbearias: agendamentos online, gestão financeira e experiência premium para seus clientes.</p>
+                        <div class="footer-social mt-3">
+                            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-2 footer-links">
+                        <h6>Produto</h6>
+                        <ul>
+                            <li><a href="/Scheduling/Scheduling">Agendamentos</a></li>
+                            <li><a href="/ServicesProvided/ListServices">Serviços</a></li>
+                            <li><a href="/Barber/ListBarber">Barbeiros</a></li>
+                            <li><a href="/Client/ListClients">Clientes</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-lg-2 footer-links">
+                        <h6>Empresa</h6>
+                        <ul>
+                            <li><a href="/">Início</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a></li>
+                            @* Adicione “Sobre”/“Contato” se tiver *@
+                        </ul>
+                    </div>
+
+                    <div class="col-12 col-lg-4">
+                        <h6 class="mb-2">Receba novidades</h6>
+                        <form class="footer-newsletter" onsubmit="event.preventDefault()">
+                            <div class="row g-2">
+                                <div class="col-12 col-sm">
+                                    <input type="email" class="form-control" placeholder="Seu e-mail" aria-label="Seu e-mail">
+                                </div>
+                                <div class="col-12 col-sm-auto">
+                                    <button class="btn w-100">Quero receber</button>
+                                </div>
+                            </div>
+                            <small class="text-white-50 d-block mt-2">Sem spam. Cancelamento a qualquer momento.</small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="footer-bottom">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div>© 2025 • BarberShopSystem</div>
+                <div class="text-end">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/swal/swal.js"></script>
+
+    <!-- Scripts base -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/swal/swal.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <!-- Vue + Axios -->
     <script src="~/lib/vue/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-      var layout= new Vue({
-        el: '#layout',
-        data() {
-          return {
 
-            isLoggedIn: false,
-          };
-        },
-        methods: {
-            Logout(){
-                      axios.post('/Login/Logout')
-               .then(response => {
-                   window.location.href = "/Login/Login"
-               })
-               .catch(error => {
-                 console.error('Erro ao  cadastrar:', error);
-               });
+    <!-- App Navbar (login/logout) -->
+    <script>
+        var layout = new Vue({
+            el: '#layout',
+            data() {
+                return { isLoggedIn: false };
             },
-            userLoggedIn(){
-                 axios.post('/Session/IsUserLoggedIn')
-                 .then(response => {
-                     this.isLoggedIn = response.data;
-                 })
-                 .catch(error => {
-                   console.error('Erro ao  cadastrar:', error);
-                 });
+            methods: {
+                Logout() {
+                    axios.post('/Login/Logout')
+                        .then(() => window.location.href = "/Login/Login")
+                        .catch(err => console.error('Erro ao deslogar:', err));
+                },
+                Login() { window.location.href = "/Login/Login"; },
+                userLoggedIn() {
+                    axios.post('/Session/IsUserLoggedIn')
+                         .then(res => { this.isLoggedIn = res.data; })
+                         .catch(err => console.error('Erro ao verificar sessão:', err));
+                }
             },
-              Login(){  
-                     window.location.href = "/Login/Login"
-              },
-        },
-        mounted(){
-              this.userLoggedIn();
-        }
-      })
+            mounted() { this.userLoggedIn(); }
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
