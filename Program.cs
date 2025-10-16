@@ -37,7 +37,16 @@ builder.Services.AddScoped<IAuthenticationUserService, AuthenticationUserService
 builder.Services.AddScoped<ServicesProvidedService>();
 
 
+// Configurar autenticação com Google
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
 
+;
 
 var app = builder.Build();
 

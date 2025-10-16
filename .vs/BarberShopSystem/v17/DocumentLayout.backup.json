@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\modelsrepository\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:modelsrepository\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\modelsrepository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:modelsrepository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\modelsrepository\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|solutionrelative:modelsrepository\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC06C3B9-11FB-1F66-801F-1B8CEA059BDF}|BarberShopSystem.csproj|c:\\users\\alves\\onedrive\\documentos\\projetos\\barbershopsystem_1.0\\barbeshopingsystem\\service\\schedulingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,7 +38,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ClientRepository.cs",
               "DocumentMoniker": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\ModelsRepository\\ClientRepository.cs",
               "RelativeDocumentMoniker": "ModelsRepository\\ClientRepository.cs",
@@ -46,12 +46,11 @@
               "RelativeToolTip": "ModelsRepository\\ClientRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T22:55:41.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T22:55:41.655Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "Controllers\\UserController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T22:50:10.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T22:50:10.117Z"
             },
             {
               "$type": "Document",
@@ -72,18 +70,17 @@
               "RelativeToolTip": "Service\\SchedulingService.cs",
               "ViewState": "AgIAAJgAAAAAAAAAAAAswK0AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T22:13:10.667Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T22:13:10.667Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\ModelsRepository\\UserRepository.cs",
               "RelativeDocumentMoniker": "ModelsRepository\\UserRepository.cs",
               "ToolTip": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\ModelsRepository\\UserRepository.cs",
               "RelativeToolTip": "ModelsRepository\\UserRepository.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAtwFQAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAIA3wGUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-13T22:11:27.477Z",
               "EditorCaption": ""
@@ -98,8 +95,7 @@
               "RelativeToolTip": "Controllers\\SchedulingController.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAowCIAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T22:09:07.418Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T22:09:07.418Z"
             }
           ]
         }
