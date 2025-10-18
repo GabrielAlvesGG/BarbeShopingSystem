@@ -27,6 +27,7 @@ namespace BarberShopSystem.Helpers
             get => Session.GetString("Name");
             set => Session.SetString("Name", value);
         }
+
         public static string UserType
         {
             get => Session.GetString("TipoUsuario");
@@ -38,14 +39,17 @@ namespace BarberShopSystem.Helpers
         {
             Session.Clear();
         }
+
         public static bool IsUserLoggedIn()
-        {   
+        {
             return SessionHelper.UserId != 0 && SessionHelper.UserId != null;
         }
+
         public static bool IsMasterUser()
         {
             return SessionHelper.UserType == "Administrador";
         }
+
         public static bool IsBarberUser()
         {
             return SessionHelper.UserType == "Barbeiro";

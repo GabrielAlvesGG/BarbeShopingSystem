@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LNK6refCA/0=",
+  "dgSpecHash": "6D7efTeuo50=",
   "success": true,
   "projectFilePath": "C:\\Users\\alves\\OneDrive\\Documentos\\Projetos\\barbershopSystem_1.0\\BarbeShopingSystem\\BarberShopSystem.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "C:\\Users\\alves\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\mysql.data\\9.1.0\\mysql.data.9.1.0.nupkg.sha512",
+    "C:\\Users\\alves\\.nuget\\packages\\restsharp\\112.1.0\\restsharp.112.1.0.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\alves\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

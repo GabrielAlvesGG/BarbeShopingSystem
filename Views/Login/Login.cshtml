@@ -317,7 +317,7 @@
             <!-- Lembrar / Esqueci -->
             <div class="auth-meta">
                 <label class="d-inline-flex align-items-center" style="gap:.5rem;">
-                    <input type="checkbox"> Lembrar de mim
+                    <input type="checkbox" v-model="loginForm.rememberMe"> Lembrar de mim
                 </label>
                 <a class="auth-link" href="javascript:void(0)" v-on:Click="recoveryPassWord">Esqueci minha senha</a>
             </div>
@@ -365,6 +365,7 @@
                 loginForm: {
                     login: "",
                     password: "",
+                    rememberMe: false
                 },
                 messages: {
                     alertLoginInvalidade: false,
@@ -390,6 +391,7 @@
                 var login = {
                     login: this.loginForm.login,
                     password: this.loginForm.password,
+                    rememberMe: this.loginForm.rememberMe,
                 }
                 axios.post('/Login/LoginUser', login, {
                     headers: { 'Content-Type': 'application/json' }

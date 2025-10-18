@@ -4,11 +4,11 @@ using BarberShopSystem.Service;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Bcpg.OpenPgp;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using BarberShopSystem.ModelsRepository;
 using BarberShopSystem.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BarberShopSystem.Controllers;
 
@@ -20,8 +20,8 @@ public class LoginController : Controller
     private readonly IAuthenticationUserService _authenticationUserService;
 
     public LoginController(IRecoveryPasswordService recoveryPasswordService,
-                           UserService userService, 
-                           ILoginService loginService, 
+                           UserService userService,
+                           ILoginService loginService,
                            IAuthenticationUserService authenticationUserService)
     {
         _recoveryPasswordService = recoveryPasswordService;
@@ -30,6 +30,7 @@ public class LoginController : Controller
         _authenticationUserService = authenticationUserService;
     }
 
+    [AllowAnonymous]
     public IActionResult Login()
     {
         return SessionHelper.IsUserLoggedIn()
@@ -37,6 +38,7 @@ public class LoginController : Controller
             : View();
     }
 
+    [AllowAnonymous]
     public IActionResult RecoveryPassword()
     {
         return (SessionHelper.IsUserLoggedIn() ?
@@ -44,12 +46,46 @@ public class LoginController : Controller
             View());
     }
 
-    public bool LoginUser([FromBody] loginDto login)
+    [AllowAnonymous]
+    public async Task<bool> LoginUser([FromBody] loginDto login)
     {
         try
         {
-            SessionHelper.StartSessionLogger(_loginService.LoginValidate(login));
-            return SessionHelper.IsUserLoggedIn();
+            // 1) Validação com SQL do jeito que você já faz
+            var user = _loginService.LoginValidate(login);
+
+            // Se falhou autenticação, retorna false
+            if (user == null || user.id <= 0)
+                return false;
+
+            // 2) Mantém sua sessão (sua lógica)
+            SessionHelper.StartSessionLogger(user);
+
+            // 3) Cria o cookie de autenticação (LEMBRAR DE MIM)
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
+                new Claim(ClaimTypes.Name, user.nome ?? login.login),
+                new Claim(ClaimTypes.Email, login.login ?? string.Empty),
+                new Claim(ClaimTypes.Role, user.tipoUsuario.ToString())
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            var props = new AuthenticationProperties
+            {
+                IsPersistent = login.rememberMe,                 // <- “Lembrar de mim”
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30) // casa com Program.cs
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                props
+            );
+
+            return true;
         }
         catch (Exception ex)
         {
@@ -58,11 +94,13 @@ public class LoginController : Controller
         }
     }
 
-    public void Logout()
+    public async Task Logout()
     {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         SessionHelper.ClearSession();
     }
 
+    [AllowAnonymous]
     public bool SendRecoveryCode([FromBody] string login)
     {
         try
@@ -76,6 +114,8 @@ public class LoginController : Controller
             throw;
         }
     }
+
+    [AllowAnonymous]
     public bool ValidateToken([FromBody] string token)
     {
         try
@@ -101,6 +141,8 @@ public class LoginController : Controller
             throw;
         }
     }
+
+    [AllowAnonymous]
     public IActionResult LoginWithGoogle()
     {
         var authenticationProperties = new AuthenticationProperties
@@ -110,9 +152,11 @@ public class LoginController : Controller
         return Challenge(authenticationProperties, GoogleDefaults.AuthenticationScheme);
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> GoogleResponse()
     {
-        var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        // Se usar Google de fato, o certo é autenticar com o esquema do Google:
+        var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
 
         bool userAuthenticated = _authenticationUserService.AuthenticateGoogleUser(authenticateResult);
 
@@ -120,5 +164,4 @@ public class LoginController : Controller
             ? RedirectToAction("Index", "Home")
             : RedirectToAction("Login", "Login");
     }
-
 }

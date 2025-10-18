@@ -1,7 +1,10 @@
 ﻿using BarberShopSystem.Helpers;
 using BarberShopSystem.Models;
 using BarberShopSystem.ModelsRepository;
+using Microsoft.Net.Http.Headers;
+using RestSharp;
 using System.Configuration;
+using System.Net.Http.Headers;
 
 namespace BarberShopSystem.Service;
 
@@ -18,8 +21,8 @@ public class LoginService : ILoginService
             IConfiguration configuration = builder.Build();
 
             LoginRepository loginRepository = new LoginRepository(configuration);
-            return  loginRepository.LoginValidate(login); ;
 
+            return loginRepository.LoginValidate(login);
         }
 		catch (Exception ex)
 		{
