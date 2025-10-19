@@ -209,7 +209,7 @@ public class AppointmentsRepository : DataBaseRepository
                 appointment.barber ??= new();
 
                 appointment.idAppointments = reader.GetInt32("Id");
-                appointment.client.id = reader.GetInt32("ClienteId");
+                appointment.client.id = reader.IsDBNull(reader.GetOrdinal("ClienteId")) ? 0 : reader.GetInt32(reader.GetOrdinal("ClienteId"));
                 appointment.barber.id = reader.GetInt32("BarbeiroId");
                 appointment.dateTime = reader.GetDateTime("DataHorario");
                 appointment.statusAppointment = reader.GetString("Status");
