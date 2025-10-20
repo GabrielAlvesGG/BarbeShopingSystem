@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Gestão de Gastos";
+}
+<style>
+    /* Escopo local para este componente */
+    #FinancialRegister label { color: #000 !important; }
+    #FinancialRegister h1 { color: #000 !important; }
+</style>
+
+<div id="FinancialRegister" v-cloak>
+    <div class="overlay" id="loadingOverlay" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <div class="container mt-5" v-show="showPropts.formsShow">
+        <div class="row justify-content-center">
+            <div class="col-md-10 p-4 shadow-sm rounded bg-white">
+                <div class="col-12 text-center mb-4">
+                    <h1>Gestão de Gastos</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="tipoGasto">Tipo de Gasto:</label>
+                        <input type="text" v-model.trim="form.tipoGasto" class="form-control" id="tipoGasto" placeholder="Ex.: Aluguel, Energia, Marketing..." data-testid="input-tipoGasto">
+                        <div class="alert alert-danger mt-2" v-show="messages.alertTipoGasto" role="alert">Informe o tipo de gasto.</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="empresa">Nome da Empresa:</label>
+                        <input type="text" v-model.trim="form.empresa" class="form-control" id="empresa" placeholder="Ex.: Empresa XYZ" data-testid="input-empresa">
+                        <div class="alert alert-danger mt-2" v-show="messages.alertEmpresa" role="alert">Informe o nome da empresa.</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="descricaoGasto">Descrição do Gasto:</label>
+                        <textarea v-model.trim="form.descricao" class="form-control" id="descricaoGasto" rows="3" placeholder="Detalhe o gasto" data-testid="input-descricaoGasto"></textarea>
+                        <div class="alert alert-danger mt-2" v-show="messages.alertDescricao" role="alert">Informe a descrição do gasto.</div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label" for="dataRetirada">Data de Retirada:</label>
+                        <input type="date" v-model="form.dataRetirada" class="form-control" id="dataRetirada" data-testid="input-dataRetirada">
+                        <div class="alert alert-danger mt-2" v-show="messages.alertDataRetirada" role="alert">Informe uma data válida.</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="gastosMulti">Gastos Fixos e Variáveis:</label>
+                        <select multiple v-model="form.gastos" class="form-control" id="gastosMulti" data-testid="input-gastosMulti" size="8">
+                            <optgroup label="Gastos Fixos">
+                                <option value="energia">Energia</option>
+                                <option value="agua">Água</option>
+                                <option value="aluguel">Aluguel</option>
+                                <option value="internet">Internet</option>
+                                <option value="produtos">Produtos</option>
+                                <option value="limpeza">Limpeza</option>
+                            </optgroup>
+                            <optgroup label="Despesas Variáveis">
+                                <option value="compraProdutos">Compra de Produtos</option>
+                                <option value="manutencaoEquipamentos">Manutenção de Equipamentos</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="outros">Outros</option>
+                            </optgroup>
+                        </select>
+                        <small class="text-muted">Use Ctrl (Windows) ou Cmd (Mac) para selecionar múltiplos itens.</small>
+                    </div>
+
+                    <div class="col-12 text-center mt-2">
+                        <button type="button" class="btn btn-success btn-lg text-white mr-2" v-on:click="saveExpense" data-testid="btn-salvar">Salvar</button>
+                        <button type="button" class="btn btn-secondary btn-lg" v-on:click="cancel" data-testid="btn-cancelar">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/vue/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.15/dist/vuetify.js"></script>
+<script>
+    Vue.use(Vuetify);
+
+    new Vue({
+        el: '#FinancialRegister',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                showPropts: { formsShow: true },
+                form: {
+                    tipoGasto: '',
+                    descricao: '',
+                    empresa: '',
+                    dataRetirada: '',
+                    gastos: [] // NEW: multi-select values
+                },
+                messages: {
+                    alertTipoGasto: false,
+                    alertDescricao: false,
+                    alertEmpresa: false,
+                    alertDataRetirada: false
+                }
+            };
+        },
+        methods: {
+            saveExpense() {
+                this.resetValidateForm();
+                if (!this.validateForm()) return;
+
+                const payload = {
+                    tipoGasto: this.form.tipoGasto.trim(),
+                    descricao: this.form.descricao.trim(),
+                    empresa: this.form.empresa.trim(),
+                    dataRetirada: this.form.dataRetirada,
+                    gastos: this.form.gastos // NEW: include selected gastos
+                };
+
+                // Exibe confirmação (captura dos valores). Adapte para integrar com sua API se necessário.
+                if (window.Swal && Swal.fire) {
+                    Swal.fire({
+                        title: 'Sucesso!',
+                        text: 'Gasto registrado com sucesso.',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                } else {
+                    alert('Gasto registrado com sucesso.');
+                }
+                console.log('Gasto capturado:', payload);
+            },
+            validateForm() {
+                let ok = true;
+
+                if (!this.form.tipoGasto || !this.form.tipoGasto.trim()) {
+                    this.messages.alertTipoGasto = true; ok = false;
+                }
+                if (!this.form.descricao || !this.form.descricao.trim()) {
+                    this.messages.alertDescricao = true; ok = false;
+                }
+                if (!this.form.empresa || !this.form.empresa.trim()) {
+                    this.messages.alertEmpresa = true; ok = false;
+                }
+                const isValidDate = (d) => !!d && /^\d{4}-\d{2}-\d{2}$/.test(d);
+                if (!isValidDate(this.form.dataRetirada)) {
+                    this.messages.alertDataRetirada = true; ok = false;
+                }
+
+                return ok;
+            },
+            resetValidateForm() {
+                this.messages.alertTipoGasto = false;
+                this.messages.alertDescricao = false;
+                this.messages.alertEmpresa = false;
+                this.messages.alertDataRetirada = false;
+            },
+            cancel() {
+                window.history.back();
+            }
+        }
+    });
+</script>
